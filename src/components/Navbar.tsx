@@ -42,8 +42,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemo }) => {
         <div className="flex items-center justify-between">
           {/* Logo & Wordmark */}
           <a href="#" className="group flex items-center gap-3">
-            <div className="w-9 h-9 rounded-md bg-[#0F3D2E] text-[#FAF7F0] flex items-center justify-center font-serif text-lg font-bold shadow-xs">
-              <img src="src/assets/logo.png" alt="" />
+            <div className="w-11 h-11 rounded-md text-[#FAF7F0] flex items-center justify-center font-serif text-lg font-bold shadow-xs">
+              <img src="src/assets/logo.png" alt="Coaching Logo" />
             </div>
             <div className="flex flex-col">
               <span className="font-editorial text-lg sm:text-xl font-bold tracking-tight text-[#14110F] group-hover:text-[#0F3D2E] transition-colors">
