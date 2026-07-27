@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ArrowUpRight, GraduationCap } from 'lucide-react';
+import logoImg from '../assets/logo.png';
 
 interface NavbarProps {
   onOpenDemo: () => void;
@@ -43,7 +44,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemo }) => {
           {/* Logo & Wordmark */}
           <a href="#" className="group flex items-center gap-3">
             <div className="w-11 h-11 rounded-md text-[#FAF7F0] flex items-center justify-center font-serif text-lg font-bold shadow-xs">
-              <img src="src/assets/logo.png" alt="Coaching Logo" />
+              <img src={logoImg} alt="Coaching Logo" />
             </div>
             <div className="flex flex-col">
               <span className="font-editorial text-lg sm:text-xl font-bold tracking-tight text-[#14110F] group-hover:text-[#0F3D2E] transition-colors">

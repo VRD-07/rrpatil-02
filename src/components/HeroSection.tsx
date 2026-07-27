@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
 import { ArrowRight, CheckCircle2, Award, BookOpen } from 'lucide-react';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
+import ccImg from '../assets/cc_img.png';
 
 interface HeroSectionProps {
   onOpenDemo: () => void;
@@ -117,7 +118,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenDemo }) => {
               {/* Contained Hero Image */}
               <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#0F3D2E]/5">
                 <img
-                  src="src/assets/cc_img.png"
+                  src={ccImg}
                   alt="Vidhata Academy students engaged in collaborative problem solving in library"
                   width={600}
                   height={450}

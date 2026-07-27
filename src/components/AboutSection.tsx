@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Target, Brain, Users } from 'lucide-react';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
+import ccImg2 from '../assets/cc_img2.png';
 
 export const AboutSection: React.FC = () => {
   const reducedMotion = usePrefersReducedMotion();
@@ -69,7 +70,7 @@ export const AboutSection: React.FC = () => {
           >
             <div className="relative rounded-lg overflow-hidden border border-[#F0ECE1] shadow-xs bg-white">
               <img
-                src="src/assets/cc_img2.png"
+                src={ccImg2}
                 alt="Faculty member conducting interactive problem-solving session at whiteboard"
                 width={500}
                 height={333}
