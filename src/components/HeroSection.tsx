@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
-import { ArrowRight, CheckCircle2, Award, BookOpen } from 'lucide-react';
+import { ArrowRight, Phone, CheckCircle2, Award, BookOpen } from 'lucide-react';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 import ccImg from '../assets/cc_img.png';
 
@@ -72,18 +72,27 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenDemo }) => {
             {/* CTA Group */}
             <motion.div
               variants={itemVariants}
-              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto"
+              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full sm:w-auto"
             >
               <button
                 onClick={onOpenDemo}
-                className="inline-flex items-center justify-center gap-3 px-7 py-4 rounded-md bg-[#0F3D2E] text-[#FAF7F0] text-xs font-semibold uppercase tracking-wider hover:bg-[#0A2A20] active:scale-[0.98] transition-all shadow-xs min-h-[48px]"
+                className="inline-flex items-center justify-center gap-3 px-6 py-4 rounded-md bg-[#0F3D2E] text-[#FAF7F0] text-xs font-semibold uppercase tracking-wider hover:bg-[#0A2A20] active:scale-[0.98] transition-all shadow-xs min-h-[48px]"
               >
                 <span>Book a Free Demo Class</span>
                 <ArrowRight className="w-4 h-4 text-[#B08D57]" />
               </button>
+
+              <a
+                href="tel:+918275280028"
+                className="inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-md border-2 border-[#0F3D2E] hover:bg-[#0F3D2E] text-[#0F3D2E] hover:text-[#FAF7F0] text-xs font-semibold uppercase tracking-wider transition-all min-h-[48px] shadow-xs group"
+              >
+                <Phone className="w-4 h-4 text-[#B08D57]" />
+                <span>Call Admissions</span>
+              </a>
+
               <a
                 href="#courses"
-                className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-md border border-[#F0ECE1] hover:border-[#B08D57] bg-white/60 text-[#14110F] text-xs font-medium uppercase tracking-wider hover:bg-white transition-all min-h-[48px]"
+                className="inline-flex items-center justify-center gap-2 px-5 py-4 rounded-md border border-[#F0ECE1] hover:border-[#B08D57] bg-white/60 text-[#14110F] text-xs font-medium uppercase tracking-wider hover:bg-white transition-all min-h-[48px]"
               >
                 <span>Explore Curriculums</span>
               </a>
