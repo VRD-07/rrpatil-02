@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #FAF7F0;
+  --color-[#FAF7F0]: #FAF7F0;
+  --color-ink: #14110F;
+  --color-emerald: #0F3D2E;
+  --color-emerald-deep: #0A2A20;
+  --color-brass: #B08D57;
+  --color-stone: #F0ECE1;
+
+  --font-serif: 'Fraunces', Georgia, serif;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+:root {
+  --cream: #FAF7F0;
+  --ink: #14110F;
+  --emerald: #0F3D2E;
+  --emerald-deep: #0A2A20;
+  --brass: #B08D57;
+  --stone: #F0ECE1;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #FAF7F0;
+  color: #14110F;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.font-editorial {
+  font-family: 'Fraunces', Georgia, serif;
+}
+
+.font-sans-utility {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF7F0;
+}
+::-webkit-scrollbar-thumb {
+  background: #F0ECE1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #B08D57;
+}
+
+/* Infinite horizontal marquee animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 40s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-marquee {
+    animation: none !important;
+  }
+}
+
