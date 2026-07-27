@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { GraduationCap, Star, CheckCircle2 } from 'lucide-react';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 import rPatilImg from '../assets/R_patil-removebg-preview.png';
+import hbImg from '../assets/h_b.png';
+import pPatilImg from '../assets/P_patil.jpeg';
 
 export const FacultySection: React.FC = () => {
   const reducedMotion = usePrefersReducedMotion();
@@ -29,7 +31,7 @@ export const FacultySection: React.FC = () => {
     {
       name: 'Prof. Harshal Belapurkar',
       role: 'Head of Chemistry',
-      photo: 'src/assets/h_b.png',
+      photo: hbImg,
       degree: 'Ph.D. Organic Chemistry (IIT Bombay)',
       experience: '15+ Years Pedagogy Experience',
       subject: 'Organic & Physical Chemistry',
@@ -38,7 +40,7 @@ export const FacultySection: React.FC = () => {
     {
       name: 'Prof. Prasad Patil',
       role: 'Head of Mathematics & NEET Biology',
-      photo: 'src/assets/P_patil.jpeg',
+      photo: pPatilImg,
       degree: 'M.Sc. Applied Mathematics & Life Sciences',
       experience: '14+ Years Pedagogy Experience',
       subject: 'Calculus, Geometry & NEET Life Sciences',

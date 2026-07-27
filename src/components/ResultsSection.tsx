@@ -3,6 +3,9 @@ import { motion } from 'framer-motion';
 import { Award, Trophy, Medal, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 import type { Student, ExamResult, SubjectMark } from '../types/results';
+import rakeshImg from '../assets/rakesh.jpeg';
+import komalImg from '../assets/komal.jpeg';
+import kartikImg from '../assets/kartik.jpeg';
 
 export const ResultsSection: React.FC = () => {
   const reducedMotion = usePrefersReducedMotion();
@@ -25,7 +28,7 @@ export const ResultsSection: React.FC = () => {
       badge: 'TOPPER 2024-25',
       name: 'Rakesh V. Karpe',
       quote: 'R. R. Patil’s conceptual depth & daily problem drills gave me absolute speed & confidence under pressure.',
-      photo: 'src/assets/rakesh.jpeg',
+      photo: rakeshImg,
       batch: '2-Year JEE Advanced Intensive',
       results: [
         {
@@ -57,7 +60,7 @@ export const ResultsSection: React.FC = () => {
       badge: 'NEET TOPPER',
       name: 'Komal N. Gund',
       quote: 'Small batch focus and 1-on-1 doubt clearing were the main drivers behind my 715 score.',
-      photo: 'src/assets/komal.jpeg',
+      photo: komalImg,
       batch: '2-Year NEET Medical Track',
       results: [
         {
@@ -79,7 +82,7 @@ export const ResultsSection: React.FC = () => {
       badge: 'BOARD TOPPER',
       name: 'Kartik D. Thorat',
       quote: 'Continuous pre-board mock exams perfected my answer presentation and timing strategy.',
-      photo: 'src/assets/kartik.jpeg',
+      photo: kartikImg,
       batch: 'Board Intensive + JEE Track',
       results: [
         {
