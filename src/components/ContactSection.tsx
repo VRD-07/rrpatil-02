@@ -11,7 +11,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenDemo }) =>
   const reducedMotion = usePrefersReducedMotion();
 
   const whatsappUrl =
-    'https://wa.me/918275280028?text=Hello%20Vidhata%20Academy%2C%20I%20am%20interested%20in%20learning%20more%20about%20your%20coaching%20batches.';
+    'https://wa.me/918275280028?text=Hello%20R. R. Patil%20Academy%2C%20I%20am%20interested%20in%20learning%20more%20about%20your%20coaching%20batches.';
 
   return (
     <section id="contact" className="py-20 sm:py-28 bg-[#0F3D2E] text-[#FAF7F0] relative overflow-hidden">
@@ -70,7 +70,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenDemo }) =>
             </div>
 
             <div className="text-xs text-[#FAF7F0]/60 font-normal">
-              Direct Helpline: <span className="text-[#B08D57] font-semibold">+91 91729-15773</span> (Mon–Sat, 8:00 AM – 7:30 PM)
+              Direct Helpline: <span className="text-[#B08D57] font-semibold">+91 82752-80028</span> (Mon–Sat, 8:00 AM – 7:30 PM)
             </div>
           </motion.div>
 
@@ -88,7 +88,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenDemo }) =>
                   MAIN CAMPUS ADDRESS
                 </span>
                 <h3 className="font-editorial text-xl font-semibold text-[#FAF7F0]">
-                  Vidhata Academic Center
+                  R. R. Patil Academic Center
                 </h3>
               </div>
 

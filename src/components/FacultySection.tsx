@@ -65,7 +65,7 @@ export const FacultySection: React.FC = () => {
             </h2>
           </div>
           <p className="text-sm text-[#14110F]/70 max-w-md mt-4 md:mt-0 leading-relaxed font-normal">
-            At Vidhata, every single lecture is conducted directly by our 3 senior master faculty members — ensuring unmatched mentorship depth.
+            At R. R. Patil, every single lecture is conducted directly by our 3 senior master faculty members — ensuring unmatched mentorship depth.
           </p>
         </div>
 

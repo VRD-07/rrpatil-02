@@ -66,7 +66,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenDemo }) => {
               variants={itemVariants}
               className="text-base sm:text-xl text-[#14110F]/80 max-w-2xl font-normal leading-relaxed mb-8"
             >
-              Vidhata Academy delivers structured, high-yield coaching for School Board Exams, JEE, and NEET. We substitute guesswork with relentless clarity and proven practice.
+              R. R. Patil Academy delivers structured, high-yield coaching for School Board Exams, JEE, and NEET. We substitute guesswork with relentless clarity and proven practice.
             </motion.p>
 
             {/* CTA Group */}
@@ -119,7 +119,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenDemo }) => {
               <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#0F3D2E]/5">
                 <img
                   src={ccImg}
-                  alt="Vidhata Academy students engaged in collaborative problem solving in library"
+                  alt="R. R. Patil Academy students engaged in collaborative problem solving in library"
                   width={600}
                   height={450}
                   className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"

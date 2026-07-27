@@ -99,7 +99,7 @@ export const CoursesSection: React.FC<CoursesSectionProps> = ({ onOpenDemo }) =>
             </h2>
           </div>
           <p className="text-sm text-[#14110F]/70 max-w-md mt-4 md:mt-0 leading-relaxed font-normal">
-            Every batch at Vidhata is structured around small group learning, ensuring individualized attention and rigorous progress monitoring.
+            Every batch at R. R. Patil is structured around small group learning, ensuring individualized attention and rigorous progress monitoring.
           </p>
         </div>
 

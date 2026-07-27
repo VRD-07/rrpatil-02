@@ -17,11 +17,11 @@ export const Footer: React.FC = () => {
                 V
               </div>
               <span className="font-editorial text-xl font-bold tracking-tight text-[#FAF7F0]">
-                VIDHATA ACADEMY
+                R. R. Patil ACADEMY
               </span>
             </div>
             <p className="text-xs text-[#FAF7F0]/70 leading-relaxed font-normal max-w-sm mb-6">
-              Vidhata Academy is a premier academic coaching institute specializing in Board Examination mastery and JEE/NEET competitive foundation. Built on rigor, discipline, and conceptual clarity.
+              R. R. Patil Academy is a premier academic coaching institute specializing in Board Examination mastery and JEE/NEET competitive foundation. Built on rigor, discipline, and conceptual clarity.
             </p>
 
             {/* Active Status Badge */}
@@ -72,7 +72,7 @@ export const Footer: React.FC = () => {
             </h4>
             <div className="space-y-2 text-xs text-[#FAF7F0]/80 leading-relaxed">
               <p>Knowledge Park 3, Deccan Gymkhana, Pune, MH 411004</p>
-              <p>Inquiry Email: <span className="text-[#FAF7F0]">admissions@vidhataacademy.demo</span></p>
+              <p>Inquiry Email: <span className="text-[#FAF7F0]">admissions@R. R. Patilacademy.demo</span></p>
               <p>Helpline: <span className="text-[#FAF7F0]">+91 (020) 2450-8900</span></p>
             </div>
           </div>
@@ -81,7 +81,7 @@ export const Footer: React.FC = () => {
         {/* Bottom copyright & scroll top */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#FAF7F0]/50 gap-4">
           <div>
-            © 2026 VIDHATA ACADEMY. Portfolio Demo Template. All rights reserved.
+            © 2026 R. R. Patil ACADEMY. Portfolio Demo Template. All rights reserved.
           </div>
           <button
             onClick={scrollToTop}

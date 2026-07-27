@@ -9,7 +9,7 @@ export const TestimonialsSection: React.FC = () => {
   const testimonials = [
     {
       quote:
-        'The weekly diagnostic testing at Vidhata changed how I prepared for Class 12 Boards and JEE. Instead of randomly solving questions, I knew exactly which chapters needed attention.',
+        'The weekly diagnostic testing at R. R. Patil changed how I prepared for Class 12 Boards and JEE. Instead of randomly solving questions, I knew exactly which chapters needed attention.',
       author: 'Ananya Deshmukh',
       avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=200&auto=format&fit=crop',
       batch: 'Class 12 Board Intensive & JEE Batch',
@@ -17,7 +17,7 @@ export const TestimonialsSection: React.FC = () => {
     },
     {
       quote:
-        'What sets Vidhata apart is the accessibility of faculty. Dr. Arishta Vardhan spent hours helping me master rotational mechanics from scratch after regular class hours.',
+        'What sets R. R. Patil apart is the accessibility of faculty. Dr. Arishta Vardhan spent hours helping me master rotational mechanics from scratch after regular class hours.',
       author: 'Siddharth Mehta',
       avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=200&auto=format&fit=crop',
       batch: '2-Year JEE Advanced Batch',

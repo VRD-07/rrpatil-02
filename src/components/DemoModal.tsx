@@ -25,7 +25,7 @@ export const DemoModal: React.FC<DemoModalProps> = ({
     e.preventDefault();
     if (!formData.name || !formData.phone) return;
 
-    const message = `Hello Vidhata Academy, I would like to book a Free Demo Class.\n\n*Student Details:*\n• Name: ${formData.name}\n• Phone: ${formData.phone}\n• Grade: ${formData.grade}\n• Target Course: ${formData.course}`;
+    const message = `Hello R. R. Patil Academy, I would like to book a Free Demo Class.\n\n*Student Details:*\n• Name: ${formData.name}\n• Phone: ${formData.phone}\n• Grade: ${formData.grade}\n• Target Course: ${formData.course}`;
 
     const whatsappUrl = `https://wa.me/918275280028?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');

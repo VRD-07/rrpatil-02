@@ -517,7 +517,7 @@ export const ResultsSection: React.FC = () => {
             <div className="flex flex-col items-center justify-center text-[#0F3D2E]">
               <Award className="w-8 h-8 sm:w-10 sm:h-10 text-[#B08D57] mb-1" />
               <span className="text-[9px] font-bold uppercase tracking-widest text-[#B08D57]">
-                VIDHATA
+                R. R. Patil
               </span>
             </div>
           </div>
@@ -797,7 +797,7 @@ export const ResultsSection: React.FC = () => {
 
                   {/* Footer tag */}
                   <div className="pt-3 mt-4 border-t border-[#F0ECE1] flex items-center justify-between text-[10px] uppercase font-semibold text-[#14110F]/60">
-                    <span>Vidhata Academy Result</span>
+                    <span>R. R. Patil Academy Result</span>
                     <span className="text-[#0F3D2E] group-hover:translate-x-1 transition-transform">
                       Verified →
                     </span>
