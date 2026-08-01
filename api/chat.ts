@@ -40,11 +40,11 @@ Keep answers short (2-4 sentences), warm, helpful, and in plain English unless t
     const apiKey = process.env.GEMINI_API_KEY || process.env.VITE_GEMINI_API_KEY;
     if (!apiKey) {
       return res.status(200).json({
-        reply: "GEMINI_API_KEY environment variable is not configured. Please add GEMINI_API_KEY in Vercel Environment Variables!"
+        reply: "Our AI assistant is currently offline. Please connect directly via WhatsApp (+918275280028) for instant assistance!"
       });
     }
 
-    // Prepare contents array adhering to strict Gemini user/model turn alternation
+    // Format history adhering to strict Gemini user/model turn alternation
     const formattedHistory = Array.isArray(history)
       ? history.filter((h: any) => h.role === 'user' || h.role === 'model')
       : [];
@@ -59,47 +59,55 @@ Keep answers short (2-4 sentences), warm, helpful, and in plain English unless t
       ],
     };
 
-    // Try gemini-1.5-flash endpoint (universally supported across all Google AI Studio keys)
-    let response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      }
-    );
+    // Array of Gemini models to try in sequence if quota/rate limits occur
+    const modelsToTry = [
+      'gemini-1.5-flash',
+      'gemini-1.5-flash-8b',
+      'gemini-2.0-flash-lite',
+      'gemini-2.0-flash',
+    ];
 
-    let data: any = await response.json();
+    let reply: string | null = null;
+    let lastError: string | null = null;
 
-    // If 1.5-flash returned error, attempt fallback to gemini-2.0-flash
-    if (!response.ok || data.error) {
-      response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
+    for (const modelName of modelsToTry) {
+      try {
+        const response = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          }
+        );
+
+        const data: any = await response.json();
+
+        if (response.ok && data?.candidates?.[0]?.content?.parts?.[0]?.text) {
+          reply = data.candidates[0].content.parts[0].text;
+          break; // Success! Break out of model retry loop
         }
-      );
-      data = await response.json();
+
+        if (data?.error) {
+          lastError = data.error.message || response.statusText;
+        }
+      } catch (err: any) {
+        lastError = err?.message || 'Network error';
+      }
     }
 
-    if (data?.error) {
-      console.error('Gemini API Error:', data.error);
-      return res.status(200).json({
-        reply: `API Notice: ${data.error.message || 'Unable to connect to Gemini API'}. Please confirm via WhatsApp (+918275280028).`
-      });
+    if (reply) {
+      return res.status(200).json({ reply });
     }
 
-    const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-
-    if (!reply) {
-      return res.status(200).json({
-        reply: "I couldn't process that question — please reach out directly via WhatsApp (+918275280028) for quick assistance!"
-      });
+    if (lastError) {
+      console.warn('Gemini models rate limited or quota exceeded:', lastError);
     }
 
-    return res.status(200).json({ reply });
+    // Warm user-friendly fallback if all models hit rate limits / quota caps
+    return res.status(200).json({
+      reply: "Our AI assistant is receiving high traffic right now! Please try again in a minute, or click below to chat directly with us on WhatsApp (+91 8275280028) for instant assistance."
+    });
   } catch (err: any) {
     console.error('Chat endpoint error:', err);
     return res.status(200).json({ 
