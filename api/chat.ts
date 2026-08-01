@@ -35,35 +35,71 @@ Keep answers short (2-4 sentences), warm, helpful, and in plain English unless t
 `;
 
   try {
-    const apiKey = process.env.GEMINI_API_KEY;
+    const apiKey = process.env.GEMINI_API_KEY || process.env.VITE_GEMINI_API_KEY;
     if (!apiKey) {
       return res.status(200).json({
-        reply: "Our AI assistant is temporarily offline. Please connect directly via WhatsApp or call +918275280028 for instant assistance!"
+        reply: "GEMINI_API_KEY environment variable is not configured. Please add GEMINI_API_KEY in Vercel Environment Variables!"
       });
     }
 
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+    // Prepare contents array adhering to strict Gemini user/model turn alternation
+    const formattedHistory = Array.isArray(history)
+      ? history.filter((h: any) => h.role === 'user' || h.role === 'model')
+      : [];
+
+    const payload = {
+      system_instruction: {
+        parts: [{ text: SYSTEM_CONTEXT }],
+      },
+      contents: [
+        ...formattedHistory,
+        { role: 'user', parts: [{ text: message }] },
+      ],
+    };
+
+    // Try gemini-1.5-flash endpoint (universally supported across all Google AI Studio keys)
+    let response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [
-            { role: 'user', parts: [{ text: SYSTEM_CONTEXT }] },
-            { role: 'model', parts: [{ text: 'Understood, I will answer only using this information.' }] },
-            ...(history || []),
-            { role: 'user', parts: [{ text: message }] },
-          ],
-        }),
+        body: JSON.stringify(payload),
       }
     );
 
-    const data = await response.json();
-    const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text 
-      || "Sorry, I couldn't process that — please reach out via WhatsApp (+918275280028) for a quick answer!";
+    let data = await response.json();
+
+    // If 1.5-flash returned error, attempt fallback to gemini-2.0-flash
+    if (!response.ok || data.error) {
+      response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        }
+      );
+      data = await response.json();
+    }
+
+    if (data?.error) {
+      console.error('Gemini API Error:', data.error);
+      return res.status(200).json({
+        reply: `API Notice: ${data.error.message || 'Unable to connect to Gemini API'}. Please confirm via WhatsApp (+918275280028).`
+      });
+    }
+
+    const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+    if (!reply) {
+      return res.status(200).json({
+        reply: "I couldn't process that question — please reach out directly via WhatsApp (+918275280028) for quick assistance!"
+      });
+    }
 
     return res.status(200).json({ reply });
-  } catch (err) {
+  } catch (err: any) {
+    console.error('Chat endpoint error:', err);
     return res.status(200).json({ 
       reply: "Please reach out directly via WhatsApp or call +918275280028 for quick admission & batch details!" 
     });
