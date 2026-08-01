@@ -1,3 +1,5 @@
+declare const process: any;
+
 export default async function handler(req: any, res: any) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -67,7 +69,7 @@ Keep answers short (2-4 sentences), warm, helpful, and in plain English unless t
       }
     );
 
-    let data = await response.json();
+    let data: any = await response.json();
 
     // If 1.5-flash returned error, attempt fallback to gemini-2.0-flash
     if (!response.ok || data.error) {
