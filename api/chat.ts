@@ -40,26 +40,31 @@ Keep answers short (2-4 sentences), warm, helpful, and in plain English unless t
     const apiKey = process.env.GEMINI_API_KEY || process.env.VITE_GEMINI_API_KEY;
     if (!apiKey) {
       return res.status(200).json({
-        reply: "Our AI assistant is currently offline. Please connect directly via WhatsApp (+918275280028) for instant assistance!"
+        reply: "AI key not configured. Please add GEMINI_API_KEY in Vercel Environment Variables!"
       });
     }
 
-    // Format history adhering to strict Gemini user/model turn alternation
+    // Embed System Context into prompt payload for 100% universal Gemini API compatibility
+    const fullPrompt = `${SYSTEM_CONTEXT}\n\nUser Question: ${message}`;
+
+    // Format clean history
     const formattedHistory = Array.isArray(history)
-      ? history.filter((h: any) => h.role === 'user' || h.role === 'model')
+      ? history
+          .filter((h: any) => h && (h.role === 'user' || h.role === 'model'))
+          .map((h: any) => ({
+            role: h.role,
+            parts: [{ text: h.parts?.[0]?.text || h.text || '' }],
+          }))
       : [];
 
     const payload = {
-      system_instruction: {
-        parts: [{ text: SYSTEM_CONTEXT }],
-      },
       contents: [
         ...formattedHistory,
-        { role: 'user', parts: [{ text: message }] },
+        { role: 'user', parts: [{ text: fullPrompt }] },
       ],
     };
 
-    // Array of Gemini models to try in sequence if quota/rate limits occur
+    // Sequential model list
     const modelsToTry = [
       'gemini-1.5-flash',
       'gemini-1.5-flash-8b',
@@ -85,14 +90,14 @@ Keep answers short (2-4 sentences), warm, helpful, and in plain English unless t
 
         if (response.ok && data?.candidates?.[0]?.content?.parts?.[0]?.text) {
           reply = data.candidates[0].content.parts[0].text;
-          break; // Success! Break out of model retry loop
+          break;
         }
 
         if (data?.error) {
-          lastError = data.error.message || response.statusText;
+          lastError = `[${modelName}]: ${data.error.message || response.statusText}`;
         }
       } catch (err: any) {
-        lastError = err?.message || 'Network error';
+        lastError = err?.message || 'Network fetch failed';
       }
     }
 
@@ -100,18 +105,15 @@ Keep answers short (2-4 sentences), warm, helpful, and in plain English unless t
       return res.status(200).json({ reply });
     }
 
-    if (lastError) {
-      console.warn('Gemini models rate limited or quota exceeded:', lastError);
-    }
-
-    // Warm user-friendly fallback if all models hit rate limits / quota caps
+    // Return detailed diagnostic info if API error occurs
+    console.error('Gemini API Error Detail:', lastError);
     return res.status(200).json({
-      reply: "Our AI assistant is receiving high traffic right now! Please try again in a minute, or click below to chat directly with us on WhatsApp (+91 8275280028) for instant assistance."
+      reply: `Gemini API Notice: ${lastError || 'Rate limit or quota exceeded'}. Please reach out via WhatsApp (+91 8275280028) for instant response.`
     });
   } catch (err: any) {
-    console.error('Chat endpoint error:', err);
+    console.error('Chat endpoint exception:', err);
     return res.status(200).json({ 
-      reply: "Please reach out directly via WhatsApp or call +918275280028 for quick admission & batch details!" 
+      reply: "Please connect directly via WhatsApp or call +918275280028 for instant batch & admission details!" 
     });
   }
 }
