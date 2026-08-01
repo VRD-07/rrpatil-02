@@ -3,10 +3,10 @@ import { ShieldCheck, GraduationCap, Award, Compass } from 'lucide-react';
 
 export const TrustStrip: React.FC = () => {
   const metrics = [
-    { label: 'Years of Operating Rigor', value: '14+ Years', icon: Compass },
-    { label: 'Students Mentored', value: '12,500+', icon: GraduationCap },
-    { label: 'Board Pass Percentage', value: '98.4%', icon: ShieldCheck },
-    { label: 'JEE/NEET Top Tier Ranks', value: '450+', icon: Award },
+    { label: 'Years of Operating Rigor', value: '5+ Years', icon: Compass },
+    { label: 'Students Mentored', value: '1000+', icon: GraduationCap },
+    { label: 'Board Pass Percentage', value: '100%', icon: ShieldCheck },
+    { label: 'MHT-CET Highest percentile', value: '99.1%', icon: Award },
   ];
 
   return (

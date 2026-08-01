@@ -39,8 +39,17 @@ body {
   font-family: 'Fraunces', Georgia, serif;
 }
 
+.font-institute-name {
+  font-family: 'Edu VIC WA NT Hand', cursive, sans-serif;
+}
+
 .font-sans-utility {
   font-family: 'Inter', sans-serif;
+}
+
+/* Ensure sections land cleanly below the fixed header */
+section {
+  scroll-margin-top: 80px;
 }
 
 /* Custom scrollbar */
@@ -86,8 +95,51 @@ body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  .animate-marquee {
+  .animate-marquee,
+  .animate-scroll-up-1,
+  .animate-scroll-down-2,
+  .animate-scroll-up-3 {
     animation: none !important;
   }
+}
+
+/* Vertical marquee animations for Hero Photo Wall */
+@keyframes scrollUp {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes scrollDown {
+  0% {
+    transform: translateY(-50%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+.animate-scroll-up-1 {
+  animation: scrollUp 40s linear infinite;
+  will-change: transform;
+}
+
+.animate-scroll-down-2 {
+  animation: scrollDown 55s linear infinite;
+  will-change: transform;
+}
+
+.animate-scroll-up-3 {
+  animation: scrollUp 45s linear infinite;
+  will-change: transform;
+}
+
+.photo-wall-container:hover .animate-scroll-up-1,
+.photo-wall-container:hover .animate-scroll-down-2,
+.photo-wall-container:hover .animate-scroll-up-3 {
+  animation-play-state: paused;
 }
 

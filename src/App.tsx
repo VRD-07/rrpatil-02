@@ -4,17 +4,29 @@ import { HeroSection } from './components/HeroSection';
 import { TrustStrip } from './components/TrustStrip';
 
 // Code-split below-the-fold components for minimal initial bundle size & fast LCP
-const AboutSection = lazy(() =>
-  import('./components/AboutSection').then((m) => ({ default: m.AboutSection }))
-);
-const CoursesSection = lazy(() =>
-  import('./components/CoursesSection').then((m) => ({ default: m.CoursesSection }))
+const WhyChooseUs = lazy(() =>
+  import('./components/WhyChooseUs').then((m) => ({ default: m.WhyChooseUs }))
 );
 const ResultsSection = lazy(() =>
   import('./components/ResultsSection').then((m) => ({ default: m.ResultsSection }))
 );
+const ProgramsAndBatches = lazy(() =>
+  import('./components/ProgramsAndBatches').then((m) => ({ default: m.ProgramsAndBatches }))
+);
+const StudyMaterial = lazy(() =>
+  import('./components/StudyMaterial').then((m) => ({ default: m.StudyMaterial }))
+);
+const AssessmentSystem = lazy(() =>
+  import('./components/AssessmentSystem').then((m) => ({ default: m.AssessmentSystem }))
+);
+const Facilities = lazy(() =>
+  import('./components/Facilities').then((m) => ({ default: m.Facilities }))
+);
 const FacultySection = lazy(() =>
   import('./components/FacultySection').then((m) => ({ default: m.FacultySection }))
+);
+const BeyondAcademics = lazy(() =>
+  import('./components/BeyondAcademics').then((m) => ({ default: m.BeyondAcademics }))
 );
 const TestimonialsSection = lazy(() =>
   import('./components/TestimonialsSection').then((m) => ({ default: m.TestimonialsSection }))
@@ -27,6 +39,9 @@ const DemoModal = lazy(() =>
 );
 const Footer = lazy(() =>
   import('./components/Footer').then((m) => ({ default: m.Footer }))
+);
+const ChatWidget = lazy(() =>
+  import('./components/ChatWidget').then((m) => ({ default: m.ChatWidget }))
 );
 
 // Minimal lightweight loader for Suspense fallback
@@ -60,27 +75,52 @@ export function App() {
         <HeroSection onOpenDemo={() => handleOpenDemo()} />
         <TrustStrip />
 
-        {/* Below-the-fold Code-split Sections */}
+        {/* SECTION A: Why Choose Us (AFTER TrustStrip, BEFORE ResultsSection) */}
         <Suspense fallback={<SectionLoader />}>
-          <AboutSection />
+          <WhyChooseUs />
         </Suspense>
 
+        {/* Results Section */}
         <Suspense fallback={<SectionLoader />}>
           <ResultsSection />
         </Suspense>
 
+        {/* SECTION B: Programs & Batches (AFTER ResultsSection) */}
         <Suspense fallback={<SectionLoader />}>
-          <CoursesSection onOpenDemo={(course) => handleOpenDemo(course)} />
+          <ProgramsAndBatches onOpenDemo={(course) => handleOpenDemo(course)} />
         </Suspense>
 
+        {/* SECTION C: Study Material (AFTER ProgramsAndBatches) */}
+        <Suspense fallback={<SectionLoader />}>
+          <StudyMaterial />
+        </Suspense>
+
+        {/* SECTION D: Assessment System (AFTER StudyMaterial) */}
+        <Suspense fallback={<SectionLoader />}>
+          <AssessmentSystem />
+        </Suspense>
+
+        {/* SECTION E: Facilities (AFTER AssessmentSystem, BEFORE FacultySection) */}
+        <Suspense fallback={<SectionLoader />}>
+          <Facilities />
+        </Suspense>
+
+        {/* Faculty Section */}
         <Suspense fallback={<SectionLoader />}>
           <FacultySection />
         </Suspense>
 
+        {/* SECTION F: Beyond Academics (AFTER FacultySection, BEFORE Testimonials) */}
+        <Suspense fallback={<SectionLoader />}>
+          <BeyondAcademics />
+        </Suspense>
+
+        {/* Testimonials Section */}
         <Suspense fallback={<SectionLoader />}>
           <TestimonialsSection />
         </Suspense>
 
+        {/* Contact Section */}
         <Suspense fallback={<SectionLoader />}>
           <ContactSection onOpenDemo={() => handleOpenDemo()} />
         </Suspense>
@@ -89,6 +129,11 @@ export function App() {
       {/* Footer */}
       <Suspense fallback={<SectionLoader />}>
         <Footer />
+      </Suspense>
+
+      {/* Floating AI Chatbot Widget */}
+      <Suspense fallback={null}>
+        <ChatWidget />
       </Suspense>
 
       {/* Demo Booking Modal */}

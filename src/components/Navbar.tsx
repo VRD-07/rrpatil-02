@@ -24,12 +24,26 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemo }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Trimmed to 4 max critical section links for parents
   const navLinks = [
     { label: 'Results', href: '#results' },
-    { label: 'Courses', href: '#courses' },
+    { label: 'Programs', href: '#programs' },
     { label: 'Faculty', href: '#faculty' },
-    { label: 'Testimonials', href: '#testimonials' },
+    { label: 'Contact', href: '#contact' },
   ];
+
+  // Mobile & Desktop Anchor Click Handler with delayed execution to prevent drawer unmount scroll cancellation
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    setMobileMenuOpen(false);
+
+    setTimeout(() => {
+      const targetElement = document.querySelector(href);
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
+  };
 
   return (
     <header
@@ -43,23 +57,24 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemo }) => {
         <div className="flex items-center justify-between">
           {/* Logo & Wordmark */}
           <a href="#" className="group flex items-center gap-3">
-            <div className="w-11 h-11 rounded-md text-[#FAF7F0] flex items-center justify-center font-serif text-lg font-bold shadow-xs">
-              <img src={logoImg} alt="Coaching Logo" />
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-md text-[#FAF7F0] flex items-center justify-center font-serif text-lg font-bold shadow-xs shrink-0">
+              <img src={logoImg} alt="Coaching Logo" className="w-full h-full object-contain" />
             </div>
             <div className="flex flex-col">
-              <span className="font-editorial text-lg sm:text-xl font-bold tracking-tight text-[#14110F] group-hover:text-[#0F3D2E] transition-colors">
+              <span className="font-institute-name text-lg sm:text-2xl font-bold tracking-tight text-[#14110F] group-hover:text-[#0F3D2E] transition-colors leading-tight">
                 R. R. Patil Coaching Classes
               </span>
               <span className="h-[2px] w-full bg-[#B08D57] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
             </div>
           </a>
 
-          {/* Desktop Nav Links */}
+          {/* Desktop Nav Links (Trimmed 4 links) */}
           <nav className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
               <a
-                key={link.label}
+                key={link.href}
                 href={link.href}
+                onClick={(e) => handleNavClick(e, link.href)}
                 className="text-xs font-medium uppercase tracking-wider text-[#14110F]/80 hover:text-[#0F3D2E] transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1.5px] after:bg-[#B08D57] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-200"
               >
                 {link.label}
@@ -71,7 +86,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemo }) => {
           <div className="hidden md:flex items-center gap-4">
             <button
               onClick={onOpenDemo}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-md bg-[#0F3D2E] text-[#FAF7F0] text-xs font-semibold uppercase tracking-wider hover:bg-[#0A2A20] active:scale-[0.98] transition-all shadow-xs min-h-[44px]"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#0F3D2E] text-[#FAF7F0] text-xs font-semibold uppercase tracking-wider hover:bg-[#0A2A20] active:scale-[0.98] transition-all shadow-xs min-h-[44px]"
             >
               <span>Book Demo Class</span>
               <ArrowUpRight className="w-3.5 h-3.5 text-[#B08D57]" />
@@ -82,7 +97,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemo }) => {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2.5 text-[#14110F] hover:text-[#0F3D2E] min-w-[44px] min-h-[44px] flex items-center justify-center rounded-md hover:bg-[#F0ECE1]/40 transition-colors"
+            className="md:hidden p-2 text-[#14110F] hover:text-[#0F3D2E] min-w-[40px] min-h-[40px] flex items-center justify-center rounded-md hover:bg-[#F0ECE1]/40 transition-colors"
             aria-label="Toggle navigation menu"
             aria-expanded={mobileMenuOpen}
           >
@@ -98,15 +113,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemo }) => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: 0.2 }}
             className="md:hidden bg-[#FAF7F0] border-b border-[#F0ECE1] px-4 pt-3 pb-6 shadow-md overflow-hidden"
           >
-            <div className="flex flex-col space-y-4 pt-2">
+            <div className="flex flex-col space-y-3 pt-2">
               {navLinks.map((link) => (
                 <a
-                  key={link.label}
+                  key={link.href}
                   href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={(e) => handleNavClick(e, link.href)}
                   className="text-sm font-medium uppercase tracking-wider text-[#14110F] py-2 border-b border-[#F0ECE1]/60 hover:text-[#0F3D2E] flex items-center justify-between"
                 >
                   <span>{link.label}</span>
@@ -119,7 +134,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemo }) => {
                     setMobileMenuOpen(false);
                     onOpenDemo();
                   }}
-                  className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-md bg-[#0F3D2E] text-[#FAF7F0] text-xs font-semibold uppercase tracking-wider min-h-[44px] shadow-xs active:bg-[#0A2A20]"
+                  className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-[#0F3D2E] text-[#FAF7F0] text-xs font-semibold uppercase tracking-wider min-h-[44px] shadow-xs active:bg-[#0A2A20]"
                 >
                   <GraduationCap className="w-4 h-4 text-[#B08D57]" />
                   <span>Book Free Demo Class</span>
@@ -132,3 +147,5 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemo }) => {
     </header>
   );
 };
+
+export default Navbar;

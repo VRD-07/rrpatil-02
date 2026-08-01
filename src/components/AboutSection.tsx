@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Target, Brain, Users } from 'lucide-react';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
-import ccImg2 from '../assets/cc_img2.png';
+import ccImg2 from '../assets/Infra/class.jpeg';
 
 export const AboutSection: React.FC = () => {
   const reducedMotion = usePrefersReducedMotion();

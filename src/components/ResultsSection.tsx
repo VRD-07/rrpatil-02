@@ -6,6 +6,7 @@ import type { Student, ExamResult, SubjectMark } from '../types/results';
 import rakeshImg from '../assets/rakesh.jpeg';
 import komalImg from '../assets/komal.jpeg';
 import kartikImg from '../assets/kartik.jpeg';
+import awardCeremonyImg from '../assets/Awards/award_01.jpeg';
 
 export const ResultsSection: React.FC = () => {
   const reducedMotion = usePrefersReducedMotion();
@@ -365,10 +366,10 @@ export const ResultsSection: React.FC = () => {
 
   // Count up Stats animation
   const stats = [
-    { label: 'Years of Operating Rigor', target: 14, suffix: '+', prefix: '' },
-    { label: 'Alumni Students Mentored', target: 12500, suffix: '+', prefix: '' },
-    { label: 'Board Examination Pass Rate', target: 98.4, suffix: '%', prefix: '', isDecimal: true },
-    { label: 'JEE / NEET Top 1000 Ranks', target: 450, suffix: '+', prefix: '' },
+    { label: 'Years of Operating Rigor', target: 5, suffix: '+', prefix: '' },
+    { label: 'Alumni Students Mentored', target: 1000, suffix: '+', prefix: '' },
+    { label: 'Board Examination Pass Rate', target: 100, suffix: '%', prefix: '', isDecimal: true },
+    { label: 'MHT-CET Highest percentile', target: 99.1, suffix: '%', prefix: '' },
   ];
 
   const [counts, setCounts] = useState<number[]>(stats.map(() => 0));
@@ -516,7 +517,7 @@ export const ResultsSection: React.FC = () => {
             </svg>
             <div className="flex flex-col items-center justify-center text-[#0F3D2E]">
               <Award className="w-8 h-8 sm:w-10 sm:h-10 text-[#B08D57] mb-1" />
-              <span className="text-[9px] font-bold uppercase tracking-widest text-[#B08D57]">
+              <span className="font-institute-name text-[11px] font-bold uppercase tracking-widest text-[#B08D57]">
                 R. R. Patil
               </span>
             </div>
@@ -524,7 +525,7 @@ export const ResultsSection: React.FC = () => {
 
           <div className="flex items-center gap-2 mb-3">
             <span className="h-px w-6 bg-[#B08D57]" />
-            <span className="text-xs font-semibold uppercase tracking-widest text-[#B08D57]">
+            <span className="font-institute-name text-sm font-semibold tracking-widest text-[#B08D57]">
               R. R. PATIL COACHING CLASSES, KOPARGAON
             </span>
             <span className="h-px w-6 bg-[#B08D57]" />
@@ -540,16 +541,28 @@ export const ResultsSection: React.FC = () => {
 
         {/* TOP 3 TOPPERS PODIUM */}
         <div className="mb-20">
-          <div className="flex items-center justify-between mb-8 pb-3 border-b border-[#E4DCC8]">
+          <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 pb-3 border-b border-[#E4DCC8] gap-4">
             <div className="flex items-center gap-2">
               <Trophy className="w-5 h-5 text-[#B08D57]" />
               <h3 className="font-editorial text-xl sm:text-2xl font-bold text-[#14110F]">
                 Institute Toppers Showcase
               </h3>
             </div>
-            <span className="text-xs font-semibold uppercase tracking-wider text-[#B08D57] bg-[#F0ECE1] px-3 py-1 rounded-full">
-              ★ TOP RANKERS
-            </span>
+            {/* Real Award Ceremony Recognition Inset */}
+            <div className="flex items-center gap-3 bg-white p-2 rounded-lg border border-[#E4DCC8] shadow-xs">
+              <img
+                src={awardCeremonyImg}
+                alt="Annual award felicitation ceremony"
+                width={72}
+                height={48}
+                loading="lazy"
+                className="w-18 h-12 rounded object-cover object-center border border-[#E4DCC8]"
+              />
+              <div>
+                <span className="text-[10px] font-bold text-[#0F3D2E] uppercase block">Official Felicitation</span>
+                <span className="text-[9px] text-[#14110F]/70 block">Annual Merit Award Ceremony</span>
+              </div>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">

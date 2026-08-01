@@ -16,7 +16,7 @@ export const Footer: React.FC = () => {
               <div className="w-8 h-8 rounded bg-[#FAF7F0] text-[#0F3D2E] flex items-center justify-center font-editorial font-bold text-base">
                 V
               </div>
-              <span className="font-editorial text-xl font-bold tracking-tight text-[#FAF7F0]">
+              <span className="font-institute-name text-2xl font-bold tracking-tight text-[#FAF7F0]">
                 R. R. Patil ACADEMY
               </span>
             </div>

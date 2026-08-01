@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
 import { ArrowRight, Phone, CheckCircle2, Award, BookOpen } from 'lucide-react';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
-import ccImg from '../assets/cc_img.png';
+import { HeroPhotoWall } from './HeroPhotoWall';
 
 interface HeroSectionProps {
   onOpenDemo: () => void;
@@ -118,53 +118,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenDemo }) => {
             </motion.div>
           </div>
 
-          {/* Right Hero Contained Photography Card */}
+          {/* Right Hero Column: Auto-Scrolling Photo Wall */}
           <motion.div
             variants={itemVariants}
-            className="lg:col-span-5 flex justify-center lg:justify-end"
+            className="lg:col-span-5 w-full flex justify-center"
           >
-            <div className="relative w-full max-w-md rounded-lg overflow-hidden bg-white border border-[#F0ECE1] shadow-xs group">
-              {/* Contained Hero Image */}
-              <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#0F3D2E]/5">
-                <img
-                  src={ccImg}
-                  alt="R. R. Patil Academy students engaged in collaborative problem solving in library"
-                  width={600}
-                  height={450}
-                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                />
-                {/* Subtle emerald tint overlay */}
-                <div className="absolute inset-0 bg-[#0F3D2E]/10 mix-blend-multiply pointer-events-none" />
-
-                {/* Floating Brass Stamp */}
-                <div className="absolute top-4 right-4 bg-[#FAF7F0]/95 backdrop-blur-xs border border-[#B08D57]/40 rounded px-3 py-1.5 shadow-xs flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-[#B08D57]" />
-                  <span className="text-[10px] font-semibold uppercase tracking-wider text-[#0F3D2E]">
-                    Est. 2012 Campus
-                  </span>
-                </div>
-              </div>
-
-              {/* Bottom Editorial Caption */}
-              <div className="p-5 bg-white border-t border-[#F0ECE1]">
-                <div className="flex items-center justify-between text-xs">
-                  <div className="flex flex-col">
-                    <span className="font-editorial text-base font-semibold text-[#14110F]">
-                      Small-Group Learning Rigor
-                    </span>
-                    <span className="text-[11px] text-[#14110F]/70">
-                      Deccan Gymkhana Main Campus Study Hall
-                    </span>
-                  </div>
-                  <span className="px-2 py-1 rounded bg-[#F0ECE1] text-[#0F3D2E] text-[10px] font-semibold uppercase">
-                    Class 8–12th
-                  </span>
-                </div>
-              </div>
-            </div>
+            <HeroPhotoWall />
           </motion.div>
         </motion.div>
       </div>
     </section>
   );
 };
+
+export default HeroSection;

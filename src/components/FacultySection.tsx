@@ -1,10 +1,15 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { GraduationCap, Star, CheckCircle2 } from 'lucide-react';
+import { GraduationCap, Star, CheckCircle2, Users } from 'lucide-react';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
-import rPatilImg from '../assets/R_patil-removebg-preview.png';
-import hbImg from '../assets/h_b.png';
-import pPatilImg from '../assets/P_patil.jpeg';
+
+// ES Module imports for ground-truth faculty photos
+import rPatilImg from '../assets/Faculties/R_patil-removebg-preview.png';
+import hbImg from '../assets/Faculties/h_b.png';
+import pPatilImg from '../assets/Faculties/P_patil.jpeg';
+import smartboardTeachingImg from '../assets/Faculties/RP_std.jpeg';
+import chemistryLabActionImg from '../assets/Faculties/hb_teach_1.jpeg';
+import mentoringSessionImg from '../assets/Faculties/pp_std_3.jpeg';
 
 export const FacultySection: React.FC = () => {
   const reducedMotion = usePrefersReducedMotion();
@@ -15,6 +20,7 @@ export const FacultySection: React.FC = () => {
     role: 'Founder, Director & Star Faculty',
     subject: 'Senior Head of Physics & Mathematics',
     photo: rPatilImg,
+    actionPhoto: smartboardTeachingImg,
     degree: 'M.Tech & Senior Pedagogy Scholar',
     experience: '20+ Years Teaching Mastery',
     highlights: [
@@ -32,6 +38,7 @@ export const FacultySection: React.FC = () => {
       name: 'Prof. Harshal Belapurkar',
       role: 'Head of Chemistry',
       photo: hbImg,
+      actionPhoto: chemistryLabActionImg,
       degree: 'Ph.D. Organic Chemistry (IIT Bombay)',
       experience: '15+ Years Pedagogy Experience',
       subject: 'Organic & Physical Chemistry',
@@ -41,6 +48,7 @@ export const FacultySection: React.FC = () => {
       name: 'Prof. Prasad Patil',
       role: 'Head of Mathematics & NEET Biology',
       photo: pPatilImg,
+      actionPhoto: mentoringSessionImg,
       degree: 'M.Sc. Applied Mathematics & Life Sciences',
       experience: '14+ Years Pedagogy Experience',
       subject: 'Calculus, Geometry & NEET Life Sciences',
@@ -51,9 +59,9 @@ export const FacultySection: React.FC = () => {
   return (
     <section id="faculty" className="py-20 sm:py-28 bg-[#FAF7F0] border-t border-[#F0ECE1]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 pb-6 border-b border-[#F0ECE1]">
-          <div>
+        {/* Section Header with 1-on-1 Mentoring Visual Proof */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-12 pb-8 border-b border-[#F0ECE1]">
+          <div className="lg:col-span-8">
             <div className="flex items-center gap-3 mb-3">
               <span className="h-px w-8 bg-[#B08D57]" />
               <span className="text-xs font-semibold uppercase tracking-widest text-[#B08D57]">
@@ -63,10 +71,31 @@ export const FacultySection: React.FC = () => {
             <h2 className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#14110F]">
               Guided by Master Educators
             </h2>
+            <p className="text-sm text-[#14110F]/70 max-w-2xl mt-3 leading-relaxed font-normal">
+              At R. R. Patil, every single lecture is conducted directly by our 3 senior master faculty members — ensuring unmatched mentorship depth and zero sub-staff reliance.
+            </p>
           </div>
-          <p className="text-sm text-[#14110F]/70 max-w-md mt-4 md:mt-0 leading-relaxed font-normal">
-            At R. R. Patil, every single lecture is conducted directly by our 3 senior master faculty members — ensuring unmatched mentorship depth.
-          </p>
+
+          {/* 1-on-1 Mentoring Proof Badge */}
+          <div className="lg:col-span-4 flex items-center gap-3 p-3.5 rounded-xl bg-white border border-[#E4DCC8] shadow-xs">
+            <img
+              src={mentoringSessionImg}
+              alt="1-on-1 faculty mentoring session with student"
+              width={80}
+              height={60}
+              loading="lazy"
+              className="w-20 h-14 rounded-lg object-cover object-center border border-[#E4DCC8] shrink-0"
+            />
+            <div>
+              <div className="flex items-center gap-1 text-[11px] font-bold text-[#0F3D2E]">
+                <Users className="w-3.5 h-3.5 text-[#B08D57]" />
+                <span>1-on-1 Personal Mentoring</span>
+              </div>
+              <span className="text-[10px] text-[#14110F]/60 leading-tight block mt-0.5">
+                Every student receives individual doubt clearance and progress tracking.
+              </span>
+            </div>
+          </div>
         </div>
 
         {/* FACULTY SHOWCASE GRID */}
@@ -96,8 +125,8 @@ export const FacultySection: React.FC = () => {
 
               {/* Layout for Photo & Info */}
               <div className="grid grid-cols-1 sm:grid-cols-12 gap-6 items-center mb-6">
-                {/* Photo Frame */}
-                <div className="sm:col-span-5 flex justify-center">
+                {/* Photo Frame with Smartboard Action Thumbnail */}
+                <div className="sm:col-span-5 flex flex-col items-center">
                   <div className="relative w-44 h-44 sm:w-52 sm:h-52 rounded-xl overflow-hidden bg-gradient-to-b from-[#B08D57]/30 to-[#0A2A20] border-2 border-[#B08D57] shadow-md flex items-center justify-center p-2">
                     <img
                       src={starFaculty.photo}
@@ -110,6 +139,21 @@ export const FacultySection: React.FC = () => {
                     <div className="absolute top-2 left-2 px-2 py-0.5 rounded bg-[#0F3D2E]/90 text-[#B08D57] border border-[#B08D57]/40 text-[9px] font-bold uppercase">
                       20+ YRS EXP
                     </div>
+                  </div>
+
+                  {/* Smartboard Teaching Inset */}
+                  <div className="mt-3 relative w-full h-14 rounded-lg overflow-hidden border border-[#B08D57]/40 shadow-xs">
+                    <img
+                      src={starFaculty.actionPhoto}
+                      alt="Prof. R.R. Patil teaching at interactive smartboard"
+                      width={200}
+                      height={60}
+                      loading="lazy"
+                      className="w-full h-full object-cover object-top"
+                    />
+                    <span className="absolute bottom-1 left-2 px-1.5 py-0.5 rounded bg-[#0A2A20]/90 text-[#FAF7F0] text-[8px] font-bold uppercase">
+                      Smartboard Interactive Teaching
+                    </span>
                   </div>
                 </div>
 
@@ -164,14 +208,16 @@ export const FacultySection: React.FC = () => {
                 <div>
                   {/* Header Row */}
                   <div className="flex items-center gap-4 mb-4">
-                    <img
-                      src={faculty.photo}
-                      alt={faculty.name}
-                      width={64}
-                      height={64}
-                      loading="lazy"
-                      className="w-16 h-16 rounded-lg object-cover object-top border-2 border-[#E4DCC8] group-hover:border-[#B08D57] transition-colors shrink-0 shadow-xs"
-                    />
+                    <div className="relative w-16 h-16 rounded-lg overflow-hidden shrink-0 border-2 border-[#E4DCC8] group-hover:border-[#B08D57] transition-colors shadow-xs">
+                      <img
+                        src={faculty.photo}
+                        alt={faculty.name}
+                        width={64}
+                        height={64}
+                        loading="lazy"
+                        className="w-full h-full object-cover object-top"
+                      />
+                    </div>
                     <div>
                       <span className="text-[10px] font-bold uppercase tracking-wider text-[#B08D57] bg-[#F0ECE1] px-2.5 py-0.5 rounded">
                         {faculty.subject}
@@ -197,9 +243,24 @@ export const FacultySection: React.FC = () => {
                   </div>
 
                   {/* Bio */}
-                  <p className="text-xs text-[#14110F]/75 leading-relaxed font-normal">
+                  <p className="text-xs text-[#14110F]/75 leading-relaxed font-normal mb-3">
                     {faculty.bio}
                   </p>
+                </div>
+
+                {/* Teaching Action Thumbnail */}
+                <div className="h-12 w-full rounded overflow-hidden border border-[#E4DCC8] relative">
+                  <img
+                    src={faculty.actionPhoto}
+                    alt={`${faculty.name} in teaching action`}
+                    width={240}
+                    height={48}
+                    loading="lazy"
+                    className="w-full h-full object-cover object-top"
+                  />
+                  <span className="absolute bottom-1 left-2 px-1.5 py-0.5 rounded bg-[#0F3D2E]/90 text-[#FAF7F0] text-[8px] font-bold uppercase">
+                    Active Classroom Session
+                  </span>
                 </div>
               </motion.div>
             ))}
