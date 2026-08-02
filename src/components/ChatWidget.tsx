@@ -8,13 +8,9 @@ interface ChatMessage {
   text: string;
 }
 
-interface GeminiPart {
-  text: string;
-}
-
-interface GeminiHistoryItem {
-  role: 'user' | 'model';
-  parts: GeminiPart[];
+interface OpenAIHistoryItem {
+  role: 'user' | 'assistant';
+  content: string;
 }
 
 export const ChatWidget: React.FC = () => {
@@ -27,7 +23,7 @@ export const ChatWidget: React.FC = () => {
       text: 'Hello! I am R. R. Patil Academy’s AI Assistant. How can I help you with batch timings, courses, or study materials today?',
     },
   ]);
-  const [geminiHistory, setGeminiHistory] = useState<GeminiHistoryItem[]>([]);
+  const [chatHistory, setChatHistory] = useState<OpenAIHistoryItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -56,10 +52,10 @@ export const ChatWidget: React.FC = () => {
     setInputMessage('');
     setIsLoading(true);
 
-    // Build history payload for Gemini API
-    const updatedHistory: GeminiHistoryItem[] = [
-      ...geminiHistory,
-      { role: 'user', parts: [{ text: query }] },
+    // Build history payload formatted as OpenAI-style messages for OpenRouter API
+    const updatedHistory: OpenAIHistoryItem[] = [
+      ...chatHistory,
+      { role: 'user', content: query },
     ];
 
     try {
@@ -68,7 +64,7 @@ export const ChatWidget: React.FC = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: query,
-          history: geminiHistory,
+          history: chatHistory,
         }),
       });
 
@@ -79,9 +75,9 @@ export const ChatWidget: React.FC = () => {
 
       // Append bot reply to messages & update history
       setMessages([...newMessages, { sender: 'bot', text: replyText }]);
-      setGeminiHistory([
+      setChatHistory([
         ...updatedHistory,
-        { role: 'model', parts: [{ text: replyText }] },
+        { role: 'assistant', content: replyText },
       ]);
     } catch (err) {
       setMessages([
