@@ -26,7 +26,7 @@ export const HeroPhotoWall: React.FC = () => {
 
   // Column 2 Photos (FEATURED CENTER COLUMN - Scrolls DOWN - 55s)
   const column2Photos = [
-    { src: rakeshAward, alt: 'Rakesh V. Karpe - JEE Advanced AIR 42 Topper', pos: 'object-top', tag: 'Topper-2026' },
+    { src: rakeshAward, alt: 'Kunal Kharat - JEE AIR-1928', pos: 'object-top', tag: 'JEE-Topper' },
     {
       isFeatured: true,
       src: rPatilImg,

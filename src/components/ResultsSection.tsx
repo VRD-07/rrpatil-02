@@ -391,7 +391,7 @@ export const ResultsSection: React.FC = () => {
         <div className="flex flex-col items-center text-center mb-10">
           <div className="relative mb-3 flex items-center justify-center">
             <svg
-              className="w-20 h-20 text-[#B08D57] opacity-25"
+              className="w-24 h-24 text-[#B08D57] opacity-35"
               viewBox="0 0 100 100"
               fill="none"
             >
@@ -405,9 +405,9 @@ export const ResultsSection: React.FC = () => {
               />
               <circle cx="50" cy="50" r="38" stroke="currentColor" strokeWidth="1" />
             </svg>
-            <div className="flex flex-col items-center justify-center text-[#0F3D2E]">
-              <Award className="w-8 h-8 sm:w-10 sm:h-10 text-[#B08D57] mb-1" />
-              <span className="font-institute-name text-[11px] font-bold uppercase tracking-widest text-[#B08D57]">
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-[#0F3D2E]">
+              <Award className="w-7 h-7 text-[#B08D57] mb-0.5" />
+              <span className="font-institute-name text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#B08D57]">
                 R. R. Patil
               </span>
             </div>
@@ -442,7 +442,7 @@ export const ResultsSection: React.FC = () => {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center divide-y lg:divide-y-0 lg:divide-x divide-[#F0ECE1]">
             <div className="flex flex-col items-center pt-2 lg:pt-0">
               <span className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0F3D2E] mb-1">
-                <CountUpStat prefix="AIR " end={42} />
+                <CountUpStat prefix="AIR " end={1928} />
               </span>
               <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#B08D57]">
                 Highest JEE Rank Ever
@@ -451,7 +451,7 @@ export const ResultsSection: React.FC = () => {
 
             <div className="flex flex-col items-center pt-4 lg:pt-0">
               <span className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0F3D2E] mb-1">
-                <CountUpStat end={715} suffix=" / 720" />
+                <CountUpStat end={475} suffix=" / 720" />
               </span>
               <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#B08D57]">
                 Highest NEET Score Ever
@@ -460,7 +460,7 @@ export const ResultsSection: React.FC = () => {
 
             <div className="flex flex-col items-center pt-4 lg:pt-0">
               <span className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0F3D2E] mb-1">
-                <CountUpStat end={99} suffix=".4%" />
+                <CountUpStat end={92} suffix=".17%" />
               </span>
               <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#B08D57]">
                 Highest HSC % Ever
@@ -469,10 +469,10 @@ export const ResultsSection: React.FC = () => {
 
             <div className="flex flex-col items-center pt-4 lg:pt-0">
               <span className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-bold text-[#B08D57] mb-1">
-                <CountUpStat end={450} suffix="+" />
+                <CountUpStat end={10} suffix="+" />
               </span>
               <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#0F3D2E]">
-                Total Top Ranks Achieved
+                Total College Toppers
               </span>
             </div>
           </div>
@@ -548,11 +548,11 @@ export const ResultsSection: React.FC = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.4, delay: idx * 0.08 }}
-                    className="bg-white border-2 border-[#E4DCC8] hover:border-[#B08D57] rounded-xl overflow-hidden p-6 shadow-xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group"
+                    className="bg-white border-2 border-[#E4DCC8] hover:border-[#B08D57] rounded-xl overflow-hidden p-4 sm:p-6 shadow-xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group"
                   >
                     <div>
                       {/* Top Category Badge */}
-                      <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center justify-between mb-3 sm:mb-4">
                         <span className="text-[9px] font-extrabold uppercase tracking-wider text-[#FAF7F0] bg-[#0F3D2E] px-2.5 py-1 rounded-full shadow-xs">
                           {topper.badge}
                         </span>
@@ -563,47 +563,52 @@ export const ResultsSection: React.FC = () => {
                         )}
                       </div>
 
-                      {/* Student Photo */}
-                      <div className="relative aspect-[4/5] w-full rounded-lg overflow-hidden bg-[#F0ECE1] mb-4 border border-[#E4DCC8]">
-                        {topper.photo ? (
-                          <img
-                            src={topper.photo}
-                            alt={topper.name}
-                            width={240}
-                            height={300}
-                            loading="lazy"
-                            className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                          />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center text-3xl font-editorial font-bold text-[#0F3D2E]">
-                            {getInitials(topper.name)}
+                      {/* Content Layout: side-by-side on mobile, stacked on sm+ */}
+                      <div className="flex flex-row sm:flex-col gap-3.5 sm:gap-0 items-start sm:items-stretch">
+                        {/* Student Photo */}
+                        <div className="relative w-24 sm:w-full aspect-[4/5] shrink-0 rounded-lg overflow-hidden bg-[#F0ECE1] mb-0 sm:mb-4 border border-[#E4DCC8]">
+                          {topper.photo ? (
+                            <img
+                              src={topper.photo}
+                              alt={topper.name}
+                              width={240}
+                              height={300}
+                              loading="lazy"
+                              className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center text-xl sm:text-3xl font-editorial font-bold text-[#0F3D2E]">
+                              {getInitials(topper.name)}
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Name & Scores */}
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-editorial text-lg sm:text-xl font-bold text-[#14110F] mb-0.5 sm:mb-1 group-hover:text-[#0F3D2E] transition-colors leading-snug">
+                            {topper.name}
+                          </h4>
+                          <div className="font-editorial text-xl sm:text-2xl font-bold text-[#0F3D2E] mb-0.5">
+                            {mainMetric}
                           </div>
-                        )}
-                      </div>
+                          <div className="text-[11px] sm:text-xs font-semibold text-[#B08D57] mb-2 sm:mb-3">
+                            {secondaryMetric}
+                          </div>
 
-                      {/* Name & Scores */}
-                      <h4 className="font-editorial text-xl font-bold text-[#14110F] mb-1 group-hover:text-[#0F3D2E] transition-colors">
-                        {topper.name}
-                      </h4>
-                      <div className="font-editorial text-2xl font-bold text-[#0F3D2E] mb-0.5">
-                        {mainMetric}
+                          {/* Quote Block */}
+                          {topper.quote && (
+                            <p className="text-[11px] sm:text-xs text-[#14110F]/75 italic leading-relaxed font-normal p-2.5 sm:p-3 rounded-lg bg-[#FAF7F0] border-l-2 border-[#B08D57] mb-3 sm:mb-4">
+                              "{topper.quote}"
+                            </p>
+                          )}
+                        </div>
                       </div>
-                      <div className="text-xs font-semibold text-[#B08D57] mb-3">
-                        {secondaryMetric}
-                      </div>
-
-                      {/* Quote Block */}
-                      {topper.quote && (
-                        <p className="text-xs text-[#14110F]/75 italic leading-relaxed font-normal p-3 rounded-lg bg-[#FAF7F0] border-l-2 border-[#B08D57] mb-4">
-                          "{topper.quote}"
-                        </p>
-                      )}
                     </div>
 
                     {/* Batch Footer & Verified Lightbox Trigger */}
-                    <div>
+                    <div className="mt-3 sm:mt-0">
                       {topper.batch && (
-                        <div className="text-[9px] font-bold text-[#14110F]/60 uppercase tracking-wider pt-3 border-t border-[#F0ECE1] mb-2 truncate">
+                        <div className="text-[9px] font-bold text-[#14110F]/60 uppercase tracking-wider pt-2 sm:pt-3 border-t border-[#F0ECE1] mb-2 truncate">
                           BATCH: {topper.batch}
                         </div>
                       )}
