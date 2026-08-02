@@ -88,7 +88,12 @@ export function App() {
           <ResultsSection />
         </Suspense>
 
-        {/* SECTION B: Programs & Batches (AFTER ResultsSection) */}
+        {/* Dedicated Memorial Tribute Section: Late Kartik Sonawane */}
+        <Suspense fallback={<SectionLoader />}>
+          <MemoryTribute />
+        </Suspense>
+
+        {/* SECTION B: Programs & Batches (AFTER ResultsSection & MemoryTribute) */}
         <Suspense fallback={<SectionLoader />}>
           <ProgramsAndBatches onOpenDemo={(course) => handleOpenDemo(course)} />
         </Suspense>
@@ -113,7 +118,7 @@ export function App() {
           <FacultySection />
         </Suspense>
 
-        {/* SECTION F: Beyond Academics (AFTER FacultySection, BEFORE Testimonials) */}
+        {/* SECTION F: Beyond Academics */}
         <Suspense fallback={<SectionLoader />}>
           <BeyondAcademics />
         </Suspense>
@@ -137,11 +142,6 @@ export function App() {
       {/* Floating AI Chatbot Widget */}
       <Suspense fallback={null}>
         <ChatWidget />
-      </Suspense>
-
-      {/* Quiet Memorial Tribute (Bottom-Left Corner) */}
-      <Suspense fallback={null}>
-        <MemoryTribute />
       </Suspense>
 
       {/* Demo Booking Modal */}

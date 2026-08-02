@@ -63,6 +63,11 @@ export const Footer: React.FC = () => {
                   Alumni & Parent Reviews
                 </a>
               </li>
+              <li>
+                <a href="#tribute" className="hover:text-[#B08D57] transition-colors text-[#B08D57]">
+                  In Memory: Late Kartik Sonawane
+                </a>
+              </li>
             </ul>
           </div>
 

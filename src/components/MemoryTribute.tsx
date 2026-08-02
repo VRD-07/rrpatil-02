@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Flame, X } from 'lucide-react';
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Flame } from 'lucide-react';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 
-// Ground-truth memorial photo asset
+// Ground-truth memorial photo assets
 import kartikMemImg from '../assets/kartik_mem.jpg';
+import kartikMemFaceImg from '../assets/kartik_mem_face.jpeg';
 
 /*
   =============================================================================
@@ -15,127 +16,93 @@ import kartikMemImg from '../assets/kartik_mem.jpg';
 */
 
 export const MemoryTribute: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const reducedMotion = usePrefersReducedMotion();
 
-  const memorialData = {
-    name: 'Kartik Sonawane',
-    batch: '12th Science HSC Batch (2024–2025)',
-    photo: kartikMemImg,
-    quote: 'A bright, humble soul whose quiet dedication, warm smile, and curiosity touched everyone at R. R. Patil Academy. Though taken from us during his 12th standard, his memory remains an eternal light in our classrooms.',
-  };
-
   return (
-    <>
-      {/* ========================================================================= */}
-      {/* 1. QUIET FLOATING TAB — BOTTOM-LEFT CORNER (OPPOSITE CHATWIDGET) */}
-      {/* ========================================================================= */}
-      <div className="fixed bottom-5 left-5 z-40">
-        <button
-          type="button"
-          onClick={() => setIsOpen(true)}
-          className="group inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FAF7F0] hover:bg-white text-[#14110F]/70 hover:text-[#14110F] border border-[#E4DCC8] hover:border-[#B08D57]/50 shadow-xs transition-all duration-300 cursor-pointer select-none"
-          aria-label="In Loving Memory — Quiet Tribute"
+    <section
+      id="tribute"
+      className="py-10 sm:py-14 bg-[#FAF7F0] border-y border-[#E4DCC8]"
+    >
+      <div className="max-w-4xl mx-auto px-4 sm:px-6">
+        <motion.div
+          initial={reducedMotion ? { opacity: 1 } : { opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4 }}
+          className="rounded-2xl bg-[#14110F] text-[#FAF7F0] p-6 sm:p-8 border border-[#B08D57]/40 shadow-xl relative overflow-hidden"
         >
-          <Flame
-            className={`w-3.5 h-3.5 text-[#B08D57] transition-opacity ${
-              reducedMotion ? 'opacity-80' : 'animate-pulse opacity-80 group-hover:opacity-100'
-            }`}
+          {/* Background Image Shifted Significantly Left (-90px horizontal offset) */}
+          <div
+            className="absolute inset-y-0 left-0 w-full sm:w-3/5 bg-cover opacity-90 pointer-events-none"
+            style={{
+              backgroundImage: `url(${kartikMemImg})`,
+              backgroundPosition: '-90px center',
+              maskImage: 'linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 35%, rgba(0,0,0,0) 75%)',
+              WebkitMaskImage: 'linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 35%, rgba(0,0,0,0) 75%)',
+            }}
           />
-          <span className="text-[11px] font-medium tracking-wide">In Memory</span>
-        </button>
-      </div>
+          {/* Subtle Color Blend Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#14110F]/60 to-[#14110F] pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#14110F]/30 via-transparent to-[#14110F]/40 pointer-events-none" />
 
-      {/* ========================================================================= */}
-      {/* 2. EXPANDED QUIET MEMORIAL CARD MODAL */}
-      {/* ========================================================================= */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: reducedMotion ? 0 : 0.3 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-2xs"
-            onClick={() => setIsOpen(false)}
-          >
-            <motion.div
-              initial={reducedMotion ? { opacity: 0 } : { scale: 0.95, opacity: 0, y: 10 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={reducedMotion ? { opacity: 0 } : { scale: 0.95, opacity: 0, y: 10 }}
-              transition={{ duration: reducedMotion ? 0 : 0.4, ease: [0.16, 1, 0.3, 1] }}
-              onClick={(e) => e.stopPropagation()}
-              className="bg-[#FAF7F0] border border-[#E4DCC8] rounded-xl max-w-sm w-full p-6 shadow-lg text-center relative overflow-hidden"
-            >
-              {/* Soft Faded & Blurred Photo Background Layer */}
-              <div
-                className="absolute inset-0 bg-cover bg-center opacity-15 blur-md pointer-events-none scale-110"
-                style={{ backgroundImage: `url(${memorialData.photo})` }}
-              />
+          {/* Card Content Layered Above Background */}
+          <div className="relative z-10">
+            {/* Header Badge */}
+            <div className="flex items-center justify-center gap-2 mb-5">
+              <span className="h-px w-6 bg-[#B08D57]/60" />
+              <span className="inline-flex items-center gap-1.5 text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#B08D57]">
+                <Flame className="w-3.5 h-3.5 text-[#B08D57]" />
+                IN RESPECTFUL MEMORY • ETERNAL TRIBUTE
+              </span>
+              <span className="h-px w-6 bg-[#B08D57]/60" />
+            </div>
 
-              {/* Close Button */}
-              <button
-                type="button"
-                onClick={() => setIsOpen(false)}
-                className="absolute top-3.5 right-3.5 p-1 rounded-full text-[#14110F]/40 hover:text-[#14110F] hover:bg-[#F0ECE1] transition-colors cursor-pointer z-20"
-                aria-label="Close memorial tribute"
-              >
-                <X className="w-4 h-4" />
-              </button>
-
-              {/* Card Contents Layered Z-10 */}
-              <div className="relative z-10">
-                {/* Top Diya Emblem */}
-                <div className="flex justify-center mb-2">
-                  <div className="w-8 h-8 rounded-full bg-[#B08D57]/15 border border-[#B08D57]/30 flex items-center justify-center shadow-xs">
-                    <Flame className="w-4 h-4 text-[#B08D57]" />
-                  </div>
-                </div>
-
-                <span className="text-[9px] font-bold uppercase tracking-widest text-[#B08D57] block mb-3">
-                  IN RESPECTFUL MEMORY
-                </span>
-
-                {/* Center Circle Face Thumbnail */}
-                <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full mx-auto mb-3.5 bg-white border-2 border-[#B08D57]/70 overflow-hidden shadow-md">
+            {/* Mobile-First Flex Layout */}
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 sm:gap-6">
+              {/* Face Image Circle Thumbnail (Using kartik_mem_face.jpeg) */}
+              <div className="shrink-0 flex flex-col items-center">
+                <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full border-2 border-[#B08D57] p-1 shadow-lg bg-[#241F1A] overflow-hidden">
                   <img
-                    src={memorialData.photo}
-                    alt={memorialData.name}
+                    src={kartikMemFaceImg}
+                    alt="Late Kartik Sonawane"
                     width={112}
                     height={112}
-                    loading="lazy"
-                    className="w-full h-full object-cover object-top"
+                    className="w-full h-full object-cover object-center rounded-full"
                   />
                 </div>
+                <span className="mt-2 text-[10px] font-semibold uppercase tracking-wider text-[#B08D57]">
+                  Om Shanti 🙏
+                </span>
+              </div>
 
-                {/* Student Name */}
-                <h3 className="font-editorial text-2xl font-bold text-[#14110F] mb-0.5">
-                  {memorialData.name}
+              {/* Tribute Text Content */}
+              <div className="flex-1 text-center sm:text-left">
+                <h3 className="font-editorial text-xl sm:text-2xl font-bold text-[#FAF7F0]">
+                  Late Kartik Sonawane
                 </h3>
+                <p className="text-xs text-[#B08D57] font-medium tracking-wide mb-3">
+                  12th Science HSC Batch (2024–2025) • R. R. Patil Coaching Classes
+                </p>
 
-                {/* Batch / Years Line */}
-                <div className="text-xs text-[#14110F]/70 font-semibold mb-4">
-                  {memorialData.batch}
-                </div>
+                <blockquote className="text-xs sm:text-sm italic text-[#FAF7F0]/90 leading-relaxed p-3.5 rounded-lg bg-[#FAF7F0]/5 border-l-2 border-[#B08D57] mb-3 backdrop-blur-xs">
+                  "A bright, humble soul whose quiet dedication, warm smile, and curiosity touched everyone at R. R. Patil Academy. Though taken from us during his 12th standard, his memory remains an eternal light in our classrooms."
+                </blockquote>
 
-                {/* Remembrance Quote */}
-                <div className="text-xs text-[#14110F]/85 italic leading-relaxed p-3.5 rounded-lg bg-white/80 border-l-2 border-[#B08D57]/60 text-center font-normal my-3 shadow-2xs">
-                  "{memorialData.quote}"
-                </div>
-
-                {/* Closing Respect Banner */}
-                <div className="pt-3 border-t border-[#E4DCC8]/60 mt-4">
-                  <span className="text-[10px] text-[#14110F]/60 font-semibold tracking-wider uppercase block">
-                    Always remembered by the R. R. Patil Academy Family
+                <div className="pt-2 border-t border-[#FAF7F0]/10 flex items-center justify-between text-[11px] text-[#FAF7F0]/60">
+                  <span className="font-medium tracking-wider uppercase">
+                    Always remembered by the R. R. Patil Academy family
                   </span>
                 </div>
               </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
   );
 };
 
 export default MemoryTribute;
+
+
+
