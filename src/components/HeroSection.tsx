@@ -109,7 +109,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenDemo }) => {
             >
               <div className="flex items-center gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-[#B08D57] shrink-0" />
-                <span className="text-xs font-medium text-[#14110F]/80">Small Batch Size (Max 25)</span>
+                <span className="text-xs font-medium text-[#14110F]/80">Affordable Education</span>
               </div>
               <div className="flex items-center gap-2.5">
                 <Award className="w-4 h-4 text-[#B08D57] shrink-0" />
