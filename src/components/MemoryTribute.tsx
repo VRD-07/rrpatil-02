@@ -31,27 +31,28 @@ export const MemoryTribute: React.FC = () => {
           transition={{ duration: 0.4 }}
           className="rounded-2xl bg-[#14110F] text-[#FAF7F0] p-6 sm:p-8 border border-[#B08D57]/40 shadow-xl relative overflow-hidden"
         >
-          {/* MOBILE VIEW BACKGROUND: Full left-aligned background with zero left fade */}
+          {/* Mobile view background image: Centered full-card background with NO right fade */}
           <div
-            className="block sm:hidden absolute inset-0 bg-cover bg-left opacity-90 pointer-events-none"
-            style={{ backgroundImage: `url(${kartikMemImg})` }}
-          />
-          {/* Mobile Top-to-Bottom Gradient Overlay (No left fade effect on mobile) */}
-          <div className="block sm:hidden absolute inset-0 bg-gradient-to-b from-transparent via-[#14110F]/80 to-[#14110F] pointer-events-none" />
-
-          {/* DESKTOP VIEW BACKGROUND: Left-aligned background with rightward fade */}
-          <div
-            className="hidden sm:block absolute inset-y-0 left-0 w-3/5 bg-cover opacity-90 pointer-events-none"
+            className="sm:hidden absolute inset-0 bg-cover bg-center opacity-40 pointer-events-none"
             style={{
               backgroundImage: `url(${kartikMemImg})`,
-              backgroundPosition: '-90px center',
-              maskImage: 'linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 35%, rgba(0,0,0,0) 75%)',
-              WebkitMaskImage: 'linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 35%, rgba(0,0,0,0) 75%)',
+              backgroundPosition: 'center center',
             }}
           />
-          {/* Desktop Rightward Blend Overlay */}
-          <div className="hidden sm:block absolute inset-0 bg-gradient-to-r from-transparent via-[#14110F]/60 to-[#14110F] pointer-events-none" />
-          <div className="hidden sm:block absolute inset-0 bg-gradient-to-b from-[#14110F]/30 via-transparent to-[#14110F]/40 pointer-events-none" />
+
+          {/* Desktop view background image (sm+): Centered background image */}
+          <div
+            className="hidden sm:block absolute inset-0 bg-cover bg-center opacity-55 pointer-events-none"
+            style={{
+              backgroundImage: `url(${kartikMemImg})`,
+              backgroundPosition: 'center center',
+              maskImage: 'linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 50%, rgba(0,0,0,0.2) 100%)',
+              WebkitMaskImage: 'linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 50%, rgba(0,0,0,0.2) 100%)',
+            }}
+          />
+
+          {/* Overall Dark Overlay for Crisp Text Readability & Contrast */}
+          <div className="absolute inset-0 bg-[#14110F]/70 sm:bg-gradient-to-r sm:from-[#14110F]/85 sm:via-[#14110F]/65 sm:to-[#14110F]/90 pointer-events-none" />
 
           {/* Card Content Layered Above Background */}
           <div className="relative z-10">
