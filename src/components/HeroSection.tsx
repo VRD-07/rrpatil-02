@@ -91,7 +91,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenDemo }) => {
               </a>
 
               <a
-                href="#courses"
+                href="#programs"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.querySelector('#programs')?.scrollIntoView({ behavior: 'smooth' });
+                }}
                 className="inline-flex items-center justify-center gap-2 px-5 py-4 rounded-md border border-[#F0ECE1] hover:border-[#B08D57] bg-white/60 text-[#14110F] text-xs font-medium uppercase tracking-wider hover:bg-white transition-all min-h-[48px]"
               >
                 <span>Explore Curriculums</span>
