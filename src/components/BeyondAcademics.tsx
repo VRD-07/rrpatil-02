@@ -5,8 +5,8 @@ import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 
 // ES Module imports for ground-truth student life & extracurricular photos
 import monsoonTripImg from '../assets/cult_trip.jpeg';
-import waterparkTripImg from '../assets/found_batch.jpeg';
-import historicalTripImg from '../assets/banner.jpeg';
+import waterparkTripImg from '../assets/water_park.jpeg';
+import historicalTripImg from '../assets/Mahabaleshwar.jpg';
 import cricketTurfImg from '../assets/turf.jpeg';
 import uniformClassroomImg from '../assets/rrp_tshirt.jpeg';
 

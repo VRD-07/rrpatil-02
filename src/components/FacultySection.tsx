@@ -7,8 +7,6 @@ import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 import rPatilImg from '../assets/Faculties/R_patil-removebg-preview.png';
 import hbImg from '../assets/Faculties/h_b.png';
 import pPatilImg from '../assets/Faculties/P_patil.jpeg';
-import smartboardTeachingImg from '../assets/Faculties/RP_std.jpeg';
-import chemistryLabActionImg from '../assets/Faculties/hb_teach_1.jpeg';
 import mentoringSessionImg from '../assets/Faculties/pp_std_3.jpeg';
 
 export const FacultySection: React.FC = () => {
@@ -20,15 +18,14 @@ export const FacultySection: React.FC = () => {
     role: 'Founder, Director & Star Faculty',
     subject: 'Senior Head of Physics & Mathematics',
     photo: rPatilImg,
-    actionPhoto: smartboardTeachingImg,
-    degree: 'M.Tech & Senior Pedagogy Scholar',
+    degree: 'Senior Instructor',
     experience: '20+ Years Teaching Mastery',
     highlights: [
-      'Personal Mentor to 12,500+ Alumni',
-      'Produced 450+ Top 1000 JEE/NEET Rankers',
+      'Personal Mentor to thousands of Alumni',
+      'Produced Top JEE/NEET Rankers',
       'Author of Proprietary Problem Drills',
     ],
-    bio: 'Renowned nationwide for transforming complex Physics and Mathematics concepts into intuitive, first-principles problem-solving algorithms. Under his personal guidance, hundreds of students achieve top 100 AIR rank distinctions each year.',
+    bio: 'Acting as a founder of the institute and a senior faculty, Prof.R. R. Patil has immense experience of more than 15 years and more.',
     quote: 'Teaching is not about delivering lectures; it is about building an unshakable conceptual foundation that performs under intense exam pressure.',
   };
 
@@ -36,23 +33,21 @@ export const FacultySection: React.FC = () => {
   const coFaculties = [
     {
       name: 'Prof. Harshal Belapurkar',
-      role: 'Head of Chemistry',
+      role: 'Head of Chemistry and Biology',
       photo: hbImg,
-      actionPhoto: chemistryLabActionImg,
-      degree: 'Ph.D. Organic Chemistry (IIT Bombay)',
-      experience: '15+ Years Pedagogy Experience',
-      subject: 'Organic & Physical Chemistry',
+      degree: 'M.Pharma',
+      experience: '10+ Years Pedagogy Experience',
+      subject: 'Chemistry AND Biology',
       bio: 'Master of reaction mechanisms & stoichiometry. Known for step-by-step analytical methods that turn Chemistry into a scoring superpower.',
     },
     {
       name: 'Prof. Prasad Patil',
-      role: 'Head of Mathematics & NEET Biology',
+      role: 'Head of Mathematics & Physics',
       photo: pPatilImg,
-      actionPhoto: mentoringSessionImg,
-      degree: 'M.Sc. Applied Mathematics & Life Sciences',
-      experience: '14+ Years Pedagogy Experience',
-      subject: 'Calculus, Geometry & NEET Life Sciences',
-      bio: 'Specialist in speed optimization & NCERT line-by-line breakdown, enabling top scores in both Board exams and competitive entrances.',
+      degree: 'M.Tech(NIT Calicut)',
+      experience: '10+ Years Pedagogy and Corporate (Amazon) Experience ',
+      subject: 'Mathematics and Physics',
+      bio: 'Renowned teacher in the field of Mathematics, specially handling JEE-level Physics and Mathematics',
     },
   ];
 
@@ -139,21 +134,6 @@ export const FacultySection: React.FC = () => {
                     <div className="absolute top-2 left-2 px-2 py-0.5 rounded bg-[#0F3D2E]/90 text-[#B08D57] border border-[#B08D57]/40 text-[9px] font-bold uppercase">
                       20+ YRS EXP
                     </div>
-                  </div>
-
-                  {/* Smartboard Teaching Inset */}
-                  <div className="mt-3 relative w-full h-14 rounded-lg overflow-hidden border border-[#B08D57]/40 shadow-xs">
-                    <img
-                      src={starFaculty.actionPhoto}
-                      alt="Prof. R.R. Patil teaching at interactive smartboard"
-                      width={200}
-                      height={60}
-                      loading="lazy"
-                      className="w-full h-full object-cover object-top"
-                    />
-                    <span className="absolute bottom-1 left-2 px-1.5 py-0.5 rounded bg-[#0A2A20]/90 text-[#FAF7F0] text-[8px] font-bold uppercase">
-                      Smartboard Interactive Teaching
-                    </span>
                   </div>
                 </div>
 
@@ -243,24 +223,9 @@ export const FacultySection: React.FC = () => {
                   </div>
 
                   {/* Bio */}
-                  <p className="text-xs text-[#14110F]/75 leading-relaxed font-normal mb-3">
+                  <p className="text-xs text-[#14110F]/75 leading-relaxed font-normal">
                     {faculty.bio}
                   </p>
-                </div>
-
-                {/* Teaching Action Thumbnail */}
-                <div className="h-12 w-full rounded overflow-hidden border border-[#E4DCC8] relative">
-                  <img
-                    src={faculty.actionPhoto}
-                    alt={`${faculty.name} in teaching action`}
-                    width={240}
-                    height={48}
-                    loading="lazy"
-                    className="w-full h-full object-cover object-top"
-                  />
-                  <span className="absolute bottom-1 left-2 px-1.5 py-0.5 rounded bg-[#0F3D2E]/90 text-[#FAF7F0] text-[8px] font-bold uppercase">
-                    Active Classroom Session
-                  </span>
                 </div>
               </motion.div>
             ))}

@@ -1,13 +1,19 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Award, ChevronLeft, ChevronRight, CheckCircle2, X, ExternalLink, Sparkles } from 'lucide-react';
+import { Award, CheckCircle2, X, ExternalLink, Sparkles } from 'lucide-react';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
-import type { Student } from '../types/results';
+import type { Student, ChampionStudent } from '../types/results';
 
 // Real photo imports
+import kunalImg from '../assets/kunal_upscaled.jpeg';
+import varadImg from '../assets/varad.jpeg';
+import result2024 from '../assets/Result_2024.jpeg';
+import result26 from '../assets/Result_26.jpeg';
+import kartikResult from '../assets/kartik_result.jpg';
+import kartikD from '../assets/kartik_upscaled.jpg';
+
 import rakeshImg from '../assets/rakesh.jpeg';
 import komalImg from '../assets/komal.jpeg';
-import kartikImg from '../assets/kartik.jpeg';
 import rakeshFelicImg from '../assets/Rakesh_felic.jpeg';
 import award1Img from '../assets/Awards/award_01.jpeg';
 import award2Img from '../assets/Awards/award_02.jpeg';
@@ -50,19 +56,601 @@ const CountUpStat: React.FC<{ end: number; suffix?: string; prefix?: string }> =
   );
 };
 
+// ============================================================================
+// 1. ALL-TIME RECORDS CHAMPIONS (Edit this array for All-Time Records)
+// ============================================================================
+export const allTimeChampions: ChampionStudent[] = [
+  {
+    id: 'alltime-jee',
+    name: 'Kunal Kharat',
+    photo: kunalImg,
+    certificatePhoto: rakeshFelicImg,
+    batch: '2-Year JEE Advanced Intensive',
+    quote: 'R. R. Patil’s conceptual depth & daily problem drills gave me absolute speed & confidence under pressure.',
+    badge: 'JEE ALL-TIME RECORD',
+    isAllTimeRecord: true,
+    score: 'AIR 1928',
+    subScore: 'AIR-1928 [Category Rank]',
+  },
+  {
+    id: 'alltime-neet',
+    name: 'Varad Chavhan',
+    photo: varadImg,
+    certificatePhoto: result2024,
+    batch: '2-Year NEET Medical Track',
+    quote: 'Small batch focus and 1-on-1 doubt clearing were the main drivers behind my 715 score.',
+    badge: 'NEET ALL-TIME RECORD',
+    isAllTimeRecord: true,
+    score: '475 / 720',
+    subScore: 'Highest NEET Score Record',
+  },
+  {
+    id: 'alltime-board',
+    name: 'Rakesh Karpe',
+    photo: rakeshImg,
+    certificatePhoto: result26,
+    batch: '12th HSC Board + JEE Track',
+    quote: 'Continuous pre-board mock exams perfected my answer presentation and timing strategy.',
+    badge: 'BOARD ALL-TIME RECORD',
+    isAllTimeRecord: true,
+    score: '92.17%',
+    subScore: 'HSC Board Distinction',
+  },
+];
+
+// ============================================================================
+// 2. THIS YEAR TOPPERS (2024-25) (Edit this array for This Year Toppers)
+// ============================================================================
+export const thisYearChampions: ChampionStudent[] = [
+  {
+    id: 'alltime-board',
+    name: 'Rakesh Karpe',
+    photo: rakeshImg,
+    certificatePhoto: result26,
+    batch: '12th HSC Board + JEE Track',
+    quote: 'Continuous pre-board mock exams perfected my answer presentation and timing strategy.',
+    badge: 'BOARD ALL-TIME RECORD',
+    isAllTimeRecord: true,
+    score: '92.17%',
+    subScore: 'HSC Board Distinction',
+  },
+  {
+    id: 'thisyear-CET',
+    name: 'Kartik Divekar',
+    photo: kartikD,
+    certificatePhoto: kartikResult,
+    batch: '12th HSC Board + JEE Track (2024-25)',
+    quote: 'Weekly assessment not only increases the probability of success, but also makes us disciplined',
+    badge: 'CET topper 2026',
+    isAllTimeRecord: false,
+    score: '96.48 %ile',
+    subScore: 'MHT-CET Distinction',
+  },
+  {
+    id: 'thisyear-board2',
+    name: 'Komal N. Gund',
+    photo: komalImg,
+    certificatePhoto: result26,
+    batch: '2-Year NEET Medical Track (2024-25)',
+    quote: 'Small batch focus and 1-on-1 doubt clearing were the main drivers behind my HSC score.',
+    badge: 'Board 2nd Topper',
+    isAllTimeRecord: false,
+    score: '89.67%',
+    subScore: 'HSC Board Disctinction',
+  },
+];// Imports from res_indi (HSC Board 2026 ground-truth marksheets)
+import res1 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.38 PM.jpeg';
+import res2 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.39 PM.jpeg';
+import res3 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.40 PM (1).jpeg';
+import res4 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.40 PM.jpeg';
+import res5 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.41 PM (1).jpeg';
+import res6 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.41 PM.jpeg';
+import res7 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.42 PM (1).jpeg';
+import res8 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.42 PM.jpeg';
+import res9 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.43 PM (1).jpeg';
+import res10 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.43 PM.jpeg';
+import res11 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.44 PM.jpeg';
+import res12 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.45 PM (1).jpeg';
+import res13 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.45 PM.jpeg';
+import res14 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.47 PM (1).jpeg';
+import res15 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.47 PM.jpeg';
+import res16 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.48 PM (1).jpeg';
+import res17 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.48 PM (2).jpeg';
+import res18 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.48 PM.jpeg';
+import res19 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.49 PM (1).jpeg';
+import res20 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.49 PM (2).jpeg';
+import res21 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.49 PM.jpeg';
+import res22 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.50 PM (1).jpeg';
+import res23 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.50 PM (2).jpeg';
+import res24 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.50 PM.jpeg';
+import res25 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.51 PM (1).jpeg';
+import res26 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.51 PM.jpeg';
+
+// ============================================================================
+// 3. FULL STUDENT PERFORMANCE ROSTER (HSC Board 2026 Verified Results)
+// ============================================================================
+export const studentRoster: Student[] = [
+  {
+    id: 'res-5',
+    name: 'Rakesh Vilas Karpe',
+    certificatePhoto: res5,
+    batch: '12th HSC Science (2026)',
+    results: [
+      {
+        type: 'board',
+        year: '2026',
+        percentage: 92.17,
+        subjects: [
+          { name: 'Maths', marks: 98 },
+          { name: 'Biology', marks: 95 },
+          { name: 'Physics', marks: 93 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'res-4',
+    name: 'Komal Navnath Gund',
+    certificatePhoto: res4,
+    batch: '12th HSC Science (2026)',
+    results: [
+      {
+        type: 'board',
+        year: '2026',
+        percentage: 89.67,
+        subjects: [
+          { name: 'Maths', marks: 96 },
+          { name: 'Biology', marks: 93 },
+          { name: 'Physics', marks: 92 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'res-6',
+    name: 'Kartik Deepak Thorat',
+    certificatePhoto: res6,
+    batch: '12th HSC Science (2026)',
+    results: [
+      {
+        type: 'board',
+        year: '2026',
+        percentage: 89.33,
+        subjects: [
+          { name: 'Maths', marks: 96 },
+          { name: 'Biology', marks: 94 },
+          { name: 'Chemistry', marks: 91 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'res-2',
+    name: 'Swati Gorakh Ghodake',
+    certificatePhoto: res2,
+    batch: '12th HSC Science (2026)',
+    results: [
+      {
+        type: 'board',
+        year: '2026',
+        percentage: 88.67,
+        subjects: [
+          { name: 'Maths & Stats', marks: 93 },
+          { name: 'Physics', marks: 92 },
+          { name: 'Chemistry', marks: 90 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'res-1',
+    name: 'Aditya Babasaheb Pune',
+    certificatePhoto: res1,
+    batch: '12th HSC Science (2026)',
+    results: [
+      {
+        type: 'board',
+        year: '2026',
+        percentage: 88.17,
+        subjects: [
+          { name: 'Maths', marks: 94 },
+          { name: 'Chemistry', marks: 93 },
+          { name: 'Physics', marks: 92 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'res-8',
+    name: 'Prajwal Mohan Thorat',
+    certificatePhoto: res8,
+    batch: '12th HSC Science (2026)',
+    results: [
+      {
+        type: 'board',
+        year: '2026',
+        percentage: 88.00,
+        subjects: [
+          { name: 'Maths & Stats', marks: 93 },
+          { name: 'Biology', marks: 93 },
+          { name: 'Physics', marks: 92 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'res-9',
+    name: 'Shree Vijay Godage',
+    certificatePhoto: res9,
+    batch: '12th HSC Science (2026)',
+    results: [
+      {
+        type: 'board',
+        year: '2026',
+        percentage: 87.50,
+        subjects: [
+          { name: 'Maths & Stats', marks: 98 },
+          { name: 'Physics', marks: 93 },
+          { name: 'Biology', marks: 93 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'res-3',
+    name: 'Anushka Machindra Pathare',
+    certificatePhoto: res3,
+    batch: '12th HSC Science (2026)',
+    results: [
+      {
+        type: 'board',
+        year: '2026',
+        percentage: 87.33,
+        subjects: [
+          { name: 'Maths', marks: 94 },
+          { name: 'Physics', marks: 92 },
+          { name: 'Biology', marks: 92 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'res-15',
+    name: 'Pratik Shivaji Gaikwad',
+    certificatePhoto: res15,
+    batch: '12th HSC Science (2026)',
+    results: [
+      {
+        type: 'board',
+        year: '2026',
+        percentage: 86.83,
+        subjects: [
+          { name: 'Maths & Stats', marks: 93 },
+          { name: 'Biology', marks: 92 },
+          { name: 'Chemistry', marks: 91 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'res-21',
+    name: 'Yugant Sunil Pawar',
+    certificatePhoto: res21,
+    batch: '12th HSC Science (2026)',
+    results: [
+      {
+        type: 'board',
+        year: '2026',
+        percentage: 86.33,
+        subjects: [
+          { name: 'Maths & Stats', marks: 97 },
+          { name: 'Physics', marks: 94 },
+          { name: 'Biology', marks: 94 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'res-23',
+    name: 'Sairaj Prabhakar Kalaskar',
+    certificatePhoto: res23,
+    batch: '12th HSC Science (2026)',
+    results: [
+      {
+        type: 'board',
+        year: '2026',
+        percentage: 86.17,
+        subjects: [
+          { name: 'Maths', marks: 94 },
+          { name: 'Physics', marks: 91 },
+          { name: 'Chemistry', marks: 89 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'res-16',
+    name: 'Alfaiz Sadik Shaikh',
+    certificatePhoto: res16,
+    batch: '12th HSC Science (2026)',
+    results: [
+      {
+        type: 'board',
+        year: '2026',
+        percentage: 85.00,
+        subjects: [
+          { name: 'Maths & Stats', marks: 95 },
+          { name: 'Biology', marks: 92 },
+          { name: 'Physics', marks: 89 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'res-26',
+    name: 'Kunal Manohar Gaikwad',
+    certificatePhoto: res26,
+    batch: '12th HSC Science (2026)',
+    results: [
+      {
+        type: 'board',
+        year: '2026',
+        percentage: 85.00,
+        subjects: [
+          { name: 'Maths & Stats', marks: 94 },
+          { name: 'Biology', marks: 92 },
+          { name: 'Physics', marks: 89 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'res-19',
+    name: 'Kartik Dattatray Divekar',
+    certificatePhoto: res19,
+    batch: '12th HSC Science (2026)',
+    results: [
+      {
+        type: 'board',
+        year: '2026',
+        percentage: 84.83,
+        subjects: [
+          { name: 'Maths & Stats', marks: 95 },
+          { name: 'Biology', marks: 94 },
+          { name: 'Chemistry', marks: 90 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'res-11',
+    name: 'Vedant Anil Chavan',
+    certificatePhoto: res11,
+    batch: '12th HSC Science (2026)',
+    results: [
+      {
+        type: 'board',
+        year: '2026',
+        percentage: 84.67,
+        subjects: [
+          { name: 'Maths & Stats', marks: 95 },
+          { name: 'IT (Sci)', marks: 94 },
+          { name: 'Physics', marks: 92 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'res-13',
+    name: 'Kunal Sunil Deokar',
+    certificatePhoto: res13,
+    batch: '12th HSC Science (2026)',
+    results: [
+      {
+        type: 'board',
+        year: '2026',
+        percentage: 84.67,
+        subjects: [
+          { name: 'IT (Sci)', marks: 96 },
+          { name: 'Maths & Stats', marks: 95 },
+          { name: 'Biology', marks: 94 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'res-25',
+    name: 'Shivam Hanuman Gunjal',
+    certificatePhoto: res25,
+    batch: '12th HSC Science (2026)',
+    results: [
+      {
+        type: 'board',
+        year: '2026',
+        percentage: 84.67,
+        subjects: [
+          { name: 'Maths & Stats', marks: 96 },
+          { name: 'Chemistry', marks: 93 },
+          { name: 'Biology', marks: 90 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'res-17',
+    name: 'Kaustubh Pramod Gund',
+    certificatePhoto: res17,
+    batch: '12th HSC Science (2026)',
+    results: [
+      {
+        type: 'board',
+        year: '2026',
+        percentage: 84.50,
+        subjects: [
+          { name: 'Maths & Stats', marks: 92 },
+          { name: 'Chemistry', marks: 89 },
+          { name: 'Geography', marks: 85 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'res-14',
+    name: 'Aradhya Sachin Amrutkar',
+    certificatePhoto: res14,
+    batch: '12th HSC Science (2026)',
+    results: [
+      {
+        type: 'board',
+        year: '2026',
+        percentage: 83.50,
+        subjects: [
+          { name: 'Chemistry', marks: 91 },
+          { name: 'Geography', marks: 89 },
+          { name: 'IT (Sci)', marks: 89 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'res-12',
+    name: 'Om Jalindar Jagtap',
+    certificatePhoto: res12,
+    batch: '12th HSC Science (2026)',
+    results: [
+      {
+        type: 'board',
+        year: '2026',
+        percentage: 83.17,
+        subjects: [
+          { name: 'Chemistry', marks: 91 },
+          { name: 'Physics', marks: 88 },
+          { name: 'IT (Sci)', marks: 88 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'res-10',
+    name: 'Shreyank Amol Sakhare',
+    certificatePhoto: res10,
+    batch: '12th HSC Science (2026)',
+    results: [
+      {
+        type: 'board',
+        year: '2026',
+        percentage: 82.83,
+        subjects: [
+          { name: 'Biology', marks: 93 },
+          { name: 'Chemistry', marks: 90 },
+          { name: 'Maths & Stats', marks: 88 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'res-24',
+    name: 'Atharva Ganesh Kangune',
+    certificatePhoto: res24,
+    batch: '12th HSC Science (2026)',
+    results: [
+      {
+        type: 'board',
+        year: '2026',
+        percentage: 82.33,
+        subjects: [
+          { name: 'Maths & Stats', marks: 93 },
+          { name: 'Physics', marks: 87 },
+          { name: 'Chemistry', marks: 87 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'res-7',
+    name: 'Gaurav Gorakh Lohakane',
+    certificatePhoto: res7,
+    batch: '12th HSC Science (2026)',
+    results: [
+      {
+        type: 'board',
+        year: '2026',
+        percentage: 81.83,
+        subjects: [
+          { name: 'Physics', marks: 94 },
+          { name: 'IT (Sci)', marks: 87 },
+          { name: 'Maths', marks: 85 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'res-20',
+    name: 'Samiksha Santosh Kadam',
+    certificatePhoto: res20,
+    batch: '12th HSC Science (2026)',
+    results: [
+      {
+        type: 'board',
+        year: '2026',
+        percentage: 81.00,
+        subjects: [
+          { name: 'Maths & Stats', marks: 98 },
+          { name: 'Physics', marks: 87 },
+          { name: 'Geography', marks: 86 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'res-18',
+    name: 'Tanishka Sandeep Pawar',
+    certificatePhoto: res18,
+    batch: '12th HSC Science (2026)',
+    results: [
+      {
+        type: 'board',
+        year: '2026',
+        percentage: 80.50,
+        subjects: [
+          { name: 'Chemistry', marks: 93 },
+          { name: 'Maths & Stats', marks: 91 },
+          { name: 'Biology', marks: 91 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'res-22',
+    name: 'Vedant Santosh Talekar',
+    certificatePhoto: res22,
+    batch: '12th HSC Science (2026)',
+    results: [
+      {
+        type: 'board',
+        year: '2026',
+        percentage: 80.17,
+        subjects: [
+          { name: 'Maths & Stats', marks: 92 },
+          { name: 'Biology', marks: 92 },
+          { name: 'Physics', marks: 81 },
+        ],
+      },
+    ],
+  },
+];
+
 export const ResultsSection: React.FC = () => {
   const reducedMotion = usePrefersReducedMotion();
 
-  // State for Toggle (Block 3): 'this-year' vs 'all-time'
-  const [timeframe, setTimeframe] = useState<'this-year' | 'all-time'>('this-year');
+  // State for Toggle (Block 3): 'all-time' (default) vs 'this-year'
+  const [timeframe, setTimeframe] = useState<'all-time' | 'this-year'>('all-time');
 
-  // State for Roster Filter (Block 4): 'all' | 'board' | 'jee' | 'neet' | 'cet' | 'steady'
-  const [activeFilter, setActiveFilter] = useState<'all' | 'board' | 'jee' | 'neet' | 'cet' | 'steady'>('all');
+  // State for Roster Filter (Block 4): 'all' (Filter tabs can be re-enabled when JEE/NEET results are added)
+  const activeFilter = 'all';
 
   // State for Lightbox Modal
-  const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
-
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [selectedStudent, setSelectedStudent] = useState<Student | ChampionStudent | null>(null);
 
   // Helper for initials fallback
   const getInitials = (name: string): string => {
@@ -71,276 +659,8 @@ export const ResultsSection: React.FC = () => {
     return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
   };
 
-  // Full Roster Student Data
-  const studentRoster: Student[] = [
-    {
-      id: 'champ-jee',
-      name: 'Rakesh V. Karpe',
-      photo: rakeshImg,
-      certificatePhoto: rakeshFelicImg,
-      batch: '2-Year JEE Advanced Intensive',
-      quote: 'R. R. Patil’s conceptual depth & daily problem drills gave me absolute speed & confidence under pressure.',
-      badge: 'JEE CHAMPION',
-      categoryChampion: 'jee',
-      isAllTimeRecord: true,
-      results: [
-        {
-          type: 'jee',
-          year: '2024-25',
-          score: 'AIR 42',
-          rankOrPercentile: '99.98 %ile',
-          subjects: [
-            { name: 'Physics', marks: 100 },
-            { name: 'Maths', marks: 100 },
-            { name: 'Chemistry', marks: 98 },
-          ],
-        },
-      ],
-    },
-    {
-      id: 'champ-neet',
-      name: 'Komal N. Gund',
-      photo: komalImg,
-      certificatePhoto: award1Img,
-      batch: '2-Year NEET Medical Track',
-      quote: 'Small batch focus and 1-on-1 doubt clearing were the main drivers behind my 715 score.',
-      badge: 'NEET CHAMPION',
-      categoryChampion: 'neet',
-      isAllTimeRecord: true,
-      results: [
-        {
-          type: 'neet',
-          year: '2024-25',
-          score: '715 / 720',
-          rankOrPercentile: 'AIR 104',
-          subjects: [
-            { name: 'Biology', marks: 358 },
-            { name: 'Chemistry', marks: 178 },
-            { name: 'Physics', marks: 179 },
-          ],
-        },
-      ],
-    },
-    {
-      id: 'champ-board',
-      name: 'Kartik D. Thorat',
-      photo: kartikImg,
-      certificatePhoto: award2Img,
-      batch: '12th HSC Board + JEE Track',
-      quote: 'Continuous pre-board mock exams perfected my answer presentation and timing strategy.',
-      badge: 'BOARD CHAMPION',
-      categoryChampion: 'board',
-      isAllTimeRecord: true,
-      results: [
-        {
-          type: 'board',
-          year: '2024-25',
-          percentage: 99.4,
-          subjects: [
-            { name: 'Chemistry', marks: 100 },
-            { name: 'Maths', marks: 99 },
-            { name: 'Physics', marks: 98 },
-          ],
-        },
-      ],
-    },
-    {
-      id: 'champ-cet',
-      name: 'Atharva K. Patil',
-      certificatePhoto: award3Img,
-      batch: '12th MHT-CET Speed Masterclass',
-      quote: '18,500+ MCQ testing platform gave me the exact timing discipline required for CET 99.85%ile.',
-      badge: 'MHT-CET CHAMPION',
-      categoryChampion: 'cet',
-      isAllTimeRecord: true,
-      results: [
-        {
-          type: 'cet',
-          year: '2024-25',
-          score: '99.85 %ile',
-          rankOrPercentile: 'State Rank 28',
-          subjects: [
-            { name: 'Maths', marks: 99 },
-            { name: 'Physics', marks: 98 },
-            { name: 'Chemistry', marks: 97 },
-          ],
-        },
-      ],
-    },
-
-    // Additional Roster Students
-    {
-      id: 'roster-5',
-      name: 'Sakshi B. Shinde',
-      batch: '12th HSC Board Batch',
-      quote: 'Detailed teacher notes made HSC 12th Board revision straightforward.',
-      results: [
-        {
-          type: 'board',
-          year: '2024-25',
-          percentage: 94.8,
-          subjects: [
-            { name: 'Physics', marks: 98 },
-            { name: 'Chemistry', marks: 95 },
-            { name: 'Maths', marks: 92 },
-          ],
-        },
-      ],
-    },
-    {
-      id: 'roster-6',
-      name: 'Omkar S. Pawar',
-      batch: '2-Year JEE Main Batch',
-      quote: 'Weekly test series helped identify weak areas in Physical Chemistry.',
-      results: [
-        {
-          type: 'jee',
-          year: '2024-25',
-          score: '99.12 %ile',
-          rankOrPercentile: 'AIR 8,420',
-          subjects: [
-            { name: 'Chemistry', marks: 99 },
-            { name: 'Physics', marks: 96 },
-            { name: 'Maths', marks: 91 },
-          ],
-        },
-      ],
-    },
-    {
-      id: 'roster-7',
-      name: 'Ananya R. Deshmukh',
-      batch: '2-Year NEET Medical Track',
-      quote: '4-Color Biology book diagrams made NCERT memorization highly effective.',
-      results: [
-        {
-          type: 'neet',
-          year: '2024-25',
-          score: '680 / 720',
-          rankOrPercentile: 'AIR 1,240',
-          subjects: [
-            { name: 'Biology', marks: 355 },
-            { name: 'Chemistry', marks: 165 },
-            { name: 'Physics', marks: 160 },
-          ],
-        },
-      ],
-    },
-    {
-      id: 'roster-8',
-      name: 'Pranav M. Joshi',
-      batch: '12th MHT-CET Batch',
-      quote: 'Speed drills and shortcut methods in Maths boosted my percentile.',
-      results: [
-        {
-          type: 'cet',
-          year: '2024-25',
-          score: '99.40 %ile',
-          rankOrPercentile: 'PCM Rank 112',
-          subjects: [
-            { name: 'Maths', marks: 98 },
-            { name: 'Physics', marks: 94 },
-          ],
-        },
-      ],
-    },
-    {
-      id: 'roster-9',
-      name: 'Siddhi K. Kulkarni',
-      batch: '12th HSC Board Batch',
-      quote: 'Personal doubt clearing sessions built my confidence before board exams.',
-      results: [
-        {
-          type: 'board',
-          year: '2024-25',
-          percentage: 92.4,
-          subjects: [
-            { name: 'Maths', marks: 96 },
-            { name: 'Physics', marks: 91 },
-            { name: 'Chemistry', marks: 90 },
-          ],
-        },
-      ],
-    },
-
-    // STEADY ACHIEVERS (70%–85% Board / 80-90%ile CET Range)
-    {
-      id: 'steady-1',
-      name: 'Rohan A. More',
-      batch: '12th HSC Regular Batch',
-      quote: 'Consistent study room hours and weekly tests raised my performance from 62% to 84.6%.',
-      isSteadyAchiever: true,
-      results: [
-        {
-          type: 'board',
-          year: '2024-25',
-          percentage: 84.6,
-          subjects: [
-            { name: 'Physics', marks: 88 },
-            { name: 'Chemistry', marks: 85 },
-            { name: 'Maths', marks: 81 },
-          ],
-        },
-      ],
-    },
-    {
-      id: 'steady-2',
-      name: 'Neha P. Chaudhari',
-      batch: '12th CET Foundation Track',
-      quote: 'Regular doubt clearing helped me gain immense confidence in MHT-CET PCM drills.',
-      isSteadyAchiever: true,
-      results: [
-        {
-          type: 'cet',
-          year: '2024-25',
-          score: '88.50 %ile',
-          rankOrPercentile: 'PCM Track',
-          subjects: [
-            { name: 'Maths', marks: 89 },
-            { name: 'Physics', marks: 86 },
-          ],
-        },
-      ],
-    },
-    {
-      id: 'steady-3',
-      name: 'Yash V. Gaikwad',
-      batch: '2-Year JEE Regular Batch',
-      quote: 'Solid foundation classes helped me cross 86%ile in JEE Main with zero backlog.',
-      isSteadyAchiever: true,
-      results: [
-        {
-          type: 'jee',
-          year: '2024-25',
-          score: '86.40 %ile',
-          subjects: [
-            { name: 'Physics', marks: 87 },
-            { name: 'Chemistry', marks: 84 },
-          ],
-        },
-      ],
-    },
-    {
-      id: 'steady-4',
-      name: 'Tanvi S. Kadam',
-      batch: '12th Board Science Track',
-      quote: 'Continuous teacher guidance ensured steady progress throughout Class 12.',
-      isSteadyAchiever: true,
-      results: [
-        {
-          type: 'board',
-          year: '2024-25',
-          percentage: 78.2,
-          subjects: [
-            { name: 'Biology', marks: 84 },
-            { name: 'Chemistry', marks: 76 },
-          ],
-        },
-      ],
-    },
-  ];
-
-  // Category Champions Data for Block 2 (Filtered by timeframe toggle)
-  const categoryChampions = studentRoster.filter((s) => s.categoryChampion);
+  // Category Champions Data for Block 2 (Separated into allTimeChampions & thisYearChampions)
+  const categoryChampions = timeframe === 'all-time' ? allTimeChampions : thisYearChampions;
 
   // Filtered Roster Data for Block 4
   const filteredRoster = studentRoster.filter((s) => {
@@ -348,6 +668,14 @@ export const ResultsSection: React.FC = () => {
     if (activeFilter === 'steady') return s.isSteadyAchiever;
     return s.results.some((r) => r.type === activeFilter);
   });
+  
+  // Duplicated Roster for Infinite Carousel Loop
+  const rosterLoop =
+    filteredRoster.length > 0
+      ? filteredRoster.length < 5
+        ? [...filteredRoster, ...filteredRoster, ...filteredRoster, ...filteredRoster]
+        : [...filteredRoster, ...filteredRoster]
+      : [];
 
   // Beyond the Exam Hall Gallery Photos (Block 5)
   const beyondExamGallery = [
@@ -359,30 +687,23 @@ export const ResultsSection: React.FC = () => {
     },
     {
       img: award2Img,
-      title: 'MHT-CET State Ranker Honor',
-      caption: 'Celebrating top percentile distinctions in MHT-CET PCM & PCB.',
-      badge: 'STATE RANKERS',
+      title: 'JEE & NEET High Performers Honor',
+      caption: 'Felicitation ceremony celebrating national percentile distinctions.',
+      badge: 'NATIONAL DISTINCTION',
     },
     {
       img: award3Img,
-      title: 'Science & Math Olympiad Awards',
-      caption: 'Honoring state and national level Olympiad medalists.',
-      badge: 'OLYMPIAD HONORS',
+      title: 'MHT-CET Top Ranker Felicitation',
+      caption: 'Honoring state-level engineering & pharmacy toppers.',
+      badge: 'CET TOPPERS',
     },
     {
       img: award4Img,
-      title: 'HSC Board Distinction Awards',
+      title: 'Board Exam Merit Award',
       caption: 'Recognizing 95%+ scorers in 12th Maharashtra State Board.',
       badge: 'BOARD EXCELLENCE',
     },
   ];
-
-  const handleScroll = (direction: 'left' | 'right') => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = direction === 'left' ? -340 : 340;
-      scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    }
-  };
 
   return (
     <section id="results" className="py-16 sm:py-24 bg-[#FAF7F0] border-b border-[#F0ECE1]">
@@ -495,17 +816,6 @@ export const ResultsSection: React.FC = () => {
             <div className="inline-flex p-1 rounded-lg bg-[#F0ECE1] border border-[#E4DCC8]">
               <button
                 type="button"
-                onClick={() => setTimeframe('this-year')}
-                className={`px-4 py-1.5 rounded-md text-xs font-bold uppercase tracking-wider transition-all duration-200 ${
-                  timeframe === 'this-year'
-                    ? 'bg-[#0F3D2E] text-[#FAF7F0] shadow-xs'
-                    : 'text-[#14110F]/70 hover:text-[#14110F]'
-                }`}
-              >
-                This Year (2024-25)
-              </button>
-              <button
-                type="button"
                 onClick={() => setTimeframe('all-time')}
                 className={`px-4 py-1.5 rounded-md text-xs font-bold uppercase tracking-wider transition-all duration-200 ${
                   timeframe === 'all-time'
@@ -514,6 +824,17 @@ export const ResultsSection: React.FC = () => {
                 }`}
               >
                 All-Time Records
+              </button>
+              <button
+                type="button"
+                onClick={() => setTimeframe('this-year')}
+                className={`px-4 py-1.5 rounded-md text-xs font-bold uppercase tracking-wider transition-all duration-200 ${
+                  timeframe === 'this-year'
+                    ? 'bg-[#0F3D2E] text-[#FAF7F0] shadow-xs'
+                    : 'text-[#14110F]/70 hover:text-[#14110F]'
+                }`}
+              >
+                This Year (2024-25)
               </button>
             </div>
           </div>
@@ -526,21 +847,9 @@ export const ResultsSection: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.3 }}
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch max-w-6xl mx-auto"
             >
               {categoryChampions.map((topper, idx) => {
-                const primaryResult = topper.results[0];
-                const mainMetric = primaryResult
-                  ? primaryResult.type === 'board'
-                    ? `${primaryResult.percentage}%`
-                    : primaryResult.score || primaryResult.rankOrPercentile
-                  : '';
-                const secondaryMetric = primaryResult
-                  ? primaryResult.type === 'board'
-                    ? 'HSC Board Distinction'
-                    : primaryResult.rankOrPercentile
-                  : '';
-
                 return (
                   <motion.div
                     key={topper.id}
@@ -589,10 +898,10 @@ export const ResultsSection: React.FC = () => {
                             {topper.name}
                           </h4>
                           <div className="font-editorial text-xl sm:text-2xl font-bold text-[#0F3D2E] mb-0.5">
-                            {mainMetric}
+                            {topper.score}
                           </div>
                           <div className="text-[11px] sm:text-xs font-semibold text-[#B08D57] mb-2 sm:mb-3">
-                            {secondaryMetric}
+                            {topper.subScore}
                           </div>
 
                           {/* Quote Block */}
@@ -628,7 +937,7 @@ export const ResultsSection: React.FC = () => {
         </div>
 
         {/* ========================================================================= */}
-        {/* BLOCK 4 — FULL RESULTS ROSTER (WITH STEADY ACHIEVERS FILTER) */}
+        {/* BLOCK 4 — FULL RESULTS ROSTER (HSC BOARD 2026 VERIFIED RESULTS) */}
         {/* ========================================================================= */}
         <div className="mb-20">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 pb-3 border-b border-[#E4DCC8] gap-4">
@@ -637,11 +946,12 @@ export const ResultsSection: React.FC = () => {
                 Student Performance Roster
               </h3>
               <p className="text-xs text-[#14110F]/70 font-normal">
-                Complete verified marksheets across Board & Entrance exams.
+                Complete 100% verified HSC Board 2026 scorecards.
               </p>
             </div>
 
-            {/* Filter Tabs */}
+            {/* Filter Tabs (Currently disabled for HSC Board results; re-enable when JEE/NEET results are added) */}
+            {/*
             <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1">
               {[
                 { key: 'all', label: 'All Results' },
@@ -665,63 +975,59 @@ export const ResultsSection: React.FC = () => {
                 </button>
               ))}
             </div>
+            */}
           </div>
 
-          {/* Roster Controls & Horizontal Scrolling Card Chain */}
-          <div className="relative group/chain">
-            <button
-              type="button"
-              onClick={() => handleScroll('left')}
-              className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white border border-[#E4DCC8] shadow-md flex items-center justify-center text-[#14110F] hover:bg-[#0F3D2E] hover:text-[#FAF7F0] transition-colors cursor-pointer"
-              aria-label="Scroll left"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
+          {/* Infinitely Rotating Marquee Carousel with Fading Edges */}
+          <div className="relative overflow-hidden py-3 [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
+            {/* Left & Right Gradient Fades */}
+            <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-r from-[#FAF7F0] to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-l from-[#FAF7F0] to-transparent z-10 pointer-events-none" />
 
+            {/* Marquee Track */}
             <div
-              ref={scrollContainerRef}
-              className="flex gap-5 overflow-x-auto no-scrollbar py-2 px-1 scroll-smooth"
+              key={activeFilter}
+              className="flex gap-5 animate-marquee hover:[animation-play-state:paused]"
             >
-              {filteredRoster.map((student) => {
+              {rosterLoop.map((student, idx) => {
                 const res = student.results[0];
                 return (
                   <div
-                    key={student.id}
-                    className="w-[290px] sm:w-[320px] shrink-0 bg-white border border-[#E4DCC8] hover:border-[#B08D57] rounded-xl p-5 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group"
+                    key={`${student.id}-${idx}`}
+                    className="w-[280px] sm:w-[310px] shrink-0 bg-white border border-[#E4DCC8] hover:border-[#B08D57] rounded-xl p-5 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group relative"
                   >
                     <div>
-                      <div className="flex items-center gap-3 mb-3">
-                        <div className="w-12 h-12 rounded-full overflow-hidden bg-[#F0ECE1] shrink-0 border border-[#E4DCC8]">
-                          {student.photo ? (
-                            <img
-                              src={student.photo}
-                              alt={student.name}
-                              width={48}
-                              height={48}
-                              loading="lazy"
-                              className="w-full h-full object-cover"
-                            />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center text-sm font-bold text-[#0F3D2E]">
-                              {getInitials(student.name)}
-                            </div>
-                          )}
+                      {/* Top Header Row with Initials Circle & Verified Button at Top Right */}
+                      <div className="flex items-center justify-between gap-2 mb-3 pb-3 border-b border-[#F0ECE1]">
+                        <div className="w-11 h-11 rounded-full overflow-hidden bg-[#0F3D2E] text-[#FAF7F0] shrink-0 border-2 border-[#B08D57]/40 flex items-center justify-center font-editorial font-bold text-sm shadow-xs">
+                          {getInitials(student.name)}
                         </div>
-                        <div>
-                          <h4 className="font-editorial text-base font-bold text-[#14110F] group-hover:text-[#0F3D2E] transition-colors">
-                            {student.name}
-                          </h4>
-                          <span className="text-[10px] text-[#14110F]/60 block font-medium">
-                            {student.batch}
-                          </span>
-                        </div>
+
+                        <button
+                          type="button"
+                          onClick={() => setSelectedStudent(student)}
+                          className="px-2.5 py-1 rounded bg-[#FAF7F0] hover:bg-[#0F3D2E] text-[#0F3D2E] hover:text-[#FAF7F0] border border-[#E4DCC8] hover:border-[#0F3D2E] text-[9px] font-extrabold uppercase tracking-wider transition-all duration-200 flex items-center gap-1 cursor-pointer shadow-2xs"
+                        >
+                          <CheckCircle2 className="w-3 h-3 text-[#25D366]" />
+                          <span>VERIFIED →</span>
+                        </button>
+                      </div>
+
+                      {/* Name & Batch */}
+                      <div className="mb-3">
+                        <h4 className="font-editorial text-base sm:text-lg font-bold text-[#14110F] group-hover:text-[#0F3D2E] transition-colors leading-snug truncate">
+                          {student.name}
+                        </h4>
+                        <span className="text-[10px] text-[#14110F]/60 block font-medium mt-0.5 truncate">
+                          {student.batch}
+                        </span>
                       </div>
 
                       {/* Main Score Callout */}
                       {res && (
                         <div className="p-3 rounded-lg bg-[#FAF7F0] border border-[#F0ECE1] mb-3">
                           <div className="text-[10px] font-bold text-[#B08D57] uppercase tracking-wider">
-                            {res.type === 'board' ? '12TH HSC BOARD' : res.type.toUpperCase()}
+                            {res.type === 'board' ? '12TH HSC BOARD 2026' : res.type.toUpperCase()}
                           </div>
                           <div className="font-editorial text-2xl font-bold text-[#0F3D2E]">
                             {res.type === 'board' ? `${res.percentage}%` : res.score || res.rankOrPercentile}
@@ -731,9 +1037,9 @@ export const ResultsSection: React.FC = () => {
 
                       {/* Subject Marks Breakdown */}
                       {res?.subjects && (
-                        <div className="space-y-1.5 mb-4">
-                          {res.subjects.map((s, idx) => (
-                            <div key={idx} className="flex justify-between text-xs font-normal">
+                        <div className="space-y-1.5 mb-2">
+                          {res.subjects.map((s, sIdx) => (
+                            <div key={sIdx} className="flex justify-between text-xs font-normal">
                               <span className="text-[#14110F]/70">{s.name}</span>
                               <span className="font-bold text-[#14110F]">{s.marks} / 100</span>
                             </div>
@@ -741,27 +1047,10 @@ export const ResultsSection: React.FC = () => {
                         </div>
                       )}
                     </div>
-
-                    <button
-                      type="button"
-                      onClick={() => setSelectedStudent(student)}
-                      className="w-full py-1.5 rounded bg-white hover:bg-[#0F3D2E] text-[#0F3D2E] hover:text-[#FAF7F0] border border-[#E4DCC8] text-[10px] font-bold uppercase tracking-wider transition-colors flex items-center justify-center gap-1 cursor-pointer pt-2 border-t"
-                    >
-                      <span>VERIFIED →</span>
-                    </button>
                   </div>
                 );
               })}
             </div>
-
-            <button
-              type="button"
-              onClick={() => handleScroll('right')}
-              className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white border border-[#E4DCC8] shadow-md flex items-center justify-center text-[#14110F] hover:bg-[#0F3D2E] hover:text-[#FAF7F0] transition-colors cursor-pointer"
-              aria-label="Scroll right"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
           </div>
         </div>
 
@@ -769,23 +1058,23 @@ export const ResultsSection: React.FC = () => {
         {/* NEW BLOCK 5 — "BEYOND THE EXAM HALL" (AWARD & COMPETITION GALLERY) */}
         {/* ========================================================================= */}
         <div>
-          <div className="flex flex-col items-center text-center mb-8">
-            <div className="flex items-center gap-2 mb-2">
+          <div className="flex flex-col items-center text-center mb-6 sm:mb-8">
+            <div className="flex items-center gap-2 mb-1.5">
               <span className="h-px w-6 bg-[#B08D57]" />
-              <span className="text-xs font-semibold uppercase tracking-widest text-[#B08D57]">
+              <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-[#B08D57]">
                 CELEBRATING EVERY WIN
               </span>
               <span className="h-px w-6 bg-[#B08D57]" />
             </div>
-            <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-[#14110F]">
+            <h3 className="font-editorial text-xl sm:text-3xl font-bold text-[#14110F]">
               Beyond the Exam Hall
             </h3>
-            <p className="text-xs sm:text-sm text-[#14110F]/75 max-w-xl font-normal leading-relaxed mt-1">
+            <p className="text-[11px] sm:text-sm text-[#14110F]/75 max-w-xl font-normal leading-relaxed mt-0.5">
               Honoring academic excellence, Olympiad distinctions, and annual merit felicitation honors.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             {beyondExamGallery.map((item, idx) => (
               <motion.div
                 key={idx}
@@ -793,10 +1082,10 @@ export const ResultsSection: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: idx * 0.08 }}
-                className="bg-white border border-[#E4DCC8] hover:border-[#B08D57] rounded-xl overflow-hidden p-4 shadow-xs hover:shadow-md transition-all duration-300 group flex flex-col justify-between"
+                className="bg-white border border-[#E4DCC8] hover:border-[#B08D57] rounded-lg sm:rounded-xl overflow-hidden p-2.5 sm:p-4 shadow-xs hover:shadow-md transition-all duration-300 group flex flex-col justify-between"
               >
                 <div>
-                  <div className="relative aspect-[4/3] w-full rounded-lg overflow-hidden bg-[#F0ECE1] mb-3 border border-[#E4DCC8]">
+                  <div className="relative aspect-[4/3] w-full rounded-md sm:rounded-lg overflow-hidden bg-[#F0ECE1] mb-2 sm:mb-3 border border-[#E4DCC8]">
                     <img
                       src={item.img}
                       alt={item.title}
@@ -805,14 +1094,14 @@ export const ResultsSection: React.FC = () => {
                       loading="lazy"
                       className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                     />
-                    <span className="absolute top-2 left-2 px-2 py-0.5 rounded bg-[#0F3D2E]/90 text-[#FAF7F0] text-[8px] font-bold uppercase tracking-wider backdrop-blur-xs">
+                    <span className="absolute top-1.5 left-1.5 px-1.5 sm:px-2 py-0.5 rounded bg-[#0F3D2E]/90 text-[#FAF7F0] text-[7px] sm:text-[8px] font-bold uppercase tracking-wider backdrop-blur-xs">
                       {item.badge}
                     </span>
                   </div>
-                  <h4 className="font-editorial text-lg font-bold text-[#14110F] mb-1 group-hover:text-[#0F3D2E] transition-colors">
+                  <h4 className="font-editorial text-sm sm:text-lg font-bold text-[#14110F] mb-0.5 sm:mb-1 group-hover:text-[#0F3D2E] transition-colors leading-tight">
                     {item.title}
                   </h4>
-                  <p className="text-xs text-[#14110F]/75 leading-relaxed font-normal">
+                  <p className="text-[10px] sm:text-xs text-[#14110F]/75 leading-normal sm:leading-relaxed font-normal">
                     {item.caption}
                   </p>
                 </div>

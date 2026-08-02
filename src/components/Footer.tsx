@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowUp } from 'lucide-react';
+import logoImg from '../assets/logo.png';
 
 export const Footer: React.FC = () => {
   const scrollToTop = () => {
@@ -13,11 +14,11 @@ export const Footer: React.FC = () => {
           {/* Brand Info */}
           <div className="md:col-span-5 flex flex-col items-start">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-8 h-8 rounded bg-[#FAF7F0] text-[#0F3D2E] flex items-center justify-center font-editorial font-bold text-base">
-                V
+              <div className="w-10 h-10 rounded-md text-[#FAF7F0] flex items-center justify-center shrink-0">
+                <img src={logoImg} alt="R. R. Patil Coaching Classes Logo" className="w-full h-full object-contain" />
               </div>
-              <span className="font-institute-name text-2xl font-bold tracking-tight text-[#FAF7F0]">
-                R. R. Patil ACADEMY
+              <span className="font-institute-name text-xl sm:text-2xl font-bold tracking-tight text-[#FAF7F0]">
+                R. R. Patil Coaching Classes
               </span>
             </div>
             <p className="text-xs text-[#FAF7F0]/70 leading-relaxed font-normal max-w-sm mb-6">
@@ -68,12 +69,12 @@ export const Footer: React.FC = () => {
           {/* Contact & Hours */}
           <div className="md:col-span-4">
             <h4 className="text-xs font-semibold uppercase tracking-widest text-[#B08D57] mb-4">
-              CAMPUS & INQUIRIES
+              KOPARGAON CAMPUS & INQUIRIES
             </h4>
             <div className="space-y-2 text-xs text-[#FAF7F0]/80 leading-relaxed">
-              <p>Knowledge Park 3, Deccan Gymkhana, Pune, MH 411004</p>
-              <p>Inquiry Email: <span className="text-[#FAF7F0]">admissions@R. R. Patilacademy.demo</span></p>
-              <p>Helpline: <span className="text-[#FAF7F0]">+91 (020) 2450-8900</span></p>
+              <p>Sai City Road, Vidya Nagar, Kopargaon, Dist. Ahilyanagar (Ahmednagar), MH - 423601</p>
+              <p>Inquiry Email: <span className="text-[#FAF7F0]">info@rrpatilacademy.in</span></p>
+              <p>Helplines: <span className="text-[#FAF7F0]">+91 86686 06268 / +91 82752 80028</span></p>
             </div>
           </div>
         </div>
@@ -81,7 +82,7 @@ export const Footer: React.FC = () => {
         {/* Bottom copyright & scroll top */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#FAF7F0]/50 gap-4">
           <div>
-            © 2026 R. R. Patil ACADEMY. Portfolio Demo Template. All rights reserved.
+            © 2026 R. R. Patil Coaching Classes, Kopargaon. All rights reserved.
           </div>
           <button
             onClick={scrollToTop}

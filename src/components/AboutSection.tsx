@@ -53,10 +53,10 @@ export const AboutSection: React.FC = () => {
               Academic excellence is not luck. It is a predictable outcome of deliberate methodology.
             </h2>
             <p className="text-base text-[#14110F]/80 leading-relaxed font-normal mb-6">
-              Founded in 2012 by educators from top technical universities, R. R. Patil Academy was built to address the dilution of rigor in secondary coaching. We combine small batch sizes with uncompromising syllabus depth.
+              Established in Kopargaon by master educators Prof. R. R. Patil, Prof. Harshal Belapurkar, and Prof. Prasad Patil, R. R. Patil Academy was built to bring world-class competitive coaching to Kopargaon. We combine small batch sizes with 100% direct senior faculty teaching and zero sub-staff reliance.
             </p>
             <div className="p-4 rounded-md border-l-2 border-[#B08D57] bg-[#F0ECE1] text-xs font-medium text-[#0F3D2E]">
-              "The goal of competitive exam coaching is to make complex problem-solving intuitive under pressure."
+              "From 6th standard foundation to 12th HSC Board distinction, JEE/NEET ranks, and AI/ML tech placement — we guide Kopargaon students every step of the way."
             </div>
           </motion.div>
 

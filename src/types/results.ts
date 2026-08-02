@@ -23,6 +23,19 @@ export type CompetitiveResult = {
 
 export type ExamResult = BoardResult | CompetitiveResult;
 
+export interface ChampionStudent {
+  id: string;
+  name: string;
+  photo?: string;
+  certificatePhoto?: string;
+  batch?: string;
+  quote?: string;
+  badge?: string;
+  isAllTimeRecord?: boolean;
+  score: string;
+  subScore: string;
+}
+
 export interface Student {
   id: string;
   name: string;

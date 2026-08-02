@@ -61,7 +61,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenDemo }) =>
               </a>
 
               <a
-                href="tel:+918275280028"
+                href="tel:+918668606268"
                 className="inline-flex items-center justify-center gap-2 px-5 py-4 rounded-md border border-[#FAF7F0]/30 hover:border-[#B08D57] text-[#FAF7F0] text-xs font-semibold uppercase tracking-wider hover:bg-[#FAF7F0]/10 transition-all min-h-[48px]"
               >
                 <Phone className="w-4 h-4 text-[#B08D57]" />
@@ -70,7 +70,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenDemo }) =>
             </div>
 
             <div className="text-xs text-[#FAF7F0]/60 font-normal">
-              Direct Helpline: <span className="text-[#B08D57] font-semibold">+91 82752-80028</span> (Mon–Sat, 8:00 AM – 7:30 PM)
+              Direct Helplines: <span className="text-[#B08D57] font-semibold">+91 86686 06268 / +91 82752 80028</span> (Mon–Sat, 6:00 AM – 7:30 PM)
             </div>
           </motion.div>
 
@@ -85,10 +85,10 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenDemo }) =>
             <div className="p-6 sm:p-8 rounded-lg bg-[#0A2A20] border border-[#B08D57]/30 space-y-6 shadow-md">
               <div className="border-b border-[#FAF7F0]/10 pb-4">
                 <span className="text-[10px] font-semibold uppercase tracking-widest text-[#B08D57] block mb-1">
-                  MAIN CAMPUS ADDRESS
+                  KOPARGAON CAMPUS ADDRESS
                 </span>
                 <h3 className="font-editorial text-xl font-semibold text-[#FAF7F0]">
-                  R. R. Patil Academic Center
+                  R. R. Patil Coaching Classes
                 </h3>
               </div>
 
@@ -96,7 +96,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenDemo }) =>
                 <div className="flex items-start gap-3">
                   <MapPin className="w-4 h-4 text-[#B08D57] shrink-0 mt-0.5" />
                   <span>
-                    Plot 45, Knowledge Park Sector 3, Near City Library, Deccan Gymkhana, Pune, Maharashtra 411004
+                    Sai City Road, Vidya Nagar, Kopargaon, Dist. Ahilyanagar (Ahmednagar), Maharashtra - 423601
                   </span>
                 </div>
 
@@ -104,19 +104,19 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenDemo }) =>
                   <Clock className="w-4 h-4 text-[#B08D57] shrink-0 mt-0.5" />
                   <div>
                     <div className="font-semibold text-[#FAF7F0]">Campus Operating Hours:</div>
-                    <div className="opacity-80">Monday – Saturday: 7:30 AM – 8:00 PM</div>
-                    <div className="opacity-80">Sunday: 9:00 AM – 2:00 PM (Diagnostic Tests Only)</div>
+                    <div className="opacity-80">Monday – Saturday: 6:00 AM – 7:30 PM</div>
+                    <div className="opacity-80">Sunday: 8:00 AM – 1:00 PM (Diagnostic Tests Only)</div>
                   </div>
                 </div>
               </div>
 
-              {/* Map Placeholder Graphic */}
+              {/* Map Graphic Box */}
               <div className="w-full h-32 rounded bg-[#0F3D2E] border border-[#FAF7F0]/10 flex flex-col items-center justify-center p-4 text-center">
                 <span className="text-[11px] font-semibold uppercase tracking-wider text-[#B08D57] mb-1">
-                  Deccan Gymkhana Campus Map
+                  Kopargaon Campus Landmark
                 </span>
-                <span className="text-[10px] text-[#FAF7F0]/60">
-                  Landmark: 2 mins walk from Metro Station Gate 2
+                <span className="text-[10px] text-[#FAF7F0]/70">
+                  Vidya Nagar, Sai City Road · Easy access for SSGM & KJS College students
                 </span>
               </div>
             </div>

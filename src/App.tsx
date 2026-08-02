@@ -43,6 +43,9 @@ const Footer = lazy(() =>
 const ChatWidget = lazy(() =>
   import('./components/ChatWidget').then((m) => ({ default: m.ChatWidget }))
 );
+const MemoryTribute = lazy(() =>
+  import('./components/MemoryTribute').then((m) => ({ default: m.MemoryTribute }))
+);
 
 // Minimal lightweight loader for Suspense fallback
 const SectionLoader: React.FC = () => (
@@ -134,6 +137,11 @@ export function App() {
       {/* Floating AI Chatbot Widget */}
       <Suspense fallback={null}>
         <ChatWidget />
+      </Suspense>
+
+      {/* Quiet Memorial Tribute (Bottom-Left Corner) */}
+      <Suspense fallback={null}>
+        <MemoryTribute />
       </Suspense>
 
       {/* Demo Booking Modal */}
