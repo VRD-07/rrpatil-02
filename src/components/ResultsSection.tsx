@@ -139,32 +139,32 @@ export const thisYearChampions: ChampionStudent[] = [
     subScore: 'HSC Board Disctinction',
   },
 ];// Imports from res_indi (HSC Board 2026 ground-truth marksheets)
-import res1 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.38 PM.jpeg';
-import res2 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.39 PM.jpeg';
-import res3 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.40 PM (1).jpeg';
-import res4 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.40 PM.jpeg';
-import res5 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.41 PM (1).jpeg';
-import res6 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.41 PM.jpeg';
-import res7 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.42 PM (1).jpeg';
-import res8 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.42 PM.jpeg';
-import res9 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.43 PM (1).jpeg';
-import res10 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.43 PM.jpeg';
-import res11 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.44 PM.jpeg';
-import res12 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.45 PM (1).jpeg';
-import res13 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.45 PM.jpeg';
-import res14 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.47 PM (1).jpeg';
-import res15 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.47 PM.jpeg';
-import res16 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.48 PM (1).jpeg';
-import res17 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.48 PM (2).jpeg';
-import res18 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.48 PM.jpeg';
-import res19 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.49 PM (1).jpeg';
-import res20 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.49 PM (2).jpeg';
-import res21 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.49 PM.jpeg';
-import res22 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.50 PM (1).jpeg';
-import res23 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.50 PM (2).jpeg';
-import res24 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.50 PM.jpeg';
-import res25 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.51 PM (1).jpeg';
-import res26 from '../assets/res_indi/WhatsApp Image 2026-07-26 at 8.32.51 PM.jpeg';
+import res1 from '../assets/res_indi/student-result-01.jpeg';
+import res2 from '../assets/res_indi/student-result-02.jpeg';
+import res3 from '../assets/res_indi/student-result-03.jpeg';
+import res4 from '../assets/res_indi/student-result-04.jpeg';
+import res5 from '../assets/res_indi/student-result-05.jpeg';
+import res6 from '../assets/res_indi/student-result-06.jpeg';
+import res7 from '../assets/res_indi/student-result-07.jpeg';
+import res8 from '../assets/res_indi/student-result-08.jpeg';
+import res9 from '../assets/res_indi/student-result-09.jpeg';
+import res10 from '../assets/res_indi/student-result-10.jpeg';
+import res11 from '../assets/res_indi/student-result-11.jpeg';
+import res12 from '../assets/res_indi/student-result-12.jpeg';
+import res13 from '../assets/res_indi/student-result-13.jpeg';
+import res14 from '../assets/res_indi/student-result-14.jpeg';
+import res15 from '../assets/res_indi/student-result-15.jpeg';
+import res16 from '../assets/res_indi/student-result-16.jpeg';
+import res17 from '../assets/res_indi/student-result-17.jpeg';
+import res18 from '../assets/res_indi/student-result-18.jpeg';
+import res19 from '../assets/res_indi/student-result-19.jpeg';
+import res20 from '../assets/res_indi/student-result-20.jpeg';
+import res21 from '../assets/res_indi/student-result-21.jpeg';
+import res22 from '../assets/res_indi/student-result-22.jpeg';
+import res23 from '../assets/res_indi/student-result-23.jpeg';
+import res24 from '../assets/res_indi/student-result-24.jpeg';
+import res25 from '../assets/res_indi/student-result-25.jpeg';
+import res26 from '../assets/res_indi/student-result-26.jpeg';
 
 // ============================================================================
 // 3. FULL STUDENT PERFORMANCE ROSTER (HSC Board 2026 Verified Results)
