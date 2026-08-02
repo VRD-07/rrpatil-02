@@ -3,9 +3,15 @@ import { motion } from 'framer-motion';
 import { CheckCircle2, BookOpen, Award, ShieldCheck, MapPin } from 'lucide-react';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 
-// ES Module imports for ground-truth award handover & dusk campus exterior photos
-import verifiedResultsImg from '../assets/Awards/award_02.jpeg';
-import duskExteriorImg from '../assets/Infra/building_front.jpeg';
+// =========================================================================
+// SWAP YOUR CARD PHOTOS HERE: Replace any import path below with your new photo
+// =========================================================================
+import card1Photo from '../assets/Rakesh_felic.jpeg'; // Card 1: Real, Verified Results
+import card2Photo from '../assets/Books/foundation_book.jpeg'; // Card 2: Our Own Study Material
+import card3Photo from '../assets/Infra/class_02.jpeg'; // Card 3: Weekly Testing & Tracking
+import card4Photo from '../assets/Infra/study_1.jpeg'; // Card 4: Safe, Structured Campus
+
+import duskExteriorImg from '../assets/Infra/building_front.jpeg'; // Featured Campus Exterior
 
 export const WhyChooseUs: React.FC = () => {
   const reducedMotion = usePrefersReducedMotion();
@@ -16,26 +22,36 @@ export const WhyChooseUs: React.FC = () => {
       title: 'Real, Verified Results',
       desc: 'Tied directly to actual institute toppers with 100% verified official scorecards.',
       link: '#results',
-      photo: verifiedResultsImg,
+      photo: card1Photo,
       badge: 'VERIFIED SCORECARDS',
+      alt: 'Verified merit recognition award presentation',
     },
     {
       icon: BookOpen,
       title: 'Our Own Study Material',
       desc: 'Proprietary in-house books authored specifically by our senior faculty.',
       link: '#study-material',
+      photo: card2Photo,
+      badge: 'IN-HOUSE PUBLICATIONS',
+      alt: 'Proprietary study material books',
     },
     {
       icon: Award,
       title: 'Weekly Testing & Tracking',
       desc: '18,500+ MCQ testing platform with weekly written and digital diagnostic analysis.',
       link: '#assessment',
+      photo: card3Photo,
+      badge: 'WEEKLY DIAGNOSTIC TESTS',
+      alt: 'Weekly testing session in progress',
     },
     {
       icon: ShieldCheck,
       title: 'Safe, Structured Campus',
       desc: 'Audio-enabled CCTV coverage across campus for safety and disciplined study focus.',
       link: '#facilities',
+      photo: card4Photo,
+      badge: 'AUDIO-CCTV SECURED',
+      alt: 'Safe structured campus study environment',
     },
   ];
 
@@ -59,10 +75,9 @@ export const WhyChooseUs: React.FC = () => {
           </p>
         </div>
 
-        {/* 4 Pillar Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        {/* 4 Pillar Grid (Mobile 2-Column Grid: grid-cols-2) */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-6 mb-12">
           {pillars.map((item, idx) => {
-            const Icon = item.icon;
             return (
               <motion.div
                 key={idx}
@@ -70,40 +85,34 @@ export const WhyChooseUs: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: reducedMotion ? 0 : idx * 0.08 }}
-                className="bg-white border border-[#E4DCC8] hover:border-[#B08D57] rounded-lg overflow-hidden p-6 shadow-xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group"
+                className="bg-white border border-[#E4DCC8] hover:border-[#B08D57] rounded-lg overflow-hidden p-3.5 sm:p-6 shadow-xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group"
               >
                 <div>
-                  {/* Photo Inset for Card 1 */}
-                  {item.photo ? (
-                    <div className="relative aspect-[16/9] w-full rounded-md overflow-hidden bg-[#0F3D2E]/10 mb-4">
-                      <img
-                        src={item.photo}
-                        alt="Verified merit recognition award presentation"
-                        width={300}
-                        height={170}
-                        loading="lazy"
-                        className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                      />
-                      <span className="absolute top-2 left-2 px-2 py-0.5 rounded bg-[#0F3D2E]/90 text-[#FAF7F0] text-[8px] font-bold uppercase tracking-wider backdrop-blur-xs">
-                        {item.badge}
-                      </span>
-                    </div>
-                  ) : (
-                    <div className="w-12 h-12 rounded-lg bg-[#0F3D2E] text-[#FAF7F0] flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
-                      <Icon className="w-6 h-6 text-[#B08D57]" />
-                    </div>
-                  )}
+                  {/* Photo Container for Card */}
+                  <div className="relative aspect-[16/10] sm:aspect-[16/9] w-full rounded-md overflow-hidden bg-[#0F3D2E]/10 mb-3 sm:mb-4">
+                    <img
+                      src={item.photo}
+                      alt={item.alt}
+                      width={300}
+                      height={170}
+                      loading="lazy"
+                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <span className="absolute top-1.5 left-1.5 sm:top-2 sm:left-2 px-1.5 py-0.5 rounded bg-[#0F3D2E]/90 text-[#FAF7F0] text-[7px] sm:text-[8px] font-bold uppercase tracking-wider backdrop-blur-xs">
+                      {item.badge}
+                    </span>
+                  </div>
 
-                  <h3 className="font-editorial text-xl font-bold text-[#14110F] mb-2 group-hover:text-[#0F3D2E] transition-colors">
+                  <h3 className="font-editorial text-base sm:text-xl font-bold text-[#14110F] mb-1.5 sm:mb-2 group-hover:text-[#0F3D2E] transition-colors leading-tight">
                     {item.title}
                   </h3>
-                  <p className="text-xs sm:text-sm text-[#14110F]/75 leading-relaxed font-normal">
+                  <p className="text-[11px] sm:text-sm text-[#14110F]/75 leading-relaxed font-normal">
                     {item.desc}
                   </p>
                 </div>
                 <a
                   href={item.link}
-                  className="mt-6 inline-flex items-center text-xs font-semibold uppercase tracking-wider text-[#0F3D2E] hover:text-[#B08D57] transition-colors gap-1 pt-4 border-t border-[#F0ECE1]"
+                  className="mt-4 sm:mt-6 inline-flex items-center text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-[#0F3D2E] hover:text-[#B08D57] transition-colors gap-1 pt-3 sm:pt-4 border-t border-[#F0ECE1]"
                 >
                   <span>Learn More</span>
                   <span className="text-[#B08D57] group-hover:translate-x-1 transition-transform">→</span>
@@ -131,7 +140,7 @@ export const WhyChooseUs: React.FC = () => {
               loading="lazy"
               className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-500"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#0F3D2E]/40 to-[#0F3D2E] hidden md:block" />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0F3D2E]/40 to-[#0F3D2E] md:bg-gradient-to-r md:from-transparent md:via-[#0F3D2E]/40 md:to-[#0F3D2E]" />
           </div>
 
           {/* Text Content */}

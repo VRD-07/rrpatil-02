@@ -13,6 +13,27 @@ interface OpenAIHistoryItem {
   content: string;
 }
 
+const SYSTEM_CONTEXT = `
+You are the official assistant for R.R. Patil Coaching Classes, Sai City, Kopargaon. Answer ONLY using the information below. If asked something not covered here, politely say you'll connect them with the institute directly via WhatsApp or phone, and do NOT guess or invent details — especially fees, timings, or results, since wrong information here would break trust.
+
+PROGRAMS:
+- 6th-10th Regular Tuition
+- 8th/9th/10th Foundation Batch
+- 11th-12th Regular (Board) Batch: Morning, 6:15 AM - 11:00 AM, for SSGM & KJS College students
+- 11th-12th Competitive Batch (JEE/NEET/CET, external students): Afternoon, 3:00 PM - 7:00 PM, for External & Sanjivani College students. Externals also get full Biology coverage via the morning batch, included at no extra fee.
+- AI-ML Bootcamp for engineering students (new, flexible timing, contact for next cohort) + placement assistance
+
+STUDY MATERIAL: In-house authored 10th Foundation Book; 7 (PCM) or 9 (PCMB) subject books for 11th/12th, including a full 4-color Biology book; 1 PYQ book covering all subjects with 50 questions per chapter.
+
+TESTING: 18,500+ MCQs on our own testing platform (website + app). Weekly: 1 domain/app test + 1 written theory test, every student, every week.
+
+FACILITIES: Study room (included in fees), computer lab (used by AI-ML and regular students alike), CCTV with audio monitoring across campus, uniform included in fees.
+
+CONTACT: WhatsApp/Call: +91 8275280028. Address: Sai City, Kopargaon.
+
+Keep answers short (2-4 sentences), warm, and in plain English unless the user writes in Marathi/Hindi, in which case respond in that language naturally. Always end an answer about fees or admission specifics by suggesting they confirm exact figures via WhatsApp or call, since those can change and you should never quote a fee number that isn't explicitly provided above.
+`;
+
 export const ChatWidget: React.FC = () => {
   const reducedMotion = usePrefersReducedMotion();
   const [isOpen, setIsOpen] = useState(false);
@@ -52,13 +73,13 @@ export const ChatWidget: React.FC = () => {
     setInputMessage('');
     setIsLoading(true);
 
-    // Build history payload formatted as OpenAI-style messages for OpenRouter API
     const updatedHistory: OpenAIHistoryItem[] = [
       ...chatHistory,
       { role: 'user', content: query },
     ];
 
     try {
+      // 1. Try serverless backend endpoint /api/chat
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -68,23 +89,95 @@ export const ChatWidget: React.FC = () => {
         }),
       });
 
-      const data = await response.json();
-      const replyText =
-        data?.reply ||
-        'Sorry, I couldn’t process that request right now — please reach out via WhatsApp for an immediate response!';
+      const responseText = await response.text();
+      let data: any = null;
+      try {
+        data = responseText ? JSON.parse(responseText) : null;
+      } catch (err) {
+        data = null;
+      }
 
-      // Append bot reply to messages & update history
-      setMessages([...newMessages, { sender: 'bot', text: replyText }]);
-      setChatHistory([
-        ...updatedHistory,
-        { role: 'assistant', content: replyText },
-      ]);
-    } catch (err) {
+      // If serverless endpoint succeeded with JSON reply
+      if (response.ok && data?.reply) {
+        setMessages([...newMessages, { sender: 'bot', text: data.reply }]);
+        setChatHistory([
+          ...updatedHistory,
+          { role: 'assistant', content: data.reply },
+        ]);
+        setIsLoading(false);
+        return;
+      }
+
+      // If endpoint returned JSON error (e.g. 401 missing key or 500 OpenRouter error)
+      if (data?.error) {
+        setMessages([
+          ...newMessages,
+          { sender: 'bot', text: `[Server API Error]: ${data.error}` },
+        ]);
+        setIsLoading(false);
+        return;
+      }
+
+      // 2. If /api/chat returned 404 (e.g. local Vite npm run dev without Vercel backend)
+      const localKey = (import.meta as any).env?.VITE_OPENROUTER_API_KEY;
+      if (localKey) {
+        // Direct OpenRouter fetch for local development
+        const openRouterRes = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localKey}`,
+            'HTTP-Referer': 'http://localhost:5173',
+            'X-Title': 'RR Patil Local Dev Chatbot',
+          },
+          body: JSON.stringify({
+            model: 'google/gemma-4-26b-a4b-it:free',
+            temperature: 0.3,
+            messages: [
+              { role: 'system', content: SYSTEM_CONTEXT },
+              ...chatHistory,
+              { role: 'user', content: query },
+            ],
+          }),
+        });
+
+        const localData = await openRouterRes.json();
+        const localReply = localData?.choices?.[0]?.message?.content;
+
+        if (openRouterRes.ok && localReply) {
+          setMessages([...newMessages, { sender: 'bot', text: localReply }]);
+          setChatHistory([
+            ...updatedHistory,
+            { role: 'assistant', content: localReply },
+          ]);
+          setIsLoading(false);
+          return;
+        }
+
+        if (localData?.error) {
+          setMessages([
+            ...newMessages,
+            { sender: 'bot', text: `[OpenRouter Error]: ${typeof localData.error === 'object' ? localData.error.message : localData.error}` },
+          ]);
+          setIsLoading(false);
+          return;
+        }
+      }
+
+      // If running on Vite dev server (npm run dev) without Vercel function proxy or local key
       setMessages([
         ...newMessages,
         {
           sender: 'bot',
-          text: 'Connection issue. Please reach out directly via WhatsApp (+91 8275280028) for instant batch & admission details!',
+          text: `[Environment Notice]: /api/chat is a Vercel Serverless Function. In local dev (npm run dev), Vite does not run /api serverless functions. To enable chatbot: 1) Deploy to Vercel with OPENROUTER_API_KEY in Vercel Settings, OR 2) Create .env.local with VITE_OPENROUTER_API_KEY=your_key for local dev.`,
+        },
+      ]);
+    } catch (err: any) {
+      setMessages([
+        ...newMessages,
+        {
+          sender: 'bot',
+          text: `[Network Error]: ${err?.message || 'Failed to communicate with chat endpoint.'}`,
         },
       ]);
     } finally {

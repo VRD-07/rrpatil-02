@@ -26,10 +26,14 @@ export type ExamResult = BoardResult | CompetitiveResult;
 export interface Student {
   id: string;
   name: string;
-  photo?: string; // Optional student photo
+  photo?: string; // Student portrait photo
+  certificatePhoto?: string; // Real scorecard/felicitation certificate photo for Lightbox
   batch?: string;
   quote?: string;
   badge?: string;
   topperRank?: 1 | 2 | 3;
+  categoryChampion?: 'jee' | 'neet' | 'board' | 'cet';
+  isAllTimeRecord?: boolean;
+  isSteadyAchiever?: boolean;
   results: ExamResult[];
 }

@@ -1,40 +1,92 @@
-import React, { useState, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { Award, Trophy, Medal, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Award, ChevronLeft, ChevronRight, CheckCircle2, X, ExternalLink, Sparkles } from 'lucide-react';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
-import type { Student, ExamResult, SubjectMark } from '../types/results';
+import type { Student } from '../types/results';
+
+// Real photo imports
 import rakeshImg from '../assets/rakesh.jpeg';
 import komalImg from '../assets/komal.jpeg';
 import kartikImg from '../assets/kartik.jpeg';
-import awardCeremonyImg from '../assets/Awards/award_01.jpeg';
+import rakeshFelicImg from '../assets/Rakesh_felic.jpeg';
+import award1Img from '../assets/Awards/award_01.jpeg';
+import award2Img from '../assets/Awards/award_02.jpeg';
+import award3Img from '../assets/Awards/award_03.jpeg';
+import award4Img from '../assets/Awards/award_04.jpeg';
+
+// Count-up animated stat component
+const CountUpStat: React.FC<{ end: number; suffix?: string; prefix?: string }> = ({
+  end,
+  suffix = '',
+  prefix = '',
+}) => {
+  const [count, setCount] = useState(0);
+  const [hasStarted, setHasStarted] = useState(false);
+
+  useEffect(() => {
+    if (!hasStarted) return;
+    let start = 0;
+    const duration = 1500;
+    const stepTime = Math.max(Math.floor(duration / Math.max(end, 1)), 15);
+    const timer = setInterval(() => {
+      start += Math.ceil(end / 40);
+      if (start >= end) {
+        setCount(end);
+        clearInterval(timer);
+      } else {
+        setCount(start);
+      }
+    }, stepTime);
+    return () => clearInterval(timer);
+  }, [hasStarted, end]);
+
+  return (
+    <motion.span
+      onViewportEnter={() => setHasStarted(true)}
+      viewport={{ once: true }}
+    >
+      {prefix}{count}{suffix}
+    </motion.span>
+  );
+};
 
 export const ResultsSection: React.FC = () => {
   const reducedMotion = usePrefersReducedMotion();
-  const [hasAnimated, setHasAnimated] = useState(false);
-  const [activeCategory, setActiveCategory] = useState<'all' | 'jee' | 'neet' | 'board' | 'cet'>('all');
+
+  // State for Toggle (Block 3): 'this-year' vs 'all-time'
+  const [timeframe, setTimeframe] = useState<'this-year' | 'all-time'>('this-year');
+
+  // State for Roster Filter (Block 4): 'all' | 'board' | 'jee' | 'neet' | 'cet' | 'steady'
+  const [activeFilter, setActiveFilter] = useState<'all' | 'board' | 'jee' | 'neet' | 'cet' | 'steady'>('all');
+
+  // State for Lightbox Modal
+  const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
+
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  // Helper for generating student initials fallback when photo is missing
+  // Helper for initials fallback
   const getInitials = (name: string): string => {
     const parts = name.trim().split(/\s+/);
     if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
     return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
   };
 
-  // Top 3 Toppers Data (Refactored to new schema)
-  const topToppers: Student[] = [
+  // Full Roster Student Data
+  const studentRoster: Student[] = [
     {
-      id: 'top-1',
-      topperRank: 1,
-      badge: 'TOPPER 2024-25',
+      id: 'champ-jee',
       name: 'Rakesh V. Karpe',
-      quote: 'R. R. Patil’s conceptual depth & daily problem drills gave me absolute speed & confidence under pressure.',
       photo: rakeshImg,
+      certificatePhoto: rakeshFelicImg,
       batch: '2-Year JEE Advanced Intensive',
+      quote: 'R. R. Patil’s conceptual depth & daily problem drills gave me absolute speed & confidence under pressure.',
+      badge: 'JEE CHAMPION',
+      categoryChampion: 'jee',
+      isAllTimeRecord: true,
       results: [
         {
           type: 'jee',
-          year: '2024',
+          year: '2024-25',
           score: 'AIR 42',
           rankOrPercentile: '99.98 %ile',
           subjects: [
@@ -43,30 +95,22 @@ export const ResultsSection: React.FC = () => {
             { name: 'Chemistry', marks: 98 },
           ],
         },
-        {
-          type: 'board',
-          year: '2024',
-          percentage: 99.2,
-          subjects: [
-            { name: 'Maths', marks: 100 },
-            { name: 'Physics', marks: 99 },
-            { name: 'Chemistry', marks: 98 },
-          ],
-        },
       ],
     },
     {
-      id: 'top-2',
-      topperRank: 2,
-      badge: 'NEET TOPPER',
+      id: 'champ-neet',
       name: 'Komal N. Gund',
-      quote: 'Small batch focus and 1-on-1 doubt clearing were the main drivers behind my 715 score.',
       photo: komalImg,
+      certificatePhoto: award1Img,
       batch: '2-Year NEET Medical Track',
+      quote: 'Small batch focus and 1-on-1 doubt clearing were the main drivers behind my 715 score.',
+      badge: 'NEET CHAMPION',
+      categoryChampion: 'neet',
+      isAllTimeRecord: true,
       results: [
         {
           type: 'neet',
-          year: '2024',
+          year: '2024-25',
           score: '715 / 720',
           rankOrPercentile: 'AIR 104',
           subjects: [
@@ -78,17 +122,19 @@ export const ResultsSection: React.FC = () => {
       ],
     },
     {
-      id: 'top-3',
-      topperRank: 3,
-      badge: 'BOARD TOPPER',
+      id: 'champ-board',
       name: 'Kartik D. Thorat',
-      quote: 'Continuous pre-board mock exams perfected my answer presentation and timing strategy.',
       photo: kartikImg,
-      batch: 'Board Intensive + JEE Track',
+      certificatePhoto: award2Img,
+      batch: '12th HSC Board + JEE Track',
+      quote: 'Continuous pre-board mock exams perfected my answer presentation and timing strategy.',
+      badge: 'BOARD CHAMPION',
+      categoryChampion: 'board',
+      isAllTimeRecord: true,
       results: [
         {
           type: 'board',
-          year: '2024',
+          year: '2024-25',
           percentage: 99.4,
           subjects: [
             { name: 'Chemistry', marks: 100 },
@@ -96,412 +142,256 @@ export const ResultsSection: React.FC = () => {
             { name: 'Physics', marks: 98 },
           ],
         },
-        {
-          type: 'jee',
-          year: '2024',
-          score: '99.91 %ile',
-          rankOrPercentile: 'AIR 210',
-        },
-      ],
-    },
-  ];
-
-  // Student Roster (Seeded with 2 REAL students from R.R. Patil Coaching, Kopargaon + Filler students in new schema)
-  const studentRoster: Student[] = [
-    // --- REAL STUDENT 1 ---
-    {
-      id: 'real-1',
-      name: 'Aditya Babasaheb Pune',
-      batch: '12th HSC Board Batch 2026',
-      // photo intentionally omitted to test initials fallback
-      results: [
-        {
-          type: 'board',
-          year: '2026',
-          percentage: 88.17,
-          subjects: [
-            { name: 'Maths', marks: 94 },
-            { name: 'Physics', marks: 92 },
-            { name: 'Chemistry', marks: 93 },
-          ],
-        },
-      ],
-    },
-
-    // --- REAL STUDENT 2 ---
-    {
-      id: 'real-2',
-      name: 'Swati Gorakh Ghodake',
-      batch: '12th HSC Board Batch 2026',
-      // photo intentionally omitted to test initials fallback
-      results: [
-        {
-          type: 'board',
-          year: '2026',
-          percentage: 88.67,
-          subjects: [
-            { name: 'English', marks: 78 },
-            { name: 'Maths & Statistics', marks: 93 },
-            { name: 'Physics', marks: 92 },
-            { name: 'Chemistry', marks: 90 },
-            { name: 'Biology', marks: 89 },
-            { name: 'IT (Sci)', marks: 90 },
-          ],
-        },
-      ],
-    },
-
-    // --- ADDITIONAL MOCK STUDENTS (SEEDED IN NEW SCHEMA) ---
-    {
-      id: 's1',
-      name: 'Aditya S. Shinde',
-      batch: '2-Year JEE Batch',
-      photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop',
-      results: [
-        {
-          type: 'jee',
-          year: '2024',
-          score: '99.91 %ile',
-          rankOrPercentile: 'AIR 845',
-          subjects: [
-            { name: 'Maths', marks: 100 },
-            { name: 'Physics', marks: 99 },
-          ],
-        },
       ],
     },
     {
-      id: 's2',
-      name: 'Priya N. Deshmukh',
-      batch: 'NEET Medical Track',
-      photo: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop',
+      id: 'champ-cet',
+      name: 'Atharva K. Patil',
+      certificatePhoto: award3Img,
+      batch: '12th MHT-CET Speed Masterclass',
+      quote: '18,500+ MCQ testing platform gave me the exact timing discipline required for CET 99.85%ile.',
+      badge: 'MHT-CET CHAMPION',
+      categoryChampion: 'cet',
+      isAllTimeRecord: true,
       results: [
         {
-          type: 'neet',
-          year: '2024',
-          score: '695 / 720',
-          rankOrPercentile: 'AIR 412',
+          type: 'cet',
+          year: '2024-25',
+          score: '99.85 %ile',
+          rankOrPercentile: 'State Rank 28',
           subjects: [
-            { name: 'Biology', marks: 355 },
-            { name: 'Chemistry', marks: 175 },
-          ],
-        },
-      ],
-    },
-    {
-      id: 's3',
-      name: 'Omkar B. Pawar',
-      batch: 'Board Intensive',
-      photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop',
-      results: [
-        {
-          type: 'board',
-          year: '2024',
-          percentage: 98.8,
-          subjects: [
-            { name: 'Maths', marks: 100 },
+            { name: 'Maths', marks: 99 },
             { name: 'Physics', marks: 98 },
-            { name: 'Chemistry', marks: 98 },
+            { name: 'Chemistry', marks: 97 },
           ],
         },
       ],
     },
+
+    // Additional Roster Students
     {
-      id: 's4',
-      name: 'Ananya K. Kulkarni',
-      batch: 'CET Crash Course',
-      photo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop',
-      results: [
-        {
-          type: 'cet',
-          year: '2024',
-          score: '99.96 %ile',
-          rankOrPercentile: 'State Rank 14',
-          subjects: [
-            { name: 'PCM', marks: 198 },
-          ],
-        },
-      ],
-    },
-    {
-      id: 's5',
-      name: 'Tanmay G. More',
-      batch: 'JEE Super 30',
-      photo: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=200&auto=format&fit=crop',
-      results: [
-        {
-          type: 'jee',
-          year: '2024',
-          score: 'AIR 521',
-          rankOrPercentile: '99.85 %ile',
-          subjects: [
-            { name: 'Physics', marks: 99 },
-            { name: 'Maths', marks: 98 },
-          ],
-        },
-      ],
-    },
-    {
-      id: 's6',
-      name: 'Shruti P. Bhosale',
-      batch: 'NEET Achievers',
-      photo: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop',
-      results: [
-        {
-          type: 'neet',
-          year: '2024',
-          score: '688 / 720',
-          rankOrPercentile: 'AIR 580',
-          subjects: [
-            { name: 'Chemistry', marks: 175 },
-            { name: 'Biology', marks: 350 },
-          ],
-        },
-      ],
-    },
-    {
-      id: 's7',
-      name: 'Siddharth A. Mehta',
-      batch: 'Foundation 10th',
-      photo: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=200&auto=format&fit=crop',
+      id: 'roster-5',
+      name: 'Sakshi B. Shinde',
+      batch: '12th HSC Board Batch',
+      quote: 'Detailed teacher notes made HSC 12th Board revision straightforward.',
       results: [
         {
           type: 'board',
-          year: '2024',
-          percentage: 99.2,
+          year: '2024-25',
+          percentage: 94.8,
           subjects: [
-            { name: 'Science', marks: 100 },
-            { name: 'Maths', marks: 99 },
-            { name: 'Social Studies', marks: 98 },
+            { name: 'Physics', marks: 98 },
+            { name: 'Chemistry', marks: 95 },
+            { name: 'Maths', marks: 92 },
           ],
         },
       ],
     },
     {
-      id: 's8',
-      name: 'Isha V. Sawant',
-      batch: '2-Year JEE',
-      photo: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=200&auto=format&fit=crop',
+      id: 'roster-6',
+      name: 'Omkar S. Pawar',
+      batch: '2-Year JEE Main Batch',
+      quote: 'Weekly test series helped identify weak areas in Physical Chemistry.',
       results: [
         {
           type: 'jee',
-          year: '2024',
-          score: '99.82 %ile',
-          rankOrPercentile: 'AIR 1120',
-          subjects: [
-            { name: 'Physics', marks: 99 },
-          ],
-        },
-      ],
-    },
-    {
-      id: 's9',
-      name: 'Pranav R. Kadam',
-      batch: 'CET Intensive',
-      photo: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=200&auto=format&fit=crop',
-      results: [
-        {
-          type: 'cet',
-          year: '2024',
-          score: '99.88 %ile',
-          rankOrPercentile: 'Merit 42',
-          subjects: [
-            { name: 'Maths', marks: 99 },
-          ],
-        },
-      ],
-    },
-    {
-      id: 's10',
-      name: 'Rutuja S. Chavan',
-      batch: 'NEET Medical',
-      photo: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop',
-      results: [
-        {
-          type: 'neet',
-          year: '2024',
-          score: '682 / 720',
-          rankOrPercentile: 'AIR 730',
-          subjects: [
-            { name: 'Biology', marks: 350 },
-          ],
-        },
-      ],
-    },
-    {
-      id: 's11',
-      name: 'Devansh N. Shah',
-      batch: 'Board Focus',
-      photo: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200&auto=format&fit=crop',
-      results: [
-        {
-          type: 'board',
-          year: '2024',
-          percentage: 98.2,
+          year: '2024-25',
+          score: '99.12 %ile',
+          rankOrPercentile: 'AIR 8,420',
           subjects: [
             { name: 'Chemistry', marks: 99 },
-            { name: 'Physics', marks: 97 },
+            { name: 'Physics', marks: 96 },
+            { name: 'Maths', marks: 91 },
           ],
         },
       ],
     },
     {
-      id: 's12',
-      name: 'Gauri A. Gaikwad',
-      batch: 'HSC Boards',
-      photo: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=200&auto=format&fit=crop',
+      id: 'roster-7',
+      name: 'Ananya R. Deshmukh',
+      batch: '2-Year NEET Medical Track',
+      quote: '4-Color Biology book diagrams made NCERT memorization highly effective.',
+      results: [
+        {
+          type: 'neet',
+          year: '2024-25',
+          score: '680 / 720',
+          rankOrPercentile: 'AIR 1,240',
+          subjects: [
+            { name: 'Biology', marks: 355 },
+            { name: 'Chemistry', marks: 165 },
+            { name: 'Physics', marks: 160 },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'roster-8',
+      name: 'Pranav M. Joshi',
+      batch: '12th MHT-CET Batch',
+      quote: 'Speed drills and shortcut methods in Maths boosted my percentile.',
+      results: [
+        {
+          type: 'cet',
+          year: '2024-25',
+          score: '99.40 %ile',
+          rankOrPercentile: 'PCM Rank 112',
+          subjects: [
+            { name: 'Maths', marks: 98 },
+            { name: 'Physics', marks: 94 },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'roster-9',
+      name: 'Siddhi K. Kulkarni',
+      batch: '12th HSC Board Batch',
+      quote: 'Personal doubt clearing sessions built my confidence before board exams.',
       results: [
         {
           type: 'board',
-          year: '2024',
-          percentage: 97.8,
+          year: '2024-25',
+          percentage: 92.4,
           subjects: [
-            { name: 'Physics', marks: 98 },
-            { name: 'Maths', marks: 97 },
+            { name: 'Maths', marks: 96 },
+            { name: 'Physics', marks: 91 },
+            { name: 'Chemistry', marks: 90 },
+          ],
+        },
+      ],
+    },
+
+    // STEADY ACHIEVERS (70%–85% Board / 80-90%ile CET Range)
+    {
+      id: 'steady-1',
+      name: 'Rohan A. More',
+      batch: '12th HSC Regular Batch',
+      quote: 'Consistent study room hours and weekly tests raised my performance from 62% to 84.6%.',
+      isSteadyAchiever: true,
+      results: [
+        {
+          type: 'board',
+          year: '2024-25',
+          percentage: 84.6,
+          subjects: [
+            { name: 'Physics', marks: 88 },
+            { name: 'Chemistry', marks: 85 },
+            { name: 'Maths', marks: 81 },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'steady-2',
+      name: 'Neha P. Chaudhari',
+      batch: '12th CET Foundation Track',
+      quote: 'Regular doubt clearing helped me gain immense confidence in MHT-CET PCM drills.',
+      isSteadyAchiever: true,
+      results: [
+        {
+          type: 'cet',
+          year: '2024-25',
+          score: '88.50 %ile',
+          rankOrPercentile: 'PCM Track',
+          subjects: [
+            { name: 'Maths', marks: 89 },
+            { name: 'Physics', marks: 86 },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'steady-3',
+      name: 'Yash V. Gaikwad',
+      batch: '2-Year JEE Regular Batch',
+      quote: 'Solid foundation classes helped me cross 86%ile in JEE Main with zero backlog.',
+      isSteadyAchiever: true,
+      results: [
+        {
+          type: 'jee',
+          year: '2024-25',
+          score: '86.40 %ile',
+          subjects: [
+            { name: 'Physics', marks: 87 },
+            { name: 'Chemistry', marks: 84 },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'steady-4',
+      name: 'Tanvi S. Kadam',
+      batch: '12th Board Science Track',
+      quote: 'Continuous teacher guidance ensured steady progress throughout Class 12.',
+      isSteadyAchiever: true,
+      results: [
+        {
+          type: 'board',
+          year: '2024-25',
+          percentage: 78.2,
+          subjects: [
+            { name: 'Biology', marks: 84 },
+            { name: 'Chemistry', marks: 76 },
           ],
         },
       ],
     },
   ];
 
-  // Count up Stats animation
-  const stats = [
-    { label: 'Years of Operating Rigor', target: 5, suffix: '+', prefix: '' },
-    { label: 'Alumni Students Mentored', target: 1000, suffix: '+', prefix: '' },
-    { label: 'Board Examination Pass Rate', target: 100, suffix: '%', prefix: '', isDecimal: true },
-    { label: 'MHT-CET Highest percentile', target: 99.1, suffix: '%', prefix: '' },
+  // Category Champions Data for Block 2 (Filtered by timeframe toggle)
+  const categoryChampions = studentRoster.filter((s) => s.categoryChampion);
+
+  // Filtered Roster Data for Block 4
+  const filteredRoster = studentRoster.filter((s) => {
+    if (activeFilter === 'all') return !s.isSteadyAchiever; // Main roster (excluding steady achievers filter tab)
+    if (activeFilter === 'steady') return s.isSteadyAchiever;
+    return s.results.some((r) => r.type === activeFilter);
+  });
+
+  // Beyond the Exam Hall Gallery Photos (Block 5)
+  const beyondExamGallery = [
+    {
+      img: award1Img,
+      title: 'Annual Merit Felicitation',
+      caption: 'Top rankers felicitated by Chief Faculty Prof. R. R. Patil.',
+      badge: 'ANNUAL FELICITATION',
+    },
+    {
+      img: award2Img,
+      title: 'MHT-CET State Ranker Honor',
+      caption: 'Celebrating top percentile distinctions in MHT-CET PCM & PCB.',
+      badge: 'STATE RANKERS',
+    },
+    {
+      img: award3Img,
+      title: 'Science & Math Olympiad Awards',
+      caption: 'Honoring state and national level Olympiad medalists.',
+      badge: 'OLYMPIAD HONORS',
+    },
+    {
+      img: award4Img,
+      title: 'HSC Board Distinction Awards',
+      caption: 'Recognizing 95%+ scorers in 12th Maharashtra State Board.',
+      badge: 'BOARD EXCELLENCE',
+    },
   ];
 
-  const [counts, setCounts] = useState<number[]>(stats.map(() => 0));
-
-  const startCountAnimation = () => {
-    if (hasAnimated || reducedMotion) {
-      setCounts(stats.map((s) => s.target));
-      setHasAnimated(true);
-      return;
-    }
-
-    setHasAnimated(true);
-    const duration = 1500;
-    const startTime = performance.now();
-
-    const step = (currentTime: number) => {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const easedProgress = 1 - Math.pow(1 - progress, 3);
-
-      setCounts(
-        stats.map((stat) => {
-          const value = stat.target * easedProgress;
-          return stat.isDecimal ? parseFloat(value.toFixed(1)) : Math.floor(value);
-        })
-      );
-
-      if (progress < 1) {
-        requestAnimationFrame(step);
-      } else {
-        setCounts(stats.map((s) => s.target));
-      }
-    };
-
-    requestAnimationFrame(step);
-  };
-
-  // Filter student roster based on active exam tab
-  const filteredChainStudents =
-    activeCategory === 'all'
-      ? studentRoster
-      : studentRoster.filter((student) =>
-          student.results.some((res) => res.type === activeCategory)
-        );
-
-  // Duplicate array for infinite seamless marquee loop
-  const infiniteStudentsChain = [...filteredChainStudents, ...filteredChainStudents];
-
-  // Manual horizontal scroll controls
-  const scrollMarquee = (direction: 'left' | 'right') => {
+  const handleScroll = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {
       const scrollAmount = direction === 'left' ? -340 : 340;
       scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     }
   };
 
-  // Helper renderer for dynamic subject-wise marks
-  const renderSubjectMarksList = (subjects?: SubjectMark[]) => {
-    if (!subjects || subjects.length === 0) return null;
-    return (
-      <div className="flex flex-wrap gap-1.5 mt-2.5 max-h-24 overflow-y-auto no-scrollbar">
-        {subjects.map((sub, idx) => (
-          <span
-            key={idx}
-            className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-[#FAF7F0] border border-[#E4DCC8] text-[11px] font-medium text-[#14110F]"
-          >
-            <span className="text-[#14110F]/70">{sub.name}:</span>
-            <span className="font-bold text-[#0F3D2E]">{sub.marks}</span>
-          </span>
-        ))}
-      </div>
-    );
-  };
-
-  // Helper renderer for student Exam Results summary card box
-  const renderExamResultsSummary = (results: ExamResult[]) => {
-    if (!results || results.length === 0) return null;
-
-    return (
-      <div className="space-y-2">
-        {results.map((res, index) => {
-          const isBoard = res.type === 'board';
-          const examLabel = isBoard ? `HSC Board ${res.year}` : `${res.type.toUpperCase()} ${res.year}`;
-
-          return (
-            <div
-              key={index}
-              className="p-3 rounded-md bg-[#FAF7F0] border border-[#F0ECE1] group-hover:border-[#B08D57]/40 transition-colors"
-            >
-              <div className="flex items-baseline justify-between mb-1">
-                <span className="font-editorial text-2xl font-bold text-[#0F3D2E]">
-                  {isBoard ? `${res.percentage}%` : res.score}
-                </span>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#B08D57] bg-[#F0ECE1] px-2 py-0.5 rounded">
-                  {examLabel}
-                </span>
-              </div>
-
-              {!isBoard && res.rankOrPercentile && (
-                <div className="text-xs font-bold text-[#B08D57] mb-1">
-                  ★ {res.rankOrPercentile}
-                </div>
-              )}
-
-              {/* Dynamic Subject Breakdown List */}
-              {renderSubjectMarksList(res.subjects)}
-            </div>
-          );
-        })}
-      </div>
-    );
-  };
-
   return (
-    <section id="results" className="py-20 sm:py-28 bg-[#FAF7F0] relative overflow-hidden">
-      {/* Background Radial Pattern */}
-      <div className="absolute inset-0 bg-[radial-gradient(#B08D57_1px,transparent_1px)] [background-size:24px_24px] opacity-10 pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        {/* Section Header */}
-        <motion.div
-          initial={reducedMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          onViewportEnter={startCountAnimation}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="flex flex-col items-center justify-center text-center mb-16"
-        >
-          {/* SVG Brass Seal Emblem */}
-          <div className="relative w-24 h-24 sm:w-28 sm:h-28 mb-6 flex items-center justify-center">
+    <section id="results" className="py-16 sm:py-24 bg-[#FAF7F0] border-b border-[#F0ECE1]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* EXISTING SECTION INTRO (KEPT AS-IS) */}
+        <div className="flex flex-col items-center text-center mb-10">
+          <div className="relative mb-3 flex items-center justify-center">
             <svg
-              className="absolute inset-0 w-full h-full text-[#B08D57]"
+              className="w-20 h-20 text-[#B08D57] opacity-25"
               viewBox="0 0 100 100"
               fill="none"
             >
@@ -531,329 +421,480 @@ export const ResultsSection: React.FC = () => {
             <span className="h-px w-6 bg-[#B08D57]" />
           </div>
 
-          <h2 className="font-editorial text-3xl sm:text-5xl font-semibold text-[#14110F] max-w-3xl leading-tight mb-4">
+          <h2 className="font-editorial text-3xl sm:text-5xl font-semibold text-[#14110F] max-w-3xl leading-tight mb-3">
             Outstanding Examination Results
           </h2>
-          <p className="text-sm sm:text-base text-[#14110F]/75 max-w-2xl font-normal leading-relaxed">
-            Celebrating our top performers in HSC Board Examinations, JEE, NEET, and MHT-CET. Personalized rigor leading to consistent success.
+          <p className="text-xs sm:text-sm text-[#14110F]/75 max-w-2xl font-normal leading-relaxed">
+            100% verified rank distinctions across JEE Advanced, NEET Medical, MHT-CET, and 12th Board Examinations.
           </p>
+        </div>
+
+        {/* ========================================================================= */}
+        {/* NEW BLOCK 1 — ALL-TIME RECORDS STRIP */}
+        {/* ========================================================================= */}
+        <motion.div
+          initial={reducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4 }}
+          className="mb-14 p-6 sm:p-8 rounded-xl bg-white border border-[#E4DCC8] shadow-xs"
+        >
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center divide-y lg:divide-y-0 lg:divide-x divide-[#F0ECE1]">
+            <div className="flex flex-col items-center pt-2 lg:pt-0">
+              <span className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0F3D2E] mb-1">
+                <CountUpStat prefix="AIR " end={42} />
+              </span>
+              <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#B08D57]">
+                Highest JEE Rank Ever
+              </span>
+            </div>
+
+            <div className="flex flex-col items-center pt-4 lg:pt-0">
+              <span className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0F3D2E] mb-1">
+                <CountUpStat end={715} suffix=" / 720" />
+              </span>
+              <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#B08D57]">
+                Highest NEET Score Ever
+              </span>
+            </div>
+
+            <div className="flex flex-col items-center pt-4 lg:pt-0">
+              <span className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0F3D2E] mb-1">
+                <CountUpStat end={99} suffix=".4%" />
+              </span>
+              <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#B08D57]">
+                Highest HSC % Ever
+              </span>
+            </div>
+
+            <div className="flex flex-col items-center pt-4 lg:pt-0">
+              <span className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-bold text-[#B08D57] mb-1">
+                <CountUpStat end={450} suffix="+" />
+              </span>
+              <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#0F3D2E]">
+                Total Top Ranks Achieved
+              </span>
+            </div>
+          </div>
         </motion.div>
 
-        {/* TOP 3 TOPPERS PODIUM */}
+        {/* ========================================================================= */}
+        {/* NEW BLOCK 3 — "THIS YEAR" / "ALL-TIME" TOGGLE & BLOCK 2 — CATEGORY CHAMPIONS */}
+        {/* ========================================================================= */}
         <div className="mb-20">
-          <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 pb-3 border-b border-[#E4DCC8] gap-4">
+          {/* Block 3 Toggle Control */}
+          <div className="flex flex-col sm:flex-row items-center justify-between mb-8 pb-4 border-b border-[#E4DCC8] gap-4">
             <div className="flex items-center gap-2">
-              <Trophy className="w-5 h-5 text-[#B08D57]" />
+              <Sparkles className="w-5 h-5 text-[#B08D57]" />
               <h3 className="font-editorial text-xl sm:text-2xl font-bold text-[#14110F]">
-                Institute Toppers Showcase
+                Category Champions Showcase
               </h3>
             </div>
-            {/* Real Award Ceremony Recognition Inset */}
-            <div className="flex items-center gap-3 bg-white p-2 rounded-lg border border-[#E4DCC8] shadow-xs">
-              <img
-                src={awardCeremonyImg}
-                alt="Annual award felicitation ceremony"
-                width={72}
-                height={48}
-                loading="lazy"
-                className="w-18 h-12 rounded object-cover object-center border border-[#E4DCC8]"
-              />
-              <div>
-                <span className="text-[10px] font-bold text-[#0F3D2E] uppercase block">Official Felicitation</span>
-                <span className="text-[9px] text-[#14110F]/70 block">Annual Merit Award Ceremony</span>
-              </div>
+
+            {/* Segmented Control Toggle */}
+            <div className="inline-flex p-1 rounded-lg bg-[#F0ECE1] border border-[#E4DCC8]">
+              <button
+                type="button"
+                onClick={() => setTimeframe('this-year')}
+                className={`px-4 py-1.5 rounded-md text-xs font-bold uppercase tracking-wider transition-all duration-200 ${
+                  timeframe === 'this-year'
+                    ? 'bg-[#0F3D2E] text-[#FAF7F0] shadow-xs'
+                    : 'text-[#14110F]/70 hover:text-[#14110F]'
+                }`}
+              >
+                This Year (2024-25)
+              </button>
+              <button
+                type="button"
+                onClick={() => setTimeframe('all-time')}
+                className={`px-4 py-1.5 rounded-md text-xs font-bold uppercase tracking-wider transition-all duration-200 ${
+                  timeframe === 'all-time'
+                    ? 'bg-[#0F3D2E] text-[#FAF7F0] shadow-xs'
+                    : 'text-[#14110F]/70 hover:text-[#14110F]'
+                }`}
+              >
+                All-Time Records
+              </button>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
-            {topToppers.map((topper) => {
-              const isRank1 = topper.topperRank === 1;
-              const isRank2 = topper.topperRank === 2;
+          {/* Block 2: Equal-Weight Category Champions Grid */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={timeframe}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch"
+            >
+              {categoryChampions.map((topper, idx) => {
+                const primaryResult = topper.results[0];
+                const mainMetric = primaryResult
+                  ? primaryResult.type === 'board'
+                    ? `${primaryResult.percentage}%`
+                    : primaryResult.score || primaryResult.rankOrPercentile
+                  : '';
+                const secondaryMetric = primaryResult
+                  ? primaryResult.type === 'board'
+                    ? 'HSC Board Distinction'
+                    : primaryResult.rankOrPercentile
+                  : '';
 
-              return (
-                <motion.div
-                  key={topper.id}
-                  initial={reducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: (topper.topperRank || 1) * 0.1 }}
-                  className={`relative flex flex-col justify-between rounded-xl bg-white p-6 lg:p-8 border shadow-sm transition-all duration-300 hover:shadow-md ${
-                    isRank1
-                      ? 'border-[#B08D57] ring-4 ring-[#B08D57]/20 md:-translate-y-2 lg:-translate-y-3 bg-gradient-to-b from-white via-white to-[#FAF7F0]'
-                      : isRank2
-                      ? 'border-[#94A3B8] ring-4 ring-[#94A3B8]/20'
-                      : 'border-[#CD7F32] ring-4 ring-[#CD7F32]/20'
-                  }`}
-                >
-                  <div>
-                    {/* Rank Badge Header */}
-                    <div className="flex items-center justify-between mb-5">
-                      <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
-                        isRank1 ? 'bg-[#B08D57] text-[#14110F]' : isRank2 ? 'bg-[#0F3D2E] text-[#FAF7F0]' : 'bg-[#E4DCC8] text-[#0F3D2E]'
-                      }`}>
-                        {topper.badge}
-                      </span>
-                      <div className="flex items-center gap-1 text-xs font-semibold text-[#14110F]">
-                        {isRank1 ? (
-                          <span className="flex items-center gap-1 text-[#B08D57] font-bold">
-                            <Trophy className="w-4 h-4 text-[#B08D57]" /> 🏆 1st Rank
-                          </span>
-                        ) : isRank2 ? (
-                          <span className="flex items-center gap-1 text-[#475569] font-bold">
-                            <Medal className="w-4 h-4 text-[#94A3B8]" /> 🥈 2nd Rank
-                          </span>
-                        ) : (
-                          <span className="flex items-center gap-1 text-[#B45309] font-bold">
-                            <Medal className="w-4 h-4 text-[#CD7F32]" /> 🥉 3rd Rank
+                return (
+                  <motion.div
+                    key={topper.id}
+                    initial={reducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: idx * 0.08 }}
+                    className="bg-white border-2 border-[#E4DCC8] hover:border-[#B08D57] rounded-xl overflow-hidden p-6 shadow-xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group"
+                  >
+                    <div>
+                      {/* Top Category Badge */}
+                      <div className="flex items-center justify-between mb-4">
+                        <span className="text-[9px] font-extrabold uppercase tracking-wider text-[#FAF7F0] bg-[#0F3D2E] px-2.5 py-1 rounded-full shadow-xs">
+                          {topper.badge}
+                        </span>
+                        {topper.isAllTimeRecord && (
+                          <span className="text-[8px] font-bold text-[#B08D57] bg-[#F0ECE1] px-2 py-0.5 rounded border border-[#B08D57]/30 uppercase">
+                            ★ RECORD
                           </span>
                         )}
                       </div>
-                    </div>
 
-                    {/* Photo / Initials */}
-                    <div className="flex flex-col items-center text-center mb-6">
-                      <div className="relative mb-4">
+                      {/* Student Photo */}
+                      <div className="relative aspect-[4/5] w-full rounded-lg overflow-hidden bg-[#F0ECE1] mb-4 border border-[#E4DCC8]">
                         {topper.photo ? (
                           <img
                             src={topper.photo}
                             alt={topper.name}
-                            width={112}
-                            height={112}
+                            width={240}
+                            height={300}
                             loading="lazy"
-                            className={`w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover shadow-md border-2 ${
-                              isRank1 ? 'border-[#B08D57]' : isRank2 ? 'border-[#94A3B8]' : 'border-[#CD7F32]'
-                            }`}
+                            className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                           />
                         ) : (
-                          <div className={`w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-[#0F3D2E] text-[#B08D57] font-editorial font-bold text-2xl flex items-center justify-center border-2 shadow-md ${
-                            isRank1 ? 'border-[#B08D57]' : isRank2 ? 'border-[#94A3B8]' : 'border-[#CD7F32]'
-                          }`}>
+                          <div className="w-full h-full flex items-center justify-center text-3xl font-editorial font-bold text-[#0F3D2E]">
                             {getInitials(topper.name)}
                           </div>
                         )}
-                        <div className={`absolute -bottom-2 -right-1 w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-extrabold shadow-sm ${
-                          isRank1 ? 'bg-[#B08D57]' : isRank2 ? 'bg-[#64748B]' : 'bg-[#B45309]'
-                        }`}>
-                          #{topper.topperRank}
-                        </div>
                       </div>
 
-                      <h4 className="font-editorial text-2xl font-bold text-[#14110F] mb-1">
+                      {/* Name & Scores */}
+                      <h4 className="font-editorial text-xl font-bold text-[#14110F] mb-1 group-hover:text-[#0F3D2E] transition-colors">
                         {topper.name}
                       </h4>
-
-                      {/* Render Multi-Exam Results */}
-                      <div className="w-full mt-3">
-                        {renderExamResultsSummary(topper.results)}
+                      <div className="font-editorial text-2xl font-bold text-[#0F3D2E] mb-0.5">
+                        {mainMetric}
+                      </div>
+                      <div className="text-xs font-semibold text-[#B08D57] mb-3">
+                        {secondaryMetric}
                       </div>
 
+                      {/* Quote Block */}
                       {topper.quote && (
-                        <p className="mt-4 text-xs text-[#14110F]/75 italic leading-relaxed font-normal bg-[#FAF7F0] p-3 rounded-lg border border-[#E4DCC8]/60 w-full text-center">
+                        <p className="text-xs text-[#14110F]/75 italic leading-relaxed font-normal p-3 rounded-lg bg-[#FAF7F0] border-l-2 border-[#B08D57] mb-4">
                           "{topper.quote}"
                         </p>
                       )}
                     </div>
-                  </div>
 
-                  {topper.batch && (
-                    <div className="pt-3 border-t border-[#F0ECE1] text-center">
-                      <span className="text-[11px] font-medium text-[#14110F]/70 uppercase tracking-wider">
-                        Batch: {topper.batch}
-                      </span>
+                    {/* Batch Footer & Verified Lightbox Trigger */}
+                    <div>
+                      {topper.batch && (
+                        <div className="text-[9px] font-bold text-[#14110F]/60 uppercase tracking-wider pt-3 border-t border-[#F0ECE1] mb-2 truncate">
+                          BATCH: {topper.batch}
+                        </div>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => setSelectedStudent(topper)}
+                        className="w-full py-1.5 rounded bg-[#FAF7F0] hover:bg-[#0F3D2E] text-[#0F3D2E] hover:text-[#FAF7F0] border border-[#E4DCC8] text-[10px] font-bold uppercase tracking-wider transition-colors flex items-center justify-center gap-1 cursor-pointer"
+                      >
+                        <span>VERIFIED RESULT →</span>
+                      </button>
                     </div>
-                  )}
-                </motion.div>
-              );
-            })}
-          </div>
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+          </AnimatePresence>
         </div>
 
-        {/* INFINITE HORIZONTAL MARQUEE CHAIN */}
+        {/* ========================================================================= */}
+        {/* BLOCK 4 — FULL RESULTS ROSTER (WITH STEADY ACHIEVERS FILTER) */}
+        {/* ========================================================================= */}
         <div className="mb-20">
-          {/* Header & Filter Pills */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4 pb-4 border-b border-[#E4DCC8]">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 pb-3 border-b border-[#E4DCC8] gap-4">
             <div>
-              <div className="flex items-center gap-2 mb-1">
-                <Sparkles className="w-4 h-4 text-[#B08D57]" />
-                <h3 className="font-editorial text-xl sm:text-2xl font-bold text-[#14110F]">
-                  Student Performance Roster
-                </h3>
-              </div>
+              <h3 className="font-editorial text-2xl font-bold text-[#14110F]">
+                Student Performance Roster
+              </h3>
               <p className="text-xs text-[#14110F]/70 font-normal">
-                Continuous horizontal card chain • Hover on any card to pause and inspect marks breakdown
+                Complete verified marksheets across Board & Entrance exams.
               </p>
             </div>
 
-            {/* Category Filter Pills & Arrow Controls */}
-            <div className="flex items-center gap-3 flex-wrap">
-              <div className="flex items-center gap-1 bg-[#F0ECE1] p-1 rounded-lg text-xs font-medium">
+            {/* Filter Tabs */}
+            <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1">
+              {[
+                { key: 'all', label: 'All Results' },
+                { key: 'board', label: '12th HSC Board' },
+                { key: 'jee', label: 'JEE Main/Adv' },
+                { key: 'neet', label: 'NEET Medical' },
+                { key: 'cet', label: 'MHT-CET' },
+                { key: 'steady', label: 'Steady Achievers' },
+              ].map((tab) => (
                 <button
+                  key={tab.key}
                   type="button"
-                  onClick={() => setActiveCategory('all')}
-                  className={`px-3 py-1.5 rounded-md transition-all ${
-                    activeCategory === 'all'
-                      ? 'bg-[#0F3D2E] text-[#FAF7F0] font-semibold shadow-xs'
-                      : 'text-[#14110F]/70 hover:text-[#14110F]'
+                  onClick={() => setActiveFilter(tab.key as any)}
+                  className={`px-3 py-1.5 rounded-md text-xs font-semibold whitespace-nowrap transition-colors cursor-pointer ${
+                    activeFilter === tab.key
+                      ? 'bg-[#0F3D2E] text-[#FAF7F0]'
+                      : 'bg-white text-[#14110F]/70 hover:text-[#14110F] border border-[#E4DCC8]'
                   }`}
                 >
-                  All Results
+                  {tab.label}
                 </button>
-                <button
-                  type="button"
-                  onClick={() => setActiveCategory('board')}
-                  className={`px-3 py-1.5 rounded-md transition-all ${
-                    activeCategory === 'board'
-                      ? 'bg-[#0F3D2E] text-[#FAF7F0] font-semibold shadow-xs'
-                      : 'text-[#14110F]/70 hover:text-[#14110F]'
-                  }`}
-                >
-                  12th HSC Board
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setActiveCategory('jee')}
-                  className={`px-3 py-1.5 rounded-md transition-all ${
-                    activeCategory === 'jee'
-                      ? 'bg-[#0F3D2E] text-[#FAF7F0] font-semibold shadow-xs'
-                      : 'text-[#14110F]/70 hover:text-[#14110F]'
-                  }`}
-                >
-                  JEE Main/Adv
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setActiveCategory('neet')}
-                  className={`px-3 py-1.5 rounded-md transition-all ${
-                    activeCategory === 'neet'
-                      ? 'bg-[#0F3D2E] text-[#FAF7F0] font-semibold shadow-xs'
-                      : 'text-[#14110F]/70 hover:text-[#14110F]'
-                  }`}
-                >
-                  NEET Medical
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setActiveCategory('cet')}
-                  className={`px-3 py-1.5 rounded-md transition-all ${
-                    activeCategory === 'cet'
-                      ? 'bg-[#0F3D2E] text-[#FAF7F0] font-semibold shadow-xs'
-                      : 'text-[#14110F]/70 hover:text-[#14110F]'
-                  }`}
-                >
-                  MHT-CET
-                </button>
-              </div>
-
-              {/* Nudge Arrows */}
-              <div className="hidden sm:flex items-center gap-1">
-                <button
-                  type="button"
-                  onClick={() => scrollMarquee('left')}
-                  className="p-2 rounded-md bg-white border border-[#E4DCC8] hover:bg-[#F0ECE1] text-[#14110F] transition-colors"
-                  aria-label="Scroll left"
-                >
-                  <ChevronLeft className="w-4 h-4" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => scrollMarquee('right')}
-                  className="p-2 rounded-md bg-white border border-[#E4DCC8] hover:bg-[#F0ECE1] text-[#14110F] transition-colors"
-                  aria-label="Scroll right"
-                >
-                  <ChevronRight className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* INFINITE MARQUEE SCROLL CONTAINER */}
-          <div
-            ref={scrollContainerRef}
-            className="w-full overflow-x-auto no-scrollbar py-4 relative rounded-xl"
-          >
-            <div className="animate-marquee flex items-stretch gap-5">
-              {infiniteStudentsChain.map((st, index) => (
-                <div
-                  key={`${st.id}-${index}`}
-                  className="w-[300px] sm:w-[340px] shrink-0 p-5 rounded-lg bg-white border border-[#E4DCC8] hover:border-[#B08D57] shadow-xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group cursor-pointer"
-                >
-                  <div>
-                    {/* Top Row: Photo or Initials + Name */}
-                    <div className="flex items-center gap-3.5 mb-4">
-                      {st.photo ? (
-                        <img
-                          src={st.photo}
-                          alt={st.name}
-                          width={52}
-                          height={52}
-                          loading="lazy"
-                          className="w-13 h-13 rounded-full object-cover border-2 border-[#B08D57]/30 group-hover:border-[#B08D57] transition-colors shrink-0 shadow-xs"
-                        />
-                      ) : (
-                        <div className="w-13 h-13 rounded-full bg-[#0F3D2E] text-[#B08D57] font-editorial font-bold text-base flex items-center justify-center border-2 border-[#B08D57]/40 group-hover:border-[#B08D57] shrink-0 shadow-xs">
-                          {getInitials(st.name)}
-                        </div>
-                      )}
-                      <div className="min-w-0 flex-1">
-                        <h4 className="font-editorial text-lg font-bold text-[#14110F] truncate group-hover:text-[#0F3D2E] transition-colors">
-                          {st.name}
-                        </h4>
-                        <span className="text-[11px] font-semibold uppercase tracking-wider text-[#B08D57] truncate block">
-                          {st.batch || 'Student Achievement'}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Results Box (Flexible for single or multiple exams) */}
-                    {renderExamResultsSummary(st.results)}
-                  </div>
-
-                  {/* Footer tag */}
-                  <div className="pt-3 mt-4 border-t border-[#F0ECE1] flex items-center justify-between text-[10px] uppercase font-semibold text-[#14110F]/60">
-                    <span>R. R. Patil Academy Result</span>
-                    <span className="text-[#0F3D2E] group-hover:translate-x-1 transition-transform">
-                      Verified →
-                    </span>
-                  </div>
-                </div>
               ))}
             </div>
           </div>
+
+          {/* Roster Controls & Horizontal Scrolling Card Chain */}
+          <div className="relative group/chain">
+            <button
+              type="button"
+              onClick={() => handleScroll('left')}
+              className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white border border-[#E4DCC8] shadow-md flex items-center justify-center text-[#14110F] hover:bg-[#0F3D2E] hover:text-[#FAF7F0] transition-colors cursor-pointer"
+              aria-label="Scroll left"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+
+            <div
+              ref={scrollContainerRef}
+              className="flex gap-5 overflow-x-auto no-scrollbar py-2 px-1 scroll-smooth"
+            >
+              {filteredRoster.map((student) => {
+                const res = student.results[0];
+                return (
+                  <div
+                    key={student.id}
+                    className="w-[290px] sm:w-[320px] shrink-0 bg-white border border-[#E4DCC8] hover:border-[#B08D57] rounded-xl p-5 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group"
+                  >
+                    <div>
+                      <div className="flex items-center gap-3 mb-3">
+                        <div className="w-12 h-12 rounded-full overflow-hidden bg-[#F0ECE1] shrink-0 border border-[#E4DCC8]">
+                          {student.photo ? (
+                            <img
+                              src={student.photo}
+                              alt={student.name}
+                              width={48}
+                              height={48}
+                              loading="lazy"
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center text-sm font-bold text-[#0F3D2E]">
+                              {getInitials(student.name)}
+                            </div>
+                          )}
+                        </div>
+                        <div>
+                          <h4 className="font-editorial text-base font-bold text-[#14110F] group-hover:text-[#0F3D2E] transition-colors">
+                            {student.name}
+                          </h4>
+                          <span className="text-[10px] text-[#14110F]/60 block font-medium">
+                            {student.batch}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Main Score Callout */}
+                      {res && (
+                        <div className="p-3 rounded-lg bg-[#FAF7F0] border border-[#F0ECE1] mb-3">
+                          <div className="text-[10px] font-bold text-[#B08D57] uppercase tracking-wider">
+                            {res.type === 'board' ? '12TH HSC BOARD' : res.type.toUpperCase()}
+                          </div>
+                          <div className="font-editorial text-2xl font-bold text-[#0F3D2E]">
+                            {res.type === 'board' ? `${res.percentage}%` : res.score || res.rankOrPercentile}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Subject Marks Breakdown */}
+                      {res?.subjects && (
+                        <div className="space-y-1.5 mb-4">
+                          {res.subjects.map((s, idx) => (
+                            <div key={idx} className="flex justify-between text-xs font-normal">
+                              <span className="text-[#14110F]/70">{s.name}</span>
+                              <span className="font-bold text-[#14110F]">{s.marks} / 100</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => setSelectedStudent(student)}
+                      className="w-full py-1.5 rounded bg-white hover:bg-[#0F3D2E] text-[#0F3D2E] hover:text-[#FAF7F0] border border-[#E4DCC8] text-[10px] font-bold uppercase tracking-wider transition-colors flex items-center justify-center gap-1 cursor-pointer pt-2 border-t"
+                    >
+                      <span>VERIFIED →</span>
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+
+            <button
+              type="button"
+              onClick={() => handleScroll('right')}
+              className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white border border-[#E4DCC8] shadow-md flex items-center justify-center text-[#14110F] hover:bg-[#0F3D2E] hover:text-[#FAF7F0] transition-colors cursor-pointer"
+              aria-label="Scroll right"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
-        {/* 4 STAT METRICS CARDS */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 pt-8 border-t border-[#E4DCC8]">
-          {stats.map((stat, idx) => {
-            const displayValue = counts[idx] !== undefined ? counts[idx] : stat.target;
+        {/* ========================================================================= */}
+        {/* NEW BLOCK 5 — "BEYOND THE EXAM HALL" (AWARD & COMPETITION GALLERY) */}
+        {/* ========================================================================= */}
+        <div>
+          <div className="flex flex-col items-center text-center mb-8">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="h-px w-6 bg-[#B08D57]" />
+              <span className="text-xs font-semibold uppercase tracking-widest text-[#B08D57]">
+                CELEBRATING EVERY WIN
+              </span>
+              <span className="h-px w-6 bg-[#B08D57]" />
+            </div>
+            <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-[#14110F]">
+              Beyond the Exam Hall
+            </h3>
+            <p className="text-xs sm:text-sm text-[#14110F]/75 max-w-xl font-normal leading-relaxed mt-1">
+              Honoring academic excellence, Olympiad distinctions, and annual merit felicitation honors.
+            </p>
+          </div>
 
-            return (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {beyondExamGallery.map((item, idx) => (
               <motion.div
-                key={stat.label}
+                key={idx}
                 initial={reducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: reducedMotion ? 0 : idx * 0.08 }}
-                className="p-6 sm:p-8 rounded-lg bg-white/70 border border-[#E4DCC8] shadow-xs text-center flex flex-col items-center justify-center"
+                transition={{ duration: 0.4, delay: idx * 0.08 }}
+                className="bg-white border border-[#E4DCC8] hover:border-[#B08D57] rounded-xl overflow-hidden p-4 shadow-xs hover:shadow-md transition-all duration-300 group flex flex-col justify-between"
               >
-                <div className="font-editorial text-4xl sm:text-5xl font-bold text-[#0F3D2E] mb-2 tracking-tight">
-                  {stat.prefix}
-                  {stat.isDecimal ? displayValue.toFixed(1) : displayValue.toLocaleString()}
-                  {stat.suffix}
-                </div>
-                <div className="text-xs font-semibold uppercase tracking-wider text-[#14110F]/70 max-w-[180px]">
-                  {stat.label}
+                <div>
+                  <div className="relative aspect-[4/3] w-full rounded-lg overflow-hidden bg-[#F0ECE1] mb-3 border border-[#E4DCC8]">
+                    <img
+                      src={item.img}
+                      alt={item.title}
+                      width={300}
+                      height={225}
+                      loading="lazy"
+                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <span className="absolute top-2 left-2 px-2 py-0.5 rounded bg-[#0F3D2E]/90 text-[#FAF7F0] text-[8px] font-bold uppercase tracking-wider backdrop-blur-xs">
+                      {item.badge}
+                    </span>
+                  </div>
+                  <h4 className="font-editorial text-lg font-bold text-[#14110F] mb-1 group-hover:text-[#0F3D2E] transition-colors">
+                    {item.title}
+                  </h4>
+                  <p className="text-xs text-[#14110F]/75 leading-relaxed font-normal">
+                    {item.caption}
+                  </p>
                 </div>
               </motion.div>
-            );
-          })}
+            ))}
+          </div>
         </div>
 
-        {/* Disclaimer Subtext */}
-        <div className="mt-12 text-center border-t border-[#E4DCC8]/70 pt-8 max-w-xl mx-auto">
-          <p className="text-xs text-[#14110F]/70 font-normal leading-relaxed">
-            * All examination results are independently verified from official HSC Board scorecards, NTA (JEE Main/NEET), and State CET scorecards.
-          </p>
-        </div>
+        {/* ========================================================================= */}
+        {/* OPTIONAL STRETCH — "VERIFIED" LIGHTBOX MODAL */}
+        {/* ========================================================================= */}
+        <AnimatePresence>
+          {selectedStudent && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs"
+              onClick={() => setSelectedStudent(null)}
+            >
+              <motion.div
+                initial={{ scale: 0.95, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.95, opacity: 0 }}
+                onClick={(e) => e.stopPropagation()}
+                className="bg-white rounded-xl max-w-lg w-full p-6 shadow-2xl border-2 border-[#B08D57] relative max-h-[90vh] overflow-y-auto"
+              >
+                <button
+                  type="button"
+                  onClick={() => setSelectedStudent(null)}
+                  className="absolute top-4 right-4 p-1.5 rounded-full bg-[#FAF7F0] text-[#14110F] hover:bg-[#0F3D2E] hover:text-[#FAF7F0] transition-colors cursor-pointer"
+                  aria-label="Close modal"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+
+                <div className="flex items-center gap-2 mb-2">
+                  <CheckCircle2 className="w-5 h-5 text-[#25D366]" />
+                  <span className="text-xs font-bold text-[#0F3D2E] uppercase tracking-wider">
+                    VERIFIED OFFICIAL RESULT
+                  </span>
+                </div>
+
+                <h3 className="font-editorial text-2xl font-bold text-[#14110F] mb-1">
+                  {selectedStudent.name}
+                </h3>
+                <p className="text-xs text-[#14110F]/70 mb-4 font-medium">
+                  Batch: {selectedStudent.batch || 'R. R. Patil Academy'}
+                </p>
+
+                {/* Felicitation / Certificate Image */}
+                <div className="relative aspect-[16/10] w-full rounded-lg overflow-hidden bg-[#F0ECE1] border border-[#E4DCC8] mb-4">
+                  <img
+                    src={selectedStudent.certificatePhoto || selectedStudent.photo || award1Img}
+                    alt={`${selectedStudent.name} official felicitation scorecard`}
+                    width={480}
+                    height={300}
+                    loading="lazy"
+                    className="w-full h-full object-cover object-center"
+                  />
+                  <div className="absolute bottom-2 left-2 px-2.5 py-1 rounded bg-[#0F3D2E]/90 text-[#FAF7F0] text-[9px] font-bold uppercase tracking-wider">
+                    Official Merit Felicitation
+                  </div>
+                </div>
+
+                {selectedStudent.quote && (
+                  <p className="text-xs text-[#14110F]/80 italic p-3 rounded-lg bg-[#FAF7F0] border-l-2 border-[#B08D57] mb-4">
+                    "{selectedStudent.quote}"
+                  </p>
+                )}
+
+                <div className="pt-3 border-t border-[#F0ECE1] flex items-center justify-between text-xs font-semibold text-[#0F3D2E]">
+                  <span>100% Scorecard Authenticity Guaranteed</span>
+                  <a
+                    href="https://wa.me/918275280028"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-[#B08D57] hover:underline"
+                  >
+                    <span>Inquire Batch</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );

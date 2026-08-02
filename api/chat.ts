@@ -35,8 +35,8 @@ Keep answers short (2-4 sentences), warm, and in plain English unless the user w
   try {
     const apiKey = process.env.OPENROUTER_API_KEY || process.env.VITE_OPENROUTER_API_KEY;
     if (!apiKey) {
-      return res.status(200).json({
-        reply: "OPENROUTER_API_KEY is not configured. Please add OPENROUTER_API_KEY in Vercel Environment Variables!"
+      return res.status(401).json({
+        error: "OPENROUTER_API_KEY is not set in environment variables! Please configure OPENROUTER_API_KEY in Vercel."
       });
     }
 
@@ -56,15 +56,16 @@ Keep answers short (2-4 sentences), warm, and in plain English unless the user w
       { role: 'user', content: message },
     ];
 
-    // List of reliable free models on OpenRouter
+    // Active free models on OpenRouter
     const freeModels = [
-      'meta-llama/llama-3.1-8b-instruct:free',
-      'google/gemma-2-9b-it:free',
+      'google/gemma-4-26b-a4b-it:free',
       'qwen/qwen-2.5-7b-instruct:free',
+      'meta-llama/llama-3.2-1b-instruct:free',
+      'mistralai/mistral-7b-instruct:free',
     ];
 
     let reply: string | null = null;
-    let lastError: string | null = null;
+    let errors: string[] = [];
 
     for (const modelName of freeModels) {
       try {
@@ -91,10 +92,12 @@ Keep answers short (2-4 sentences), warm, and in plain English unless the user w
         }
 
         if (data?.error) {
-          lastError = `[${modelName}]: ${data.error.message || response.statusText}`;
+          errors.push(`[${modelName}]: ${typeof data.error === 'object' ? data.error.message : data.error}`);
+        } else if (!response.ok) {
+          errors.push(`[${modelName}]: HTTP ${response.status} ${response.statusText}`);
         }
       } catch (err: any) {
-        lastError = err?.message || 'Network fetch error';
+        errors.push(`[${modelName}]: ${err?.message || 'Network fetch error'}`);
       }
     }
 
@@ -102,17 +105,12 @@ Keep answers short (2-4 sentences), warm, and in plain English unless the user w
       return res.status(200).json({ reply });
     }
 
-    if (lastError) {
-      console.warn('OpenRouter API rate limit / error:', lastError);
-    }
-
-    return res.status(200).json({
-      reply: "Sorry, I couldn't process that — please reach out via WhatsApp (+91 8275280028) for a quick answer!"
+    return res.status(500).json({
+      error: `OpenRouter Free Models Error: ${errors.join(' | ')}`
     });
   } catch (err: any) {
-    console.error('Chat function error:', err);
-    return res.status(200).json({
-      reply: "Something went wrong. Please connect with us directly via WhatsApp (+91 8275280028)."
+    return res.status(500).json({
+      error: `Serverless Function Error: ${err?.message || 'Unknown internal error'}`
     });
   }
 }
