@@ -99,7 +99,7 @@ export const allTimeChampions: ChampionStudent[] = [
 ];
 
 // ============================================================================
-// 2. THIS YEAR TOPPERS (2024-25) (Edit this array for This Year Toppers)
+// 2. THIS YEAR TOPPERS (2025-26) (Edit this array for This Year Toppers)
 // ============================================================================
 export const thisYearChampions: ChampionStudent[] = [
   {
@@ -119,7 +119,7 @@ export const thisYearChampions: ChampionStudent[] = [
     name: 'Kartik Divekar',
     photo: kartikD,
     certificatePhoto: kartikResult,
-    batch: '12th HSC Board + JEE Track (2024-25)',
+    batch: '12th HSC Board + JEE Track (2025-26)',
     quote: 'Weekly assessment not only increases the probability of success, but also makes us disciplined',
     badge: 'CET topper 2026',
     isAllTimeRecord: false,
@@ -131,7 +131,7 @@ export const thisYearChampions: ChampionStudent[] = [
     name: 'Komal N. Gund',
     photo: komalImg,
     certificatePhoto: result26,
-    batch: '2-Year NEET Medical Track (2024-25)',
+    batch: '2-Year NEET Medical Track (2025-26)',
     quote: 'Small batch focus and 1-on-1 doubt clearing were the main drivers behind my HSC score.',
     badge: 'Board 2nd Topper',
     isAllTimeRecord: false,
@@ -834,7 +834,7 @@ export const ResultsSection: React.FC = () => {
                     : 'text-[#14110F]/70 hover:text-[#14110F]'
                 }`}
               >
-                This Year (2024-25)
+                This Year (2025-26)
               </button>
             </div>
           </div>
