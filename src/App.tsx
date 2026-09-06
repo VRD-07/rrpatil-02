@@ -1,7 +1,9 @@
-import React, { useState, Suspense, lazy } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
+import { Announcement } from './components/Announcement';
 import { TrustStrip } from './components/TrustStrip';
+import { fetchLatestAnnouncement, type AnnouncementData } from './sanity/client';
 
 // Code-split below-the-fold components for minimal initial bundle size & fast LCP
 const WhyChooseUs = lazy(() =>
@@ -57,6 +59,19 @@ const SectionLoader: React.FC = () => (
 export function App() {
   const [demoModalOpen, setDemoModalOpen] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState<string | undefined>(undefined);
+  const [announcement, setAnnouncement] = useState<AnnouncementData | null>(null);
+
+  useEffect(() => {
+    fetchLatestAnnouncement()
+      .then((data) => {
+        if (data) {
+          setAnnouncement(data);
+        }
+      })
+      .catch((err) => {
+        console.warn('[App] Failed to load announcement:', err);
+      });
+  }, []);
 
   const handleOpenDemo = (courseName?: string) => {
     setSelectedCourse(courseName);
@@ -76,6 +91,7 @@ export function App() {
       {/* Above-the-fold Hero Section */}
       <main>
         <HeroSection onOpenDemo={() => handleOpenDemo()} />
+        <Announcement data={announcement} />
         <TrustStrip />
 
         {/* SECTION A: Why Choose Us (AFTER TrustStrip, BEFORE ResultsSection) */}

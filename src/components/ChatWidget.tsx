@@ -34,6 +34,9 @@ CONTACT: WhatsApp/Call: +91 8275280028. Address: Sai City, Kopargaon.
 Keep answers short (2-4 sentences), warm, and in plain English unless the user writes in Marathi/Hindi, in which case respond in that language naturally. Always end an answer about fees or admission specifics by suggesting they confirm exact figures via WhatsApp or call, since those can change and you should never quote a fee number that isn't explicitly provided above.
 `;
 
+const FALLBACK_ERROR_MESSAGE =
+  "I'm sorry, I'm having trouble connecting right now. Please check your internet connection and try again. For urgent inquiries, feel free to contact us on WhatsApp (+91 8275280028).";
+
 export const ChatWidget: React.FC = () => {
   const reducedMotion = usePrefersReducedMotion();
   const [isOpen, setIsOpen] = useState(false);
@@ -110,9 +113,10 @@ export const ChatWidget: React.FC = () => {
 
       // If endpoint returned JSON error (e.g. 401 missing key or 500 OpenRouter error)
       if (data?.error) {
+        console.error('[ChatWidget Error]:', data.error);
         setMessages([
           ...newMessages,
-          { sender: 'bot', text: `[Server API Error]: ${data.error}` },
+          { sender: 'bot', text: FALLBACK_ERROR_MESSAGE },
         ]);
         setIsLoading(false);
         return;
@@ -155,9 +159,10 @@ export const ChatWidget: React.FC = () => {
         }
 
         if (localData?.error) {
+          console.error('[ChatWidget Local OpenRouter Error]:', localData.error);
           setMessages([
             ...newMessages,
-            { sender: 'bot', text: `[OpenRouter Error]: ${typeof localData.error === 'object' ? localData.error.message : localData.error}` },
+            { sender: 'bot', text: FALLBACK_ERROR_MESSAGE },
           ]);
           setIsLoading(false);
           return;
@@ -165,19 +170,21 @@ export const ChatWidget: React.FC = () => {
       }
 
       // If running on Vite dev server (npm run dev) without Vercel function proxy or local key
+      console.warn('[ChatWidget Environment Notice]: /api/chat endpoint not reachable or API key missing.');
       setMessages([
         ...newMessages,
         {
           sender: 'bot',
-          text: `[Environment Notice]: /api/chat is a Vercel Serverless Function. In local dev (npm run dev), Vite does not run /api serverless functions. To enable chatbot: 1) Deploy to Vercel with OPENROUTER_API_KEY in Vercel Settings, OR 2) Create .env.local with VITE_OPENROUTER_API_KEY=your_key for local dev.`,
+          text: FALLBACK_ERROR_MESSAGE,
         },
       ]);
     } catch (err: any) {
+      console.error('[ChatWidget Network Error]:', err);
       setMessages([
         ...newMessages,
         {
           sender: 'bot',
-          text: `[Network Error]: ${err?.message || 'Failed to communicate with chat endpoint.'}`,
+          text: FALLBACK_ERROR_MESSAGE,
         },
       ]);
     } finally {
