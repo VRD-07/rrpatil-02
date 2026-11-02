@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Award, CheckCircle2, X, ExternalLink, Sparkles } from 'lucide-react';
+import Reveal from './Reveal';
 
 // Real photo imports
 import kunalImg from '../assets/kunal_upscaled.jpeg';
@@ -696,90 +697,93 @@ export const ResultsSection = () => {
     <section id="results" className="py-16 sm:py-24 bg-[#FAF7F0] border-b border-[#F0ECE1]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* EXISTING SECTION INTRO (KEPT AS-IS) */}
-        <div className="flex flex-col items-center text-center mb-10">
-          <div className="relative mb-3 flex items-center justify-center">
-            <svg
-              className="w-24 h-24 text-[#B08D57] opacity-35"
-              viewBox="0 0 100 100"
-              fill="none"
-            >
-              <circle
-                cx="50"
-                cy="50"
-                r="46"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeDasharray="4 4"
-              />
-              <circle cx="50" cy="50" r="38" stroke="currentColor" strokeWidth="1" />
-            </svg>
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-[#0F3D2E]">
-              <Award className="w-7 h-7 text-[#B08D57] mb-0.5" />
-              <span className="font-institute-name text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#B08D57]">
-                R. R. Patil
-              </span>
+        <Reveal>
+          <div className="flex flex-col items-center text-center mb-10">
+            <div className="relative mb-3 flex items-center justify-center">
+              <svg
+                className="w-24 h-24 text-[#B08D57] opacity-35"
+                viewBox="0 0 100 100"
+                fill="none"
+              >
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="46"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeDasharray="4 4"
+                />
+                <circle cx="50" cy="50" r="38" stroke="currentColor" strokeWidth="1" />
+              </svg>
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-[#0F3D2E]">
+                <Award className="w-7 h-7 text-[#B08D57] mb-0.5" />
+                <span className="font-institute-name text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#B08D57]">
+                  R. R. Patil
+                </span>
+              </div>
             </div>
-          </div>
 
-          <div className="flex items-center gap-2 mb-3">
-            <span className="h-px w-6 bg-[#B08D57]" />
-            <span className="font-institute-name text-sm font-semibold tracking-widest text-[#B08D57]">
-              R. R. PATIL COACHING CLASSES, KOPARGAON
-            </span>
-            <span className="h-px w-6 bg-[#B08D57]" />
-          </div>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="h-px w-6 bg-[#B08D57]" />
+              <span className="font-institute-name text-sm font-semibold tracking-widest text-[#B08D57]">
+                R. R. PATIL COACHING CLASSES, KOPARGAON
+              </span>
+              <span className="h-px w-6 bg-[#B08D57]" />
+            </div>
 
-          <h2 className="font-editorial text-3xl sm:text-5xl font-semibold text-[#14110F] max-w-3xl leading-tight mb-3">
-            Outstanding Examination Results
-          </h2>
-          <p className="text-xs sm:text-sm text-[#14110F]/75 max-w-2xl font-normal leading-relaxed">
-            100% verified rank distinctions across JEE Advanced, NEET Medical, MHT-CET, and 12th Board Examinations.
-          </p>
-        </div>
+            <h2 className="font-editorial text-3xl sm:text-5xl font-semibold text-[#14110F] max-w-3xl leading-tight mb-3">
+              Outstanding Examination Results
+            </h2>
+            <p className="text-xs sm:text-sm text-[#14110F]/75 max-w-2xl font-normal leading-relaxed">
+              100% verified rank distinctions across JEE Advanced, NEET Medical, MHT-CET, and 12th Board Examinations.
+            </p>
+          </div>
+        </Reveal>
 
         {/* ========================================================================= */}
         {/* NEW BLOCK 1 — ALL-TIME RECORDS STRIP */}
         {/* ========================================================================= */}
-        <div className="mb-14 p-6 sm:p-8 rounded-xl bg-white border border-[#E4DCC8] shadow-xs"
-        >
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center divide-y lg:divide-y-0 lg:divide-x divide-[#F0ECE1]">
-            <div className="flex flex-col items-center pt-2 lg:pt-0">
-              <span className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0F3D2E] mb-1">
-                <CountUpStat prefix="AIR " end={1928} />
-              </span>
-              <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#B08D57]">
-                Highest JEE Rank Ever
-              </span>
-            </div>
+        <Reveal delay={100}>
+          <div className="mb-14 p-6 sm:p-8 rounded-xl bg-white border border-[#E4DCC8] shadow-xs">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center divide-y lg:divide-y-0 lg:divide-x divide-[#F0ECE1]">
+              <div className="flex flex-col items-center pt-2 lg:pt-0">
+                <span className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0F3D2E] mb-1">
+                  <CountUpStat prefix="AIR " end={1928} />
+                </span>
+                <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#B08D57]">
+                  Highest JEE Rank Ever
+                </span>
+              </div>
 
-            <div className="flex flex-col items-center pt-4 lg:pt-0">
-              <span className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0F3D2E] mb-1">
-                <CountUpStat end={475} suffix=" / 720" />
-              </span>
-              <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#B08D57]">
-                Highest NEET Score Ever
-              </span>
-            </div>
+              <div className="flex flex-col items-center pt-4 lg:pt-0">
+                <span className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0F3D2E] mb-1">
+                  <CountUpStat end={475} suffix=" / 720" />
+                </span>
+                <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#B08D57]">
+                  Highest NEET Score Ever
+                </span>
+              </div>
 
-            <div className="flex flex-col items-center pt-4 lg:pt-0">
-              <span className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0F3D2E] mb-1">
-                <CountUpStat end={92} suffix=".17%" />
-              </span>
-              <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#B08D57]">
-                Highest HSC % Ever
-              </span>
-            </div>
+              <div className="flex flex-col items-center pt-4 lg:pt-0">
+                <span className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0F3D2E] mb-1">
+                  <CountUpStat end={92} suffix=".17%" />
+                </span>
+                <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#B08D57]">
+                  Highest HSC % Ever
+                </span>
+              </div>
 
-            <div className="flex flex-col items-center pt-4 lg:pt-0">
-              <span className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-bold text-[#B08D57] mb-1">
-                <CountUpStat end={10} suffix="+" />
-              </span>
-              <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#0F3D2E]">
-                Total College Toppers
-              </span>
+              <div className="flex flex-col items-center pt-4 lg:pt-0">
+                <span className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-bold text-[#B08D57] mb-1">
+                  <CountUpStat end={10} suffix="+" />
+                </span>
+                <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#0F3D2E]">
+                  Total College Toppers
+                </span>
+              </div>
             </div>
           </div>
-        </div>
+        </Reveal>
 
         {/* ========================================================================= */}
         {/* NEW BLOCK 3 — "THIS YEAR" / "ALL-TIME" TOGGLE & BLOCK 2 — CATEGORY CHAMPIONS */}
@@ -822,86 +826,84 @@ export const ResultsSection = () => {
           </div>
 
           {/* Block 2: Equal-Weight Category Champions Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch max-w-6xl mx-auto"
-            >
-              {categoryChampions.map((topper, idx) => {
-                return (
-                  <div className="bg-white border-2 border-[#E4DCC8] hover:border-[#B08D57] rounded-xl overflow-hidden p-4 sm:p-6 shadow-xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group"
-                  >
-                    <div>
-                      {/* Top Category Badge */}
-                      <div className="flex items-center justify-between mb-3 sm:mb-4">
-                        <span className="text-[9px] font-extrabold uppercase tracking-wider text-[#FAF7F0] bg-[#0F3D2E] px-2.5 py-1 rounded-full shadow-xs">
-                          {topper.badge}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch max-w-6xl mx-auto">
+            {categoryChampions.map((topper, idx) => (
+              <Reveal key={topper.id} delay={idx * 100} className="h-full">
+                <div className="h-full bg-white border-2 border-[#E4DCC8] hover:border-[#B08D57] rounded-xl overflow-hidden p-4 sm:p-6 shadow-xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group">
+                  <div>
+                    {/* Top Category Badge */}
+                    <div className="flex items-center justify-between mb-3 sm:mb-4">
+                      <span className="text-[9px] font-extrabold uppercase tracking-wider text-[#FAF7F0] bg-[#0F3D2E] px-2.5 py-1 rounded-full shadow-xs">
+                        {topper.badge}
+                      </span>
+                      {topper.isAllTimeRecord && (
+                        <span className="text-[8px] font-bold text-[#B08D57] bg-[#F0ECE1] px-2 py-0.5 rounded border border-[#B08D57]/30 uppercase">
+                          ★ RECORD
                         </span>
-                        {topper.isAllTimeRecord && (
-                          <span className="text-[8px] font-bold text-[#B08D57] bg-[#F0ECE1] px-2 py-0.5 rounded border border-[#B08D57]/30 uppercase">
-                            ★ RECORD
-                          </span>
+                      )}
+                    </div>
+
+                    {/* Content Layout: side-by-side on mobile, stacked on sm+ */}
+                    <div className="flex flex-row sm:flex-col gap-3.5 sm:gap-0 items-start sm:items-stretch">
+                      {/* Student Photo */}
+                      <div className="relative w-24 sm:w-full aspect-[4/5] shrink-0 rounded-lg overflow-hidden bg-[#F0ECE1] mb-0 sm:mb-4 border border-[#E4DCC8]">
+                        {topper.photo ? (
+                          <img
+                            src={topper.photo}
+                            alt={topper.name}
+                            width={240}
+                            height={300}
+                            loading="lazy"
+                            className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-xl sm:text-3xl font-editorial font-bold text-[#0F3D2E]">
+                            {getInitials(topper.name)}
+                          </div>
                         )}
                       </div>
 
-                      {/* Content Layout: side-by-side on mobile, stacked on sm+ */}
-                      <div className="flex flex-row sm:flex-col gap-3.5 sm:gap-0 items-start sm:items-stretch">
-                        {/* Student Photo */}
-                        <div className="relative w-24 sm:w-full aspect-[4/5] shrink-0 rounded-lg overflow-hidden bg-[#F0ECE1] mb-0 sm:mb-4 border border-[#E4DCC8]">
-                          {topper.photo ? (
-                            <img
-                              src={topper.photo}
-                              alt={topper.name}
-                              width={240}
-                              height={300}
-                              loading="lazy"
-                              className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                            />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center text-xl sm:text-3xl font-editorial font-bold text-[#0F3D2E]">
-                              {getInitials(topper.name)}
-                            </div>
-                          )}
+                      {/* Name & Scores */}
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-editorial text-lg sm:text-xl font-bold text-[#14110F] mb-0.5 sm:mb-1 group-hover:text-[#0F3D2E] transition-colors leading-snug">
+                          {topper.name}
+                        </h4>
+                        <div className="font-editorial text-xl sm:text-2xl font-bold text-[#0F3D2E] mb-0.5">
+                          {topper.score}
+                        </div>
+                        <div className="text-[11px] sm:text-xs font-semibold text-[#B08D57] mb-2 sm:mb-3">
+                          {topper.subScore}
                         </div>
 
-                        {/* Name & Scores */}
-                        <div className="flex-1 min-w-0">
-                          <h4 className="font-editorial text-lg sm:text-xl font-bold text-[#14110F] mb-0.5 sm:mb-1 group-hover:text-[#0F3D2E] transition-colors leading-snug">
-                            {topper.name}
-                          </h4>
-                          <div className="font-editorial text-xl sm:text-2xl font-bold text-[#0F3D2E] mb-0.5">
-                            {topper.score}
-                          </div>
-                          <div className="text-[11px] sm:text-xs font-semibold text-[#B08D57] mb-2 sm:mb-3">
-                            {topper.subScore}
-                          </div>
-
-                          {/* Quote Block */}
-                          {topper.quote && (
-                            <p className="text-[11px] sm:text-xs text-[#14110F]/75 italic leading-relaxed font-normal p-2.5 sm:p-3 rounded-lg bg-[#FAF7F0] border-l-2 border-[#B08D57] mb-3 sm:mb-4">
-                              "{topper.quote}"
-                            </p>
-                          )}
-                        </div>
+                        {/* Quote Block */}
+                        {topper.quote && (
+                          <p className="text-[11px] sm:text-xs text-[#14110F]/75 italic leading-relaxed font-normal p-2.5 sm:p-3 rounded-lg bg-[#FAF7F0] border-l-2 border-[#B08D57] mb-3 sm:mb-4">
+                            "{topper.quote}"
+                          </p>
+                        )}
                       </div>
                     </div>
-
-                    {/* Batch Footer & Verified Lightbox Trigger */}
-                    <div className="mt-3 sm:mt-0">
-                      {topper.batch && (
-                        <div className="text-[9px] font-bold text-[#14110F]/60 uppercase tracking-wider pt-2 sm:pt-3 border-t border-[#F0ECE1] mb-2 truncate">
-                          BATCH: {topper.batch}
-                        </div>
-                      )}
-                      <button
-                        type="button"
-                        onClick={() => setSelectedStudent(topper)}
-                        className="w-full py-1.5 rounded bg-[#FAF7F0] hover:bg-[#0F3D2E] text-[#0F3D2E] hover:text-[#FAF7F0] border border-[#E4DCC8] text-[10px] font-bold uppercase tracking-wider transition-colors flex items-center justify-center gap-1 cursor-pointer"
-                      >
-                        <span>VERIFIED RESULT →</span>
-                      </button>
-                    </div>
                   </div>
-                );
-              })}
-            </div>
+
+                  {/* Batch Footer & Verified Lightbox Trigger */}
+                  <div className="mt-3 sm:mt-0">
+                    {topper.batch && (
+                      <div className="text-[9px] font-bold text-[#14110F]/60 uppercase tracking-wider pt-2 sm:pt-3 border-t border-[#F0ECE1] mb-2 truncate">
+                        BATCH: {topper.batch}
+                      </div>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => setSelectedStudent(topper)}
+                      className="w-full py-1.5 rounded bg-[#FAF7F0] hover:bg-[#0F3D2E] text-[#0F3D2E] hover:text-[#FAF7F0] border border-[#E4DCC8] text-[10px] font-bold uppercase tracking-wider transition-colors flex items-center justify-center gap-1 cursor-pointer"
+                    >
+                      <span>VERIFIED RESULT →</span>
+                    </button>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
           
         </div>
 
@@ -1027,48 +1029,51 @@ export const ResultsSection = () => {
         {/* NEW BLOCK 5 — "BEYOND THE EXAM HALL" (AWARD & COMPETITION GALLERY) */}
         {/* ========================================================================= */}
         <div>
-          <div className="flex flex-col items-center text-center mb-6 sm:mb-8">
-            <div className="flex items-center gap-2 mb-1.5">
-              <span className="h-px w-6 bg-[#B08D57]" />
-              <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-[#B08D57]">
-                CELEBRATING EVERY WIN
-              </span>
-              <span className="h-px w-6 bg-[#B08D57]" />
+          <Reveal>
+            <div className="flex flex-col items-center text-center mb-6 sm:mb-8">
+              <div className="flex items-center gap-2 mb-1.5">
+                <span className="h-px w-6 bg-[#B08D57]" />
+                <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-[#B08D57]">
+                  CELEBRATING EVERY WIN
+                </span>
+                <span className="h-px w-6 bg-[#B08D57]" />
+              </div>
+              <h3 className="font-editorial text-xl sm:text-3xl font-bold text-[#14110F]">
+                Beyond the Exam Hall
+              </h3>
+              <p className="text-[11px] sm:text-sm text-[#14110F]/75 max-w-xl font-normal leading-relaxed mt-0.5">
+                Honoring academic excellence, Olympiad distinctions, and annual merit felicitation honors.
+              </p>
             </div>
-            <h3 className="font-editorial text-xl sm:text-3xl font-bold text-[#14110F]">
-              Beyond the Exam Hall
-            </h3>
-            <p className="text-[11px] sm:text-sm text-[#14110F]/75 max-w-xl font-normal leading-relaxed mt-0.5">
-              Honoring academic excellence, Olympiad distinctions, and annual merit felicitation honors.
-            </p>
-          </div>
+          </Reveal>
 
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             {beyondExamGallery.map((item, idx) => (
-              <div className="bg-white border border-[#E4DCC8] hover:border-[#B08D57] rounded-lg sm:rounded-xl overflow-hidden p-2.5 sm:p-4 shadow-xs hover:shadow-md transition-all duration-300 group flex flex-col justify-between"
-              >
-                <div>
-                  <div className="relative aspect-[4/3] w-full rounded-md sm:rounded-lg overflow-hidden bg-[#F0ECE1] mb-2 sm:mb-3 border border-[#E4DCC8]">
-                    <img
-                      src={item.img}
-                      alt={item.title}
-                      width={300}
-                      height={225}
-                      loading="lazy"
-                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <span className="absolute top-1.5 left-1.5 px-1.5 sm:px-2 py-0.5 rounded bg-[#0F3D2E]/90 text-[#FAF7F0] text-[7px] sm:text-[8px] font-bold uppercase tracking-wider backdrop-blur-xs">
-                      {item.badge}
-                    </span>
+              <Reveal key={idx} delay={idx * 80} className="h-full">
+                <div className="h-full bg-white border border-[#E4DCC8] hover:border-[#B08D57] rounded-lg sm:rounded-xl overflow-hidden p-2.5 sm:p-4 shadow-xs hover:shadow-md transition-all duration-300 group flex flex-col justify-between">
+                  <div>
+                    <div className="relative aspect-[4/3] w-full rounded-md sm:rounded-lg overflow-hidden bg-[#F0ECE1] mb-2 sm:mb-3 border border-[#E4DCC8]">
+                      <img
+                        src={item.img}
+                        alt={item.title}
+                        width={300}
+                        height={225}
+                        loading="lazy"
+                        className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <span className="absolute top-1.5 left-1.5 px-1.5 sm:px-2 py-0.5 rounded bg-[#0F3D2E]/90 text-[#FAF7F0] text-[7px] sm:text-[8px] font-bold uppercase tracking-wider backdrop-blur-xs">
+                        {item.badge}
+                      </span>
+                    </div>
+                    <h4 className="font-editorial text-sm sm:text-lg font-bold text-[#14110F] mb-0.5 sm:mb-1 group-hover:text-[#0F3D2E] transition-colors leading-tight">
+                      {item.title}
+                    </h4>
+                    <p className="text-[10px] sm:text-xs text-[#14110F]/75 leading-normal sm:leading-relaxed font-normal">
+                      {item.caption}
+                    </p>
                   </div>
-                  <h4 className="font-editorial text-sm sm:text-lg font-bold text-[#14110F] mb-0.5 sm:mb-1 group-hover:text-[#0F3D2E] transition-colors leading-tight">
-                    {item.title}
-                  </h4>
-                  <p className="text-[10px] sm:text-xs text-[#14110F]/75 leading-normal sm:leading-relaxed font-normal">
-                    {item.caption}
-                  </p>
                 </div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>

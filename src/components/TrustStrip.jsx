@@ -1,5 +1,6 @@
 import React from 'react';
 import { ShieldCheck, GraduationCap, Award, Compass } from 'lucide-react';
+import Reveal from './Reveal';
 
 export const TrustStrip = () => {
   const metrics = [
@@ -16,24 +17,25 @@ export const TrustStrip = () => {
           {metrics.map((item, idx) => {
             const Icon = item.icon;
             return (
-              <div
-                key={item.label}
-                className={`flex items-center gap-4 ${
-                  idx !== 0 ? 'pt-4 md:pt-0 md:pl-6' : ''
-                }`}
-              >
-                <div className="w-10 h-10 rounded-full bg-[#E4DCC8]/40 border border-[#B08D57]/30 flex items-center justify-center text-[#0F3D2E] shrink-0">
-                  <Icon className="w-5 h-5" />
-                </div>
-                <div>
-                  <div className="font-editorial text-xl sm:text-2xl font-bold text-[#0F3D2E]">
-                    {item.value}
+              <Reveal key={item.label} delay={idx * 80}>
+                <div
+                  className={`flex items-center gap-4 ${
+                    idx !== 0 ? 'pt-4 md:pt-0 md:pl-6' : ''
+                  }`}
+                >
+                  <div className="w-10 h-10 rounded-full bg-[#E4DCC8]/40 border border-[#B08D57]/30 flex items-center justify-center text-[#0F3D2E] shrink-0">
+                    <Icon className="w-5 h-5" />
                   </div>
-                  <div className="text-[11px] font-medium uppercase tracking-wider text-[#14110F]/70">
-                    {item.label}
+                  <div>
+                    <div className="font-editorial text-xl sm:text-2xl font-bold text-[#0F3D2E]">
+                      {item.value}
+                    </div>
+                    <div className="text-[11px] font-medium uppercase tracking-wider text-[#14110F]/70">
+                      {item.label}
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Reveal>
             );
           })}
         </div>

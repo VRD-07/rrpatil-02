@@ -1,5 +1,6 @@
 import React from 'react';
 import { Flame } from 'lucide-react';
+import Reveal from './Reveal';
 
 import kartikMemImg from '../assets/kartik_mem.jpg';
 import kartikMemFaceImg from '../assets/kartik_mem_face.jpeg';
@@ -11,7 +12,8 @@ export const MemoryTribute = () => {
       className="py-10 sm:py-14 bg-[#FAF7F0] border-y border-[#E4DCC8]"
     >
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
-        <div className="rounded-2xl bg-[#14110F] text-[#FAF7F0] p-6 sm:p-8 border border-[#B08D57]/40 shadow-xl relative overflow-hidden">
+        <Reveal>
+          <div className="rounded-2xl bg-[#14110F] text-[#FAF7F0] p-6 sm:p-8 border border-[#B08D57]/40 shadow-xl relative overflow-hidden">
           {/* Mobile view background image */}
           <div
             className="sm:hidden absolute inset-0 bg-cover bg-center opacity-40 pointer-events-none"
@@ -87,8 +89,9 @@ export const MemoryTribute = () => {
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </Reveal>
+    </div>
+  </section>
   );
 };
 
