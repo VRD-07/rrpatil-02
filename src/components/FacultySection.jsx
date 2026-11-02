@@ -49,45 +49,43 @@ export const FacultySection = () => {
     <section id="faculty" className="py-20 sm:py-28 bg-[#FAF7F0] border-t border-[#F0ECE1]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header with 1-on-1 Mentoring Visual Proof */}
-        <Reveal>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-12 pb-8 border-b border-[#F0ECE1]">
-            <div className="lg:col-span-8">
-              <div className="flex items-center gap-3 mb-3">
-                <span className="h-px w-8 bg-[#B08D57]" />
-                <span className="text-xs font-semibold uppercase tracking-widest text-[#B08D57]">
-                  OUR FACULTY & FOUNDER
-                </span>
-              </div>
-              <h2 className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#14110F]">
-                Guided by Master Educators
-              </h2>
-              <p className="text-sm text-[#14110F]/70 max-w-2xl mt-3 leading-relaxed font-normal">
-                At R. R. Patil, every single lecture is conducted directly by our 3 senior master faculty members — ensuring unmatched mentorship depth and zero sub-staff reliance.
-              </p>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-12 pb-8 border-b border-[#F0ECE1]">
+          <div className="lg:col-span-8">
+            <div className="flex items-center gap-3 mb-3">
+              <span className="h-px w-8 bg-[#B08D57]" />
+              <span className="text-xs font-semibold uppercase tracking-widest text-[#B08D57]">
+                OUR FACULTY & FOUNDER
+              </span>
             </div>
+            <h2 className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#14110F]">
+              Guided by Master Educators
+            </h2>
+            <p className="text-sm text-[#14110F]/70 max-w-2xl mt-3 leading-relaxed font-normal">
+              At R. R. Patil, every single lecture is conducted directly by our 3 senior master faculty members — ensuring unmatched mentorship depth and zero sub-staff reliance.
+            </p>
+          </div>
 
-            {/* 1-on-1 Mentoring Proof Badge */}
-            <div className="lg:col-span-4 flex items-center gap-3 p-3.5 rounded-xl bg-white border border-[#E4DCC8] shadow-xs">
-              <img
-                src={mentoringSessionImg}
-                alt="1-on-1 faculty mentoring session with student"
-                width={80}
-                height={60}
-                loading="lazy"
-                className="w-20 h-14 rounded-lg object-cover object-center border border-[#E4DCC8] shrink-0"
-              />
-              <div>
-                <div className="flex items-center gap-1 text-[11px] font-bold text-[#0F3D2E]">
-                  <Users className="w-3.5 h-3.5 text-[#B08D57]" />
-                  <span>1-on-1 Personal Mentoring</span>
-                </div>
-                <span className="text-[10px] text-[#14110F]/60 leading-tight block mt-0.5">
-                  Every student receives individual doubt clearance and progress tracking.
-                </span>
+          {/* 1-on-1 Mentoring Proof Badge */}
+          <div className="lg:col-span-4 flex items-center gap-3 p-3.5 rounded-xl bg-white border border-[#E4DCC8] shadow-xs">
+            <img
+              src={mentoringSessionImg}
+              alt="1-on-1 faculty mentoring session with student"
+              width={80}
+              height={60}
+              loading="lazy"
+              className="w-20 h-14 rounded-lg object-cover object-center border border-[#E4DCC8] shrink-0"
+            />
+            <div>
+              <div className="flex items-center gap-1 text-[11px] font-bold text-[#0F3D2E]">
+                <Users className="w-3.5 h-3.5 text-[#B08D57]" />
+                <span>1-on-1 Personal Mentoring</span>
               </div>
+              <span className="text-[10px] text-[#14110F]/60 leading-tight block mt-0.5">
+                Every student receives individual doubt clearance and progress tracking.
+              </span>
             </div>
           </div>
-        </Reveal>
+        </div>
 
         {/* FACULTY SHOWCASE GRID */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">

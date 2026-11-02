@@ -47,23 +47,21 @@ export const StudyMaterial = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <Reveal>
-          <div className="flex flex-col items-center text-center mb-8 sm:mb-12">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="h-px w-6 bg-[#B08D57]" />
-              <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-[#B08D57]">
-                PROPRIETARY PUBLICATIONS & MODULES
-              </span>
-              <span className="h-px w-6 bg-[#B08D57]" />
-            </div>
-            <h2 className="font-editorial text-2xl sm:text-4xl lg:text-5xl font-semibold text-[#14110F] max-w-3xl">
-              Study Material Built In-House
-            </h2>
-            <p className="mt-2 text-xs sm:text-sm text-[#14110F]/75 max-w-2xl font-normal leading-relaxed">
-              Authored directly by our senior faculty for deep conceptual understanding — provided free with every course enrollment.
-            </p>
+        <div className="flex flex-col items-center text-center mb-8 sm:mb-12">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="h-px w-6 bg-[#B08D57]" />
+            <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-[#B08D57]">
+              PROPRIETARY PUBLICATIONS & MODULES
+            </span>
+            <span className="h-px w-6 bg-[#B08D57]" />
           </div>
-        </Reveal>
+          <h2 className="font-editorial text-2xl sm:text-4xl lg:text-5xl font-semibold text-[#14110F] max-w-3xl">
+            Study Material Built In-House
+          </h2>
+          <p className="mt-2 text-xs sm:text-sm text-[#14110F]/75 max-w-2xl font-normal leading-relaxed">
+            Authored directly by our senior faculty for deep conceptual understanding — provided free with every course enrollment.
+          </p>
+        </div>
 
         {/* 4 Cards Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-8 sm:mb-10">
@@ -121,29 +119,27 @@ export const StudyMaterial = () => {
         </div>
 
         {/* Bottom Banner */}
-        <Reveal delay={200}>
-          <div className="p-4 sm:p-6 rounded-xl bg-[#0F3D2E] text-[#FAF7F0] border border-[#B08D57] flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm text-center sm:text-left">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-[#B08D57]/20 border border-[#B08D57]/40 flex items-center justify-center shrink-0">
-                <Layers className="w-5 h-5 text-[#B08D57]" />
-              </div>
-              <div>
-                <h4 className="font-editorial text-base sm:text-lg font-bold text-white">
-                  30+ Total In-House Books & Practice Modules Included Free
-                </h4>
-                <p className="text-[11px] sm:text-xs text-[#FAF7F0]/80 mt-0.5">
-                  Every student receives their complete set of physical books & practice modules upon enrollment.
-                </p>
-              </div>
+        <div className="p-4 sm:p-6 rounded-xl bg-[#0F3D2E] text-[#FAF7F0] border border-[#B08D57] flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm text-center sm:text-left">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-[#B08D57]/20 border border-[#B08D57]/40 flex items-center justify-center shrink-0">
+              <Layers className="w-5 h-5 text-[#B08D57]" />
             </div>
-
-            <div className="flex flex-wrap items-center justify-center gap-2 text-[10px] font-bold uppercase tracking-wider text-[#B08D57]">
-              <span className="px-2.5 py-1 rounded bg-[#FAF7F0]/10 border border-[#FAF7F0]/20">100% Faculty Authored</span>
-              <span className="px-2.5 py-1 rounded bg-[#FAF7F0]/10 border border-[#FAF7F0]/20">Zero Photocopy Notes</span>
-              <span className="px-2.5 py-1 rounded bg-[#FAF7F0]/10 border border-[#FAF7F0]/20">Included With Course</span>
+            <div>
+              <h4 className="font-editorial text-base sm:text-lg font-bold text-white">
+                30+ Total In-House Books & Practice Modules Included Free
+              </h4>
+              <p className="text-[11px] sm:text-xs text-[#FAF7F0]/80 mt-0.5">
+                Every student receives their complete set of physical books & practice modules upon enrollment.
+              </p>
             </div>
           </div>
-        </Reveal>
+
+          <div className="flex flex-wrap items-center justify-center gap-2 text-[10px] font-bold uppercase tracking-wider text-[#B08D57]">
+            <span className="px-2.5 py-1 rounded bg-[#FAF7F0]/10 border border-[#FAF7F0]/20">100% Faculty Authored</span>
+            <span className="px-2.5 py-1 rounded bg-[#FAF7F0]/10 border border-[#FAF7F0]/20">Zero Photocopy Notes</span>
+            <span className="px-2.5 py-1 rounded bg-[#FAF7F0]/10 border border-[#FAF7F0]/20">Included With Course</span>
+          </div>
+        </div>
 
       </div>
     </section>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Award, CheckCircle2, X, ExternalLink, Sparkles } from 'lucide-react';
 import Reveal from './Reveal';
 
@@ -18,11 +18,42 @@ import award2Img from '../assets/Awards/award_02.jpeg';
 import award3Img from '../assets/Awards/award_03.jpeg';
 import award4Img from '../assets/Awards/award_04.jpeg';
 
-// Count-up animated stat component
+// Count-up animated stat component (triggers when scrolled into view)
 const CountUpStat = ({ end, suffix = '', prefix = '' }) => {
   const [count, setCount] = useState(0);
+  const [hasStarted, setHasStarted] = useState(false);
+  const ref = useRef(null);
+
+  // Start counter only when element enters the viewport (matches original onViewportEnter)
+  useEffect(() => {
+    if (typeof window === 'undefined' || !('IntersectionObserver' in window)) {
+      setHasStarted(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHasStarted(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    const currentEl = ref.current;
+    if (currentEl) {
+      observer.observe(currentEl);
+    }
+
+    return () => {
+      if (currentEl) observer.unobserve(currentEl);
+      observer.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
+    if (!hasStarted) return;
     let start = 0;
     const duration = 1500;
     const stepTime = Math.max(Math.floor(duration / Math.max(end, 1)), 15);
@@ -36,10 +67,10 @@ const CountUpStat = ({ end, suffix = '', prefix = '' }) => {
       }
     }, stepTime);
     return () => clearInterval(timer);
-  }, [end]);
+  }, [hasStarted, end]);
 
   return (
-    <span>
+    <span ref={ref}>
       {prefix}{count}{suffix}
     </span>
   );
@@ -697,48 +728,46 @@ export const ResultsSection = () => {
     <section id="results" className="py-16 sm:py-24 bg-[#FAF7F0] border-b border-[#F0ECE1]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* EXISTING SECTION INTRO (KEPT AS-IS) */}
-        <Reveal>
-          <div className="flex flex-col items-center text-center mb-10">
-            <div className="relative mb-3 flex items-center justify-center">
-              <svg
-                className="w-24 h-24 text-[#B08D57] opacity-35"
-                viewBox="0 0 100 100"
-                fill="none"
-              >
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="46"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeDasharray="4 4"
-                />
-                <circle cx="50" cy="50" r="38" stroke="currentColor" strokeWidth="1" />
-              </svg>
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-[#0F3D2E]">
-                <Award className="w-7 h-7 text-[#B08D57] mb-0.5" />
-                <span className="font-institute-name text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#B08D57]">
-                  R. R. Patil
-                </span>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2 mb-3">
-              <span className="h-px w-6 bg-[#B08D57]" />
-              <span className="font-institute-name text-sm font-semibold tracking-widest text-[#B08D57]">
-                R. R. PATIL COACHING CLASSES, KOPARGAON
+        <div className="flex flex-col items-center text-center mb-10">
+          <div className="relative mb-3 flex items-center justify-center">
+            <svg
+              className="w-24 h-24 text-[#B08D57] opacity-35"
+              viewBox="0 0 100 100"
+              fill="none"
+            >
+              <circle
+                cx="50"
+                cy="50"
+                r="46"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeDasharray="4 4"
+              />
+              <circle cx="50" cy="50" r="38" stroke="currentColor" strokeWidth="1" />
+            </svg>
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-[#0F3D2E]">
+              <Award className="w-7 h-7 text-[#B08D57] mb-0.5" />
+              <span className="font-institute-name text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#B08D57]">
+                R. R. Patil
               </span>
-              <span className="h-px w-6 bg-[#B08D57]" />
             </div>
-
-            <h2 className="font-editorial text-3xl sm:text-5xl font-semibold text-[#14110F] max-w-3xl leading-tight mb-3">
-              Outstanding Examination Results
-            </h2>
-            <p className="text-xs sm:text-sm text-[#14110F]/75 max-w-2xl font-normal leading-relaxed">
-              100% verified rank distinctions across JEE Advanced, NEET Medical, MHT-CET, and 12th Board Examinations.
-            </p>
           </div>
-        </Reveal>
+
+          <div className="flex items-center gap-2 mb-3">
+            <span className="h-px w-6 bg-[#B08D57]" />
+            <span className="font-institute-name text-sm font-semibold tracking-widest text-[#B08D57]">
+              R. R. PATIL COACHING CLASSES, KOPARGAON
+            </span>
+            <span className="h-px w-6 bg-[#B08D57]" />
+          </div>
+
+          <h2 className="font-editorial text-3xl sm:text-5xl font-semibold text-[#14110F] max-w-3xl leading-tight mb-3">
+            Outstanding Examination Results
+          </h2>
+          <p className="text-xs sm:text-sm text-[#14110F]/75 max-w-2xl font-normal leading-relaxed">
+            100% verified rank distinctions across JEE Advanced, NEET Medical, MHT-CET, and 12th Board Examinations.
+          </p>
+        </div>
 
         {/* ========================================================================= */}
         {/* NEW BLOCK 1 — ALL-TIME RECORDS STRIP */}
@@ -1029,23 +1058,21 @@ export const ResultsSection = () => {
         {/* NEW BLOCK 5 — "BEYOND THE EXAM HALL" (AWARD & COMPETITION GALLERY) */}
         {/* ========================================================================= */}
         <div>
-          <Reveal>
-            <div className="flex flex-col items-center text-center mb-6 sm:mb-8">
-              <div className="flex items-center gap-2 mb-1.5">
-                <span className="h-px w-6 bg-[#B08D57]" />
-                <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-[#B08D57]">
-                  CELEBRATING EVERY WIN
-                </span>
-                <span className="h-px w-6 bg-[#B08D57]" />
-              </div>
-              <h3 className="font-editorial text-xl sm:text-3xl font-bold text-[#14110F]">
-                Beyond the Exam Hall
-              </h3>
-              <p className="text-[11px] sm:text-sm text-[#14110F]/75 max-w-xl font-normal leading-relaxed mt-0.5">
-                Honoring academic excellence, Olympiad distinctions, and annual merit felicitation honors.
-              </p>
+          <div className="flex flex-col items-center text-center mb-6 sm:mb-8">
+            <div className="flex items-center gap-2 mb-1.5">
+              <span className="h-px w-6 bg-[#B08D57]" />
+              <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-[#B08D57]">
+                CELEBRATING EVERY WIN
+              </span>
+              <span className="h-px w-6 bg-[#B08D57]" />
             </div>
-          </Reveal>
+            <h3 className="font-editorial text-xl sm:text-3xl font-bold text-[#14110F]">
+              Beyond the Exam Hall
+            </h3>
+            <p className="text-[11px] sm:text-sm text-[#14110F]/75 max-w-xl font-normal leading-relaxed mt-0.5">
+              Honoring academic excellence, Olympiad distinctions, and annual merit felicitation honors.
+            </p>
+          </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             {beyondExamGallery.map((item, idx) => (

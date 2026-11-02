@@ -11,7 +11,6 @@ import {
   MessageCircle,
   Code,
 } from 'lucide-react';
-import Reveal from './Reveal';
 import instructorImg from '../assets/Faculties/Akshay.jpeg';
 
 export const ProgramsAndBatches = ({ onOpenDemo }) => {
@@ -56,45 +55,43 @@ export const ProgramsAndBatches = ({ onOpenDemo }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <Reveal>
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 pb-6 border-b border-[#B08D57]/20 gap-4">
-            <div>
-              <div className="flex items-center gap-2 mb-3">
-                <span className="h-px w-6 bg-[#B08D57]" />
-                <span className="text-xs font-semibold uppercase tracking-widest text-[#B08D57]">
-                  THE FULL STUDENT JOURNEY · 6TH TO PLACEMENT
-                </span>
-              </div>
-              <h2 className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#14110F]">
-                Programs & Batch Schedule
-              </h2>
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 pb-6 border-b border-[#B08D57]/20 gap-4">
+          <div>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="h-px w-6 bg-[#B08D57]" />
+              <span className="text-xs font-semibold uppercase tracking-widest text-[#B08D57]">
+                THE FULL STUDENT JOURNEY · 6TH TO PLACEMENT
+              </span>
             </div>
-            
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-              <p className="text-xs sm:text-sm text-[#14110F]/75 max-w-md leading-relaxed font-normal">
-                A continuous, structured academic ecosystem guiding students from early foundation to engineering career placement.
-              </p>
+            <h2 className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#14110F]">
+              Programs & Batch Schedule
+            </h2>
+          </div>
+          
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <p className="text-xs sm:text-sm text-[#14110F]/75 max-w-md leading-relaxed font-normal">
+              A continuous, structured academic ecosystem guiding students from early foundation to engineering career placement.
+            </p>
 
-              {/* Quick Accordion Toggle Controls */}
-              <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider shrink-0">
-                <button
-                  type="button"
-                  onClick={expandAll}
-                  className="px-2.5 py-1 rounded bg-[#F0ECE1] hover:bg-[#0F3D2E] text-[#0F3D2E] hover:text-[#FAF7F0] border border-[#E4DCC8] transition-colors cursor-pointer"
-                >
-                  Expand All
-                </button>
-                <button
-                  type="button"
-                  onClick={collapseAll}
-                  className="px-2.5 py-1 rounded bg-[#F0ECE1] hover:bg-[#0F3D2E] text-[#0F3D2E] hover:text-[#FAF7F0] border border-[#E4DCC8] transition-colors cursor-pointer"
-                >
-                  Collapse All
-                </button>
-              </div>
+            {/* Quick Accordion Toggle Controls */}
+            <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider shrink-0">
+              <button
+                type="button"
+                onClick={expandAll}
+                className="px-2.5 py-1 rounded bg-[#F0ECE1] hover:bg-[#0F3D2E] text-[#0F3D2E] hover:text-[#FAF7F0] border border-[#E4DCC8] transition-colors cursor-pointer"
+              >
+                Expand All
+              </button>
+              <button
+                type="button"
+                onClick={collapseAll}
+                className="px-2.5 py-1 rounded bg-[#F0ECE1] hover:bg-[#0F3D2E] text-[#0F3D2E] hover:text-[#FAF7F0] border border-[#E4DCC8] transition-colors cursor-pointer"
+              >
+                Collapse All
+              </button>
             </div>
           </div>
-        </Reveal>
+        </div>
 
         {/* 3-STAGE VERTICAL JOURNEY TIMELINE */}
         <div className="relative pl-6 sm:pl-12 lg:pl-16">
@@ -107,8 +104,7 @@ export const ProgramsAndBatches = ({ onOpenDemo }) => {
           <div className="space-y-12 sm:space-y-16">
             
             {/* STAGE 1 — FOUNDATION YEARS (6TH - 10TH) */}
-            <Reveal>
-              <div className="relative">
+            <div className="relative">
               {/* Stage Marker */}
               <div className="absolute -left-6 sm:-left-12 lg:-left-16 top-0 flex items-center gap-3">
                 <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#0F3D2E] text-[#FAF7F0] border-2 border-[#B08D57] flex items-center justify-center font-editorial font-bold text-sm sm:text-base shadow-sm shrink-0 z-10">
@@ -241,10 +237,8 @@ export const ProgramsAndBatches = ({ onOpenDemo }) => {
 
               </div>
             </div>
-          </Reveal>
 
-          {/* STAGE 2 — BOARD & COMPETITIVE MASTERY (11TH - 12TH) */}
-          <Reveal>
+            {/* STAGE 2 — BOARD & COMPETITIVE MASTERY (11TH - 12TH) */}
             <div className="relative">
               {/* Stage Marker */}
               <div className="absolute -left-6 sm:-left-12 lg:-left-16 top-0 flex items-center gap-3">
@@ -474,10 +468,8 @@ export const ProgramsAndBatches = ({ onOpenDemo }) => {
 
               </div>
             </div>
-          </Reveal>
 
-          {/* STAGE 3 — COLLEGE & CAREER (AI-ML BOOTCAMP) */}
-          <Reveal>
+            {/* STAGE 3 — COLLEGE & CAREER (AI-ML BOOTCAMP) */}
             <div className="relative">
               {/* Stage Marker */}
               <div className="absolute -left-6 sm:-left-12 lg:-left-16 top-0 flex items-center gap-3">
@@ -595,7 +587,6 @@ export const ProgramsAndBatches = ({ onOpenDemo }) => {
                 </div>
               </div>
             </div>
-          </Reveal>
 
           </div>
         </div>

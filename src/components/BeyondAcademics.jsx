@@ -44,23 +44,21 @@ export const BeyondAcademics = () => {
     <section id="beyond-academics" className="py-16 sm:py-24 bg-[#F0ECE1] border-y border-[#E4DCC8]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <Reveal>
-          <div className="flex flex-col items-center text-center mb-12 sm:mb-16">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="h-px w-6 bg-[#B08D57]" />
-              <span className="text-xs font-semibold uppercase tracking-widest text-[#B08D57]">
-                STUDENT LIFE & RECREATION
-              </span>
-              <span className="h-px w-6 bg-[#B08D57]" />
-            </div>
-            <h2 className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#14110F] max-w-3xl">
-              Beyond the Classroom
-            </h2>
-            <p className="mt-3 text-xs sm:text-sm text-[#14110F]/75 max-w-2xl font-normal leading-relaxed">
-              Academic rigor balanced with memorable experiences, camaraderie, and physical recreation.
-            </p>
+        <div className="flex flex-col items-center text-center mb-12 sm:mb-16">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="h-px w-6 bg-[#B08D57]" />
+            <span className="text-xs font-semibold uppercase tracking-widest text-[#B08D57]">
+              STUDENT LIFE & RECREATION
+            </span>
+            <span className="h-px w-6 bg-[#B08D57]" />
           </div>
-        </Reveal>
+          <h2 className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#14110F] max-w-3xl">
+            Beyond the Classroom
+          </h2>
+          <p className="mt-3 text-xs sm:text-sm text-[#14110F]/75 max-w-2xl font-normal leading-relaxed">
+            Academic rigor balanced with memorable experiences, camaraderie, and physical recreation.
+          </p>
+        </div>
 
         {/* 4 Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">

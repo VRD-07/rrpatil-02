@@ -52,23 +52,21 @@ export const WhyChooseUs = () => {
     <section id="why-us" className="py-16 sm:py-24 bg-[#FAF7F0] border-b border-[#F0ECE1]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <Reveal>
-          <div className="flex flex-col items-center text-center mb-12 sm:mb-16">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="h-px w-6 bg-[#B08D57]" />
-              <span className="text-xs font-semibold uppercase tracking-widest text-[#B08D57]">
-                INSTITUTE DISTINCTIONS
-              </span>
-              <span className="h-px w-6 bg-[#B08D57]" />
-            </div>
-            <h2 className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#14110F] max-w-3xl">
-              Why Families Trust Us
-            </h2>
-            <p className="mt-3 text-xs sm:text-sm text-[#14110F]/75 max-w-2xl font-normal leading-relaxed">
-              Purely affirmative, proven principles that make R. R. Patil Coaching Classes Kopargaon’s preferred choice.
-            </p>
+        <div className="flex flex-col items-center text-center mb-12 sm:mb-16">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="h-px w-6 bg-[#B08D57]" />
+            <span className="text-xs font-semibold uppercase tracking-widest text-[#B08D57]">
+              INSTITUTE DISTINCTIONS
+            </span>
+            <span className="h-px w-6 bg-[#B08D57]" />
           </div>
-        </Reveal>
+          <h2 className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#14110F] max-w-3xl">
+            Why Families Trust Us
+          </h2>
+          <p className="mt-3 text-xs sm:text-sm text-[#14110F]/75 max-w-2xl font-normal leading-relaxed">
+            Purely affirmative, proven principles that make R. R. Patil Coaching Classes Kopargaon’s preferred choice.
+          </p>
+        </div>
 
         {/* 4 Pillar Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-6 mb-12">

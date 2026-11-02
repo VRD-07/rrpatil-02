@@ -42,23 +42,21 @@ export const TestimonialsSection = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <Reveal>
-          <div className="flex flex-col items-center text-center mb-14 sm:mb-16">
-            <div className="flex items-center gap-3 mb-3">
-              <span className="h-px w-8 bg-[#B08D57]" />
-              <span className="text-xs font-semibold uppercase tracking-widest text-[#B08D57]">
-                AUTHENTICATED ALUMNI VOICES
-              </span>
-              <span className="h-px w-8 bg-[#B08D57]" />
-            </div>
-            <h2 className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#14110F] max-w-2xl">
-              Words from Our Verified Toppers
-            </h2>
-            <p className="text-xs sm:text-sm text-[#14110F]/70 max-w-xl mt-2 font-normal leading-relaxed">
-              Real feedback from students who completed their 11th & 12th standard journey at R. R. Patil Academy.
-            </p>
+        <div className="flex flex-col items-center text-center mb-14 sm:mb-16">
+          <div className="flex items-center gap-3 mb-3">
+            <span className="h-px w-8 bg-[#B08D57]" />
+            <span className="text-xs font-semibold uppercase tracking-widest text-[#B08D57]">
+              AUTHENTICATED ALUMNI VOICES
+            </span>
+            <span className="h-px w-8 bg-[#B08D57]" />
           </div>
-        </Reveal>
+          <h2 className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#14110F] max-w-2xl">
+            Words from Our Verified Toppers
+          </h2>
+          <p className="text-xs sm:text-sm text-[#14110F]/70 max-w-xl mt-2 font-normal leading-relaxed">
+            Real feedback from students who completed their 11th & 12th standard journey at R. R. Patil Academy.
+          </p>
+        </div>
 
         {/* Testimonials 3-Column Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
