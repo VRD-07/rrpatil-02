@@ -67,6 +67,29 @@ export const DemoModal = ({
     e.preventDefault();
     if (!formData.name || !formData.phone) return;
 
+    // Send to Backend
+    fetch('http://localhost:5000/api/demo', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    })
+      .then(async (res) => {
+        const data = await res.json();
+        if (!res.ok || data.error) {
+          throw new Error(data.details || data.error || 'Server error');
+        }
+        return data;
+      })
+      .then((data) => {
+        console.log('Backend Success:', data);
+        alert('Thank you! Your demo class is booked (ID: ' + data.bookingId + ').');
+        onClose(); // Close modal
+      })
+      .catch((err) => {
+        console.error('Backend Error:', err);
+        alert('Database error: ' + err.message);
+      });
+
     const messageLines = [
       `Hello R. R. Patil Academy,`,
       `I would like to book a Free Demo & Evaluation Class.`,
