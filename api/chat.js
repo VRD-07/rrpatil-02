@@ -1,16 +1,10 @@
-export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
-  const { message, history } = req.body || {};
-
-  if (!message || typeof message !== 'string') {
-    return res.status(400).json({ error: 'Message parameter is required' });
-  }
-
-  const SYSTEM_CONTEXT = `
+const SYSTEM_CONTEXT = `
 You are the official assistant for R.R. Patil Coaching Classes, Sai City, Kopargaon. Answer ONLY using the information below. If asked something not covered here, politely say you'll connect them with the institute directly via WhatsApp or phone, and do NOT guess or invent details — especially fees, timings, or results, since wrong information here would break trust.
+
+ADMISSIONS:
+- Admissions are currently OPEN for all batches (6th–10th Regular/Foundation, 11th–12th Board & Competitive JEE/NEET/CET, and AI-ML Bootcamp).
+- Direct admission inquiries and campus visits are welcome at Sai City, Kopargaon.
+- For fee structure, discounts, and enrollment details, please contact directly on WhatsApp or Call (+91 8275280028).
 
 PROGRAMS:
 - 6th-10th Regular Tuition
@@ -30,14 +24,26 @@ CONTACT: WhatsApp/Call: +91 8275280028. Address: Sai City, Kopargaon.
 Keep answers short (2-4 sentences), warm, and in plain English unless the user writes in Marathi/Hindi, in which case respond in that language naturally. Always end an answer about fees or admission specifics by suggesting they confirm exact figures via WhatsApp or call, since those can change and you should never quote a fee number that isn't explicitly provided above.
 `;
 
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  const { message, history } = req.body || {};
+
+  if (!message || typeof message !== 'string') {
+    return res.status(400).json({ error: 'Message parameter is required' });
+  }
+
   try {
     const apiKey = process.env.OPENROUTER_API_KEY || process.env.VITE_OPENROUTER_API_KEY;
     if (!apiKey) {
       return res.status(401).json({
-        error: "OPENROUTER_API_KEY is not set in environment variables! Please configure OPENROUTER_API_KEY in Vercel."
+        error: "OPENROUTER_API_KEY is not set in environment variables! Please configure OPENROUTER_API_KEY in Vercel or .env.local."
       });
     }
 
+    // Format OpenAI-style history: { role: 'user' | 'assistant', content: string }
     const formattedHistory = Array.isArray(history)
       ? history
           .filter((h) => h && (h.role === 'user' || h.role === 'assistant'))
@@ -53,11 +59,14 @@ Keep answers short (2-4 sentences), warm, and in plain English unless the user w
       { role: 'user', content: message },
     ];
 
+    // Verified active free models on OpenRouter
     const freeModels = [
+      'openrouter/free',
+      'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free',
+      'nvidia/nemotron-3.5-lightning:free',
+      'nvidia/nemotron-3-ultra-550b-a55b:free',
+      'google/gemma-4-31b-it:free',
       'google/gemma-4-26b-a4b-it:free',
-      'qwen/qwen-2.5-7b-instruct:free',
-      'meta-llama/llama-3.2-1b-instruct:free',
-      'mistralai/mistral-7b-instruct:free',
     ];
 
     let reply = null;
@@ -69,7 +78,7 @@ Keep answers short (2-4 sentences), warm, and in plain English unless the user w
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`,
+            'Authorization': `Bearer ${apiKey.trim()}`,
             'HTTP-Referer': 'https://rr-patil-coaching.vercel.app',
             'X-Title': 'RR Patil Coaching Classes Chatbot',
           },

@@ -4,6 +4,11 @@ import { X, Send, Bot, Sparkles } from 'lucide-react';
 const SYSTEM_CONTEXT = `
 You are the official assistant for R.R. Patil Coaching Classes, Sai City, Kopargaon. Answer ONLY using the information below. If asked something not covered here, politely say you'll connect them with the institute directly via WhatsApp or phone, and do NOT guess or invent details — especially fees, timings, or results, since wrong information here would break trust.
 
+ADMISSIONS:
+- Admissions are currently OPEN for all batches (6th–10th Regular/Foundation, 11th–12th Board & Competitive JEE/NEET/CET, and AI-ML Bootcamp).
+- Direct admission inquiries and campus visits are welcome at Sai City, Kopargaon.
+- For fee structure, discounts, and enrollment details, please contact directly on WhatsApp or Call (+91 8275280028).
+
 PROGRAMS:
 - 6th-10th Regular Tuition
 - 8th/9th/10th Foundation Batch
@@ -24,6 +29,129 @@ Keep answers short (2-4 sentences), warm, and in plain English unless the user w
 
 const FALLBACK_ERROR_MESSAGE =
   "I'm sorry, I'm having trouble connecting right now. Please check your internet connection and try again. For urgent inquiries, feel free to contact us on WhatsApp (+91 8275280028).";
+
+function getSmartLocalResponse(query) {
+  const q = query.toLowerCase().trim();
+
+  // Greetings
+  if (
+    q === 'hi' ||
+    q === 'hello' ||
+    q === 'hey' ||
+    q.startsWith('hi ') ||
+    q.startsWith('hello ') ||
+    q.startsWith('hey ') ||
+    q.includes('namaste') ||
+    q.includes('नमस्कार')
+  ) {
+    return 'Hello! Welcome to R. R. Patil Coaching Classes. How can I assist you today? You can ask about our 6th–12th batches, JEE/NEET competitive coaching, study material, or admissions!';
+  }
+
+  // Admission inquiries
+  if (
+    q.includes('admission') ||
+    q.includes('admissions') ||
+    q.includes('enroll') ||
+    q.includes('joining') ||
+    q.includes('registration') ||
+    q.includes('प्रवेश') ||
+    q.includes('दाखला')
+  ) {
+    return 'Admissions are currently OPEN for all batches (6th–10th Regular & Foundation, 11th–12th Board & Competitive JEE/NEET/CET, and AI-ML Bootcamp)! For exact fee structures, scholarships, and immediate enrollment, please contact us directly on WhatsApp or call +91 8275280028 or visit our Sai City, Kopargaon campus.';
+  }
+
+  // Batch timings & schedules
+  if (
+    q.includes('timing') ||
+    q.includes('timings') ||
+    q.includes('batch') ||
+    q.includes('time') ||
+    q.includes('schedule') ||
+    q.includes('वेळ') ||
+    q.includes('बॅच')
+  ) {
+    return 'Our 11th-12th Regular (Board) Batch runs in the morning from 6:15 AM to 11:00 AM (for SSGM & KJS College students). The Competitive Batch (JEE/NEET/CET) runs in the afternoon from 3:00 PM to 7:00 PM (for External & Sanjivani students with full morning Biology coverage included). We also run 6th–10th Regular & Foundation batches. Contact +91 8275280028 for the latest timetable.';
+  }
+
+  // Courses & Programs
+  if (
+    q.includes('course') ||
+    q.includes('courses') ||
+    q.includes('program') ||
+    q.includes('offer') ||
+    q.includes('neet') ||
+    q.includes('jee') ||
+    q.includes('cet') ||
+    q.includes('bootcamp') ||
+    q.includes('aiml') ||
+    q.includes('ai-ml') ||
+    q.includes('अभ्यासक्रम')
+  ) {
+    return 'We offer comprehensive coaching for: 6th–10th Regular Tuition, 8th–10th Foundation Batch, 11th–12th Regular Board Batches, 11th–12th Competitive Batches (JEE/NEET/MHT-CET), and our hands-on AI-ML Bootcamp for engineering students. Feel free to call or WhatsApp +91 8275280028 for full course syllabi.';
+  }
+
+  // Study Material & Books & Testing
+  if (
+    q.includes('material') ||
+    q.includes('book') ||
+    q.includes('books') ||
+    q.includes('notes') ||
+    q.includes('pyq') ||
+    q.includes('test') ||
+    q.includes('mcq') ||
+    q.includes('पुस्तके')
+  ) {
+    return 'Students receive in-house authored 10th Foundation Books, 7 (PCM) or 9 (PCMB) subject books for 11th/12th including a 4-color Biology book, and a PYQ book with 50 questions per chapter, plus access to 18,500+ MCQs on our testing platform.';
+  }
+
+  // Facilities & Infrastructure
+  if (
+    q.includes('facility') ||
+    q.includes('facilities') ||
+    q.includes('lab') ||
+    q.includes('study room') ||
+    q.includes('cctv') ||
+    q.includes('uniform')
+  ) {
+    return 'Our campus features dedicated study rooms (included in fees), a modern computer lab for regular & AI-ML students, full CCTV with audio monitoring for student safety, and uniforms provided with enrollment.';
+  }
+
+  // Faculty / Teachers
+  if (
+    q.includes('faculty') ||
+    q.includes('teacher') ||
+    q.includes('teachers') ||
+    q.includes('sir') ||
+    q.includes('patil') ||
+    q.includes('mentor')
+  ) {
+    return 'Our institute is led by experienced faculty providing specialized coaching for Board, JEE, NEET, and MHT-CET exams with individual attention, small batch sizes, and daily doubt-clearing sessions.';
+  }
+
+  // Fees
+  if (q.includes('fee') || q.includes('fees') || q.includes('cost') || q.includes('फी')) {
+    return 'Our fees include study room access, uniform, books, and testing platform access. For exact fee details and installment plans, please contact us on WhatsApp (+91 8275280028).';
+  }
+
+  // Contact / Address / Location
+  if (
+    q.includes('address') ||
+    q.includes('contact') ||
+    q.includes('location') ||
+    q.includes('where') ||
+    q.includes('phone') ||
+    q.includes('number') ||
+    q.includes('call') ||
+    q.includes('whatsapp') ||
+    q.includes('पत्ता') ||
+    q.includes('संपर्क')
+  ) {
+    return 'R. R. Patil Coaching Classes is located at Sai City, Kopargaon. You can call or WhatsApp us anytime at +91 8275280028.';
+  }
+
+  // General helpful fallback
+  return 'Thank you for reaching out to R. R. Patil Coaching Classes! We offer 6th–12th State Board, JEE, NEET, CET, and AI-ML programs. For detailed queries or personal counseling, please contact us directly on WhatsApp or Call at +91 8275280028 or visit our Sai City, Kopargaon campus.';
+}
 
 export const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -68,8 +196,10 @@ export const ChatWidget = () => {
       { role: 'user', content: query },
     ];
 
+    let replyFound = null;
+
+    // 1. Try backend serverless endpoint /api/chat
     try {
-      // 1. Try serverless backend endpoint /api/chat
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -79,101 +209,88 @@ export const ChatWidget = () => {
         }),
       });
 
-      const responseText = await response.text();
-      let data = null;
-      try {
-        data = responseText ? JSON.parse(responseText) : null;
-      } catch (err) {
-        data = null;
-      }
-
-      // If serverless endpoint succeeded with JSON reply
-      if (response.ok && data?.reply) {
-        setMessages([...newMessages, { sender: 'bot', text: data.reply }]);
-        setChatHistory([
-          ...updatedHistory,
-          { role: 'assistant', content: data.reply },
-        ]);
-        setIsLoading(false);
-        return;
-      }
-
-      // If endpoint returned error
-      if (data?.error) {
-        console.error('[ChatWidget Error]:', data.error);
-        setMessages([
-          ...newMessages,
-          { sender: 'bot', text: FALLBACK_ERROR_MESSAGE },
-        ]);
-        setIsLoading(false);
-        return;
-      }
-
-      // 2. Direct OpenRouter fetch for local development if VITE_OPENROUTER_API_KEY is present
-      const localKey = import.meta.env?.VITE_OPENROUTER_API_KEY;
-      if (localKey) {
-        const openRouterRes = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localKey}`,
-            'HTTP-Referer': 'http://localhost:5173',
-            'X-Title': 'RR Patil Local Dev Chatbot',
-          },
-          body: JSON.stringify({
-            model: 'google/gemma-4-26b-a4b-it:free',
-            temperature: 0.3,
-            messages: [
-              { role: 'system', content: SYSTEM_CONTEXT },
-              ...chatHistory,
-              { role: 'user', content: query },
-            ],
-          }),
-        });
-
-        const localData = await openRouterRes.json();
-        const localReply = localData?.choices?.[0]?.message?.content;
-
-        if (openRouterRes.ok && localReply) {
-          setMessages([...newMessages, { sender: 'bot', text: localReply }]);
-          setChatHistory([
-            ...updatedHistory,
-            { role: 'assistant', content: localReply },
-          ]);
-          setIsLoading(false);
-          return;
-        }
-
-        if (localData?.error) {
-          console.error('[ChatWidget Local OpenRouter Error]:', localData.error);
-          setMessages([
-            ...newMessages,
-            { sender: 'bot', text: FALLBACK_ERROR_MESSAGE },
-          ]);
-          setIsLoading(false);
-          return;
+      if (response.ok) {
+        const data = await response.json().catch(() => null);
+        if (data?.reply) {
+          replyFound = data.reply;
         }
       }
-
-      setMessages([
-        ...newMessages,
-        {
-          sender: 'bot',
-          text: FALLBACK_ERROR_MESSAGE,
-        },
-      ]);
-    } catch (err) {
-      console.error('[ChatWidget Network Error]:', err);
-      setMessages([
-        ...newMessages,
-        {
-          sender: 'bot',
-          text: FALLBACK_ERROR_MESSAGE,
-        },
-      ]);
-    } finally {
-      setIsLoading(false);
+    } catch (apiErr) {
+      console.warn('[ChatWidget /api/chat notice]:', apiErr);
     }
+
+    // 2. If /api/chat was not available or didn't return a reply, try direct OpenRouter with local key
+    if (!replyFound) {
+      const localKey = (
+        import.meta.env?.VITE_OPENROUTER_API_KEY ||
+        import.meta.env?.OPENROUTER_API_KEY ||
+        ''
+      ).trim();
+
+      if (localKey) {
+        const candidateModels = [
+          'openrouter/free',
+          'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free',
+          'nvidia/nemotron-3.5-lightning:free',
+          'nvidia/nemotron-3-ultra-550b-a55b:free',
+          'google/gemma-4-31b-it:free',
+          'google/gemma-4-26b-a4b-it:free',
+        ];
+
+        for (const modelName of candidateModels) {
+          try {
+            const openRouterRes = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${localKey}`,
+                'HTTP-Referer': 'https://rr-patil-coaching.vercel.app',
+                'X-Title': 'RR Patil Coaching Classes Chatbot',
+              },
+              body: JSON.stringify({
+                model: modelName,
+                temperature: 0.3,
+                messages: [
+                  { role: 'system', content: SYSTEM_CONTEXT },
+                  ...chatHistory,
+                  { role: 'user', content: query },
+                ],
+              }),
+            });
+
+            if (openRouterRes.ok) {
+              const localData = await openRouterRes.json().catch(() => null);
+              const text = localData?.choices?.[0]?.message?.content;
+              if (text) {
+                replyFound = text;
+                break;
+              }
+            }
+          } catch (modelErr) {
+            console.warn(`[ChatWidget direct ${modelName} notice]:`, modelErr);
+          }
+        }
+      }
+    }
+
+    // 3. Smart offline knowledge fallback for academy inquiries if network/AI is unavailable
+    if (!replyFound) {
+      const smartResponse = getSmartLocalResponse(query);
+      if (smartResponse) {
+        replyFound = smartResponse;
+      }
+    }
+
+    // 4. Update messages and history
+    const finalReply = replyFound || FALLBACK_ERROR_MESSAGE;
+    setMessages([...newMessages, { sender: 'bot', text: finalReply }]);
+    if (replyFound) {
+      setChatHistory([
+        ...updatedHistory,
+        { role: 'assistant', content: replyFound },
+      ]);
+    }
+    setIsLoading(false);
   };
 
   return (
